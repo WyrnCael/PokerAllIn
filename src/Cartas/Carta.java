@@ -1,38 +1,22 @@
-package pr1;
+package Cartas;
 
 public class Carta {
 
-	
-
-	private char valor;
-	private char color;
+	private Point valor;
+	private Palo color;
 	
 	
-	Carta(char v, char c){
+	Carta(Point v, Palo c){
 		this.valor=v;
 		this.color=c;
 	}
 	
-	public char getValor() {
-		return valor;
+	public Point getValor() {
+		return this.valor;
 	}
 
-
-	public void setValor(char valor) {
-		this.valor = valor;
-	}
-
-
-	public char getColor() {
+	public Palo getColor() {
 		return color;
 	}
 
-
-	public void setColor(char color) {
-		this.color = color;
-	}
-
-
-	
-	
 }

@@ -1,11 +1,11 @@
-package pr1;
+package Cartas;
 
 import java.util.*;
 
 public class Mano {
 
 	
-	private List<Carta> cartas; 
+	private ArrayList<Carta> cartas; 
 	
 	public Mano(){
 		cartas = new ArrayList<Carta>();
@@ -15,13 +15,14 @@ public class Mano {
 		return cartas;
 	}
 
-	public void setCartas(List<Carta> cartas) {
+	public void setCartas(ArrayList<Carta> cartas) {
 		this.cartas = cartas;
 	}
 	
 	public void addCartas(Carta c){
 		cartas.add(c);
 	}
+	
 	public void deleteCartas(Carta c){
 		cartas.remove(c);
 	}
@@ -31,7 +32,7 @@ public class Mano {
 	       	@Override
 			public int compare(Carta arg0, Carta arg1) {
 				// TODO Auto-generated method stub
-				return arg0.getValor() - arg1.getValor();
+				return arg0.getValor().getPoint() - arg1.getValor().getPoint();
 			}           
 	    });
 	}
@@ -41,8 +42,8 @@ public class Mano {
 	       	@Override
 			public int compare(Carta arg0, Carta arg1) {
 				// TODO Auto-generated method stub
-				return arg1.getValor() - arg0.getValor();
-			}           
+				return arg1.getValor().getPoint() - arg0.getValor().getPoint();
+			}
 	    });
 	}
 	
