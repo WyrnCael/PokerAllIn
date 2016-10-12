@@ -14,7 +14,7 @@ public class Carta {
 	}
 	
 	public char getValor() {
-		return valor;
+		return valor + 's';
 	}
 
 
