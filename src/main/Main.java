@@ -38,9 +38,10 @@ public class Main {
 		/* Prueba: Lectura de la mano del apartado 1 */
 		String manoString = datos.get(0);
 		Mano mano = new Mano();
-		for(int i = 0; i < 5;i++){
+		for(int i = 0; i < 10; i=i+2){
 			// ¿Como inicializo el enum?
-			// Carta carta = new Carta(new Point(manoString.substring(i, i+1)), new Palo(manoString.substring(i+1, i+2)));
+			Carta carta = new Carta(Point.parsea(manoString.substring(i, i+1)), Palo.parsea(manoString.substring(i+1, i+2)));
+			mano.addCartas(carta);
 		}
 		/* FIN de prueba */
 		
