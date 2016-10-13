@@ -2,6 +2,7 @@ package Jugada;
 
 import java.util.*;
 
+import Cartas.Carta;
 import Cartas.Mano;
 
 public class Jugada {
@@ -11,6 +12,23 @@ public class Jugada {
 	private Mano mejorJugada;
 	
 	public void compruebaMano(Mano actual, Mano mejorJugada,Vector<String> draws ){
+		
+		/* INICIO EJEMPLO PARA HACER COMPARACIONES DEL VALOR (POINT) */
+		
+		// Cogemos una carta
+		Carta carta = actual.getCartas().get(0);
+		
+		// El valor se mira asi:
+		carta.getValor().getValor(); // Quizas habria que cambiar el nombre
+									 // a una de las dos funciones para evitar
+									 // confusiones.
+		
+		// Y para hacer comparaciones, pues:
+			// Cogemos otra carta
+			Carta otraCarta = actual.getCartas().get(1);
+			if (carta.getValor().getValor() == otraCarta.getValor().getValor()){}
+		
+		/* FIN DEL EJEMPLO */
 		
 		// Guardar actual en una variable auxiliar
 		this.manoActual = actual;
