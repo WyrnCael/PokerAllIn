@@ -2,10 +2,7 @@ package main;
 
 import java.util.Vector;
 
-import Cartas.Carta;
 import Cartas.Mano;
-import Cartas.Palo;
-import Cartas.Point;
 import controlArchivo.Entrada;
 import controlArchivo.Salida;
 

@@ -27,22 +27,22 @@ public class Mano {
 		cartas.remove(c);
 	}
 	
-	public void ordenaPorValorMayorAMenor(){
-		Collections.sort(cartas, new Comparator<Carta>() {
-	       	@Override
-			public int compare(Carta arg0, Carta arg1) {
-				// TODO Auto-generated method stub
-				return arg0.getValor().getPoint() - arg1.getValor().getPoint();
-			}           
-	    });
-	}
-	
 	public void ordenaPorValorMenorAMayor(){
 		Collections.sort(cartas, new Comparator<Carta>() {
 	       	@Override
 			public int compare(Carta arg0, Carta arg1) {
 				// TODO Auto-generated method stub
-				return arg1.getValor().getPoint() - arg0.getValor().getPoint();
+				return arg0.getValor().getValor() - arg1.getValor().getValor();
+			}           
+	    });
+	}
+	
+	public void ordenaPorValorMayorAMenor(){
+		Collections.sort(cartas, new Comparator<Carta>() {
+	       	@Override
+			public int compare(Carta arg0, Carta arg1) {
+				// TODO Auto-generated method stub
+				return arg1.getValor().getValor() - arg0.getValor().getValor();
 			}
 	    });
 	}
