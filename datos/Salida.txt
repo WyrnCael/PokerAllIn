@@ -1,1 +1,17 @@
 AhAcQhJhTh
+ - Best hand: Pair of Aces
+ - Draw: Straight Gutshot
+ - Draw: Flush
+
+AhQcQhQhAc
+ - Best hand: Full house Queens Aces
+
+AhAcAsAd2h
+ - Best hand: Four of a kind Aces
+
+QhQcQsKhJc
+ - Best hand: Three of a kind Queens
+
+2hQcJsAh3c
+ - Best hand: High card Aces
+

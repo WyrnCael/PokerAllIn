@@ -3,6 +3,7 @@ package main;
 import java.util.Vector;
 
 import Cartas.Mano;
+import Jugada.JugadaMejor5Cartas;
 import controlArchivo.Entrada;
 import controlArchivo.Salida;
 
@@ -10,11 +11,29 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		Vector<String> datos = new Vector<String>();
+		Vector<String> datosSalida = new Vector<String>();
+		
+		Entrada entrada = new Entrada(args[1]);
+		datos = entrada.leerDatos();
 		
 		// args[0] es el opcion de la jugada
 		switch(args[0]){
 		case "1":
 			System.out.println("Mejor jugada con 5 cartas");
+			for(int i = 0; i < datos.size();i++){
+				JugadaMejor5Cartas jugada = new JugadaMejor5Cartas(datos.get(i));
+				String str = " - Best hand: " + jugada.getBestHand();
+				System.out.println(str);
+				datosSalida.add(datos.get(i));
+				datosSalida.add(str);
+				Vector<String> draws = jugada.getDraws();
+				str = " - Draw: ";
+				for(int j = 0; j < draws.size(); j++){
+					datosSalida.add(str + draws.get(j));
+				}
+				datosSalida.add("");
+			}
 			break;
 		case "2":
 			System.out.println("Mejor jugada con 2 cartas");
@@ -27,27 +46,8 @@ public class Main {
 			break;
 		}
 		
-		Vector<String> datos = new Vector<String>();
-		
-		Entrada entrada = new Entrada(args[1]);
-		datos = entrada.leerDatos();
-		
-		/* Prueba: Lectura de la mano del apartado 1 */
-		String manoString = datos.get(0);
-		Mano mano = new Mano();
-		mano.parseaMano(manoString);
-		
-			// Probamos el orden y la salida por pantalla
-			System.out.println("Mano sin ordenar: " + mano.toString());
-			mano.ordenaPorValorMayorAMenor();
-			System.out.println("Mano ordenada de mayor a menor: " + mano.toString());
-			mano.ordenaPorValorMenorAMayor();
-			System.out.println("Mano ordenada de menos a mayor: " + mano.toString());
-		
-		/* FIN de prueba */
-		
 		Salida salida = new Salida(args[2]);
-		salida.guardarDatos(datos);		
+		salida.guardarDatos(datosSalida);		
 	}
 
 }

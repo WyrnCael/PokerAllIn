@@ -1,33 +1,33 @@
 package Cartas;
 
 public enum Point {
-	ACE('A', 14),
-	KING('K', 13),
-	QUEEN('Q', 12),
-	JACK('J', 11),
-	TEN('T', 10),
-	NINE('9', 9),
-	EIGHT('8', 8),
-	SEVEN('7', 7),
-	SIX('6', 6),
-	FIVE('5', 5),
-	FOUR('4', 4),
-	THREE('3', 3),
-	TWO('2', 2);
+	ACE("Aces", 14),
+	KING("Kings", 13),
+	QUEEN("Queens", 12),
+	JACK("Jacks", 11),
+	TEN("Tens", 10),
+	NINE("9", 9),
+	EIGHT("8", 8),
+	SEVEN("7", 7),
+	SIX("6", 6),
+	FIVE("5", 5),
+	FOUR("4", 4),
+	THREE("3", 3),
+	TWO("2", 2);
 	
-	private char nombre;
+	private String nombre;
 	private int valor;
 	
-	public char toChar(){
+	public String toString(){
 		return this.nombre;
 	}
 	
-	Point(char point, int valor){
+	Point(String point, int valor){
 		this.nombre = point;
 		this.valor = valor;
 	}
 	
-	public int getPoint(){
+	public String getName(){
 		return this.nombre;
 	}
 	
