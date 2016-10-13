@@ -2,6 +2,10 @@ package main;
 
 import java.util.Vector;
 
+import Cartas.Carta;
+import Cartas.Mano;
+import Cartas.Palo;
+import Cartas.Point;
 import controlArchivo.Entrada;
 import controlArchivo.Salida;
 
@@ -13,10 +17,10 @@ public class Main {
 		// args[0] es el opcion de la jugada
 		switch(args[0]){
 		case "1":
-			System.out.println("Mejor mano con 5 cartas");
+			System.out.println("Mejor jugada con 5 cartas");
 			break;
 		case "2":
-			System.out.println("Mejor mano con 2 cartas");
+			System.out.println("Mejor jugada con 2 cartas");
 			break;
 		case "3":
 			System.out.println("Ordenar jugadores");
@@ -31,10 +35,17 @@ public class Main {
 		Entrada entrada = new Entrada(args[1]);
 		datos = entrada.leerDatos();
 		
+		/* Prueba: Lectura de la mano del apartado 1 */
+		String manoString = datos.get(0);
+		Mano mano = new Mano();
+		for(int i = 0; i < 5;i++){
+			// ¿Como inicializo el enum?
+			// Carta carta = new Carta(new Point(manoString.substring(i, i+1)), new Palo(manoString.substring(i+1, i+2)));
+		}
+		/* FIN de prueba */
+		
 		Salida salida = new Salida(args[2]);
-		salida.guardarDatos(datos);
-		
-		
+		salida.guardarDatos(datos);		
 	}
 
 }

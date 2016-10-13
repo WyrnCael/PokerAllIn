@@ -6,7 +6,7 @@ public class Carta {
 	private Palo color;
 	
 	
-	Carta(Point v, Palo c){
+	public Carta(Point v, Palo c){
 		this.valor=v;
 		this.color=c;
 	}
