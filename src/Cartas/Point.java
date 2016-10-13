@@ -16,10 +16,9 @@ public enum Point {
 	TWO('2');
 	
 	private char point;
-	private String desc;
 	
-	public String toString(){
-		return this.desc;
+	public char toChar(){
+		return this.point;
 	}
 	
 	Point(char point){

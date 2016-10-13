@@ -18,5 +18,9 @@ public class Carta {
 	public Palo getColor() {
 		return color;
 	}
+	
+	public String toString(){
+		return this.valor.toChar() + this.color.toString();
+	}
 
 }

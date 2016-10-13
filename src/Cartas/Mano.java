@@ -47,5 +47,21 @@ public class Mano {
 	    });
 	}
 	
+	public void parseaMano(String entrada){
+		for(int i = 0; i < entrada.length(); i=i+2){
+			Carta carta = new Carta(Point.parsea(entrada.substring(i, i+1)), Palo.parsea(entrada.substring(i+1, i+2)));
+			this.addCartas(carta);
+		}
+	}
+	
+	public String toString(){
+		String r = "";
+		for(int i=0 ; i < cartas.size(); i++){
+			r += " " + cartas.get(i).toString();
+		}
+		
+		return r;
+	}
+	
 	
 }

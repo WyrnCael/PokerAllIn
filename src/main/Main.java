@@ -38,11 +38,15 @@ public class Main {
 		/* Prueba: Lectura de la mano del apartado 1 */
 		String manoString = datos.get(0);
 		Mano mano = new Mano();
-		for(int i = 0; i < 10; i=i+2){
-			// ¿Como inicializo el enum?
-			Carta carta = new Carta(Point.parsea(manoString.substring(i, i+1)), Palo.parsea(manoString.substring(i+1, i+2)));
-			mano.addCartas(carta);
-		}
+		mano.parseaMano(manoString);
+		
+			// Probamos el orden y la salida por pantalla
+			System.out.println("Mano sin ordenar: " + mano.toString());
+			mano.ordenaPorValorMayorAMenor();
+			System.out.println("Mano ordenada de mayor a menor: " + mano.toString());
+			mano.ordenaPorValorMenorAMayor();
+			System.out.println("Mano ordenada de menos a mayor: " + mano.toString());
+		
 		/* FIN de prueba */
 		
 		Salida salida = new Salida(args[2]);
