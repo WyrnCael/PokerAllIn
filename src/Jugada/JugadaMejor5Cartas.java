@@ -1,6 +1,9 @@
 package Jugada;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -15,8 +18,10 @@ public class JugadaMejor5Cartas {
 	// Campos de clase
 	private String card;
 	private Map<Carta, Integer> map;
+	private List<Carta> listCard;
 	private String bestHand;
 	private Vector<String> draws;
+	private Vector<Integer> subRange;
 	
 	/**
 	 * Constructor
@@ -26,7 +31,9 @@ public class JugadaMejor5Cartas {
 	public JugadaMejor5Cartas(String datos){
 		this.card = datos;
 		map = new TreeMap<Carta, Integer>();
+		listCard = new ArrayList<Carta>();
 		draws = new Vector<String>();
+		subRange = new Vector<Integer>();
 		bestHand();
 	}
 	
@@ -38,7 +45,6 @@ public class JugadaMejor5Cartas {
 		
 		int red = 0;
 		int black = 0;
-		
 		for(int i = 0; i < this.card.length(); i=i+2){
 			Point point = Point.parsea(this.card.substring(i, i+1));
 			Palo palo = Palo.parsea(this.card.substring(i+1, i+2));
@@ -48,12 +54,14 @@ public class JugadaMejor5Cartas {
 				black++;
 			}
 			Carta carta = new Carta(point, palo);
-			if(map.containsKey(carta)){
-				map.put(carta, map.get(carta).intValue()+1);
+			this.listCard.add(carta);
+			if(this.map.containsKey(carta)){
+				this.map.put(carta, map.get(carta).intValue()+1);
 			} else {
-				map.put(carta, 1);
+				this.map.put(carta, 1);
 			}
 		}
+		Collections.sort(this.listCard);
 		
 		int bestValue = 0;
 		int count = 1;
@@ -73,6 +81,7 @@ public class JugadaMejor5Cartas {
 			
 			switch(map.get(aux)){
 			case 1:
+				this.subRange.add(1);
 				if(bestValue == 0){
 					bestValue = Ranking.HIGH_CARD.getValor();
 //					col = aux.getColor().getPalo();
@@ -111,6 +120,7 @@ public class JugadaMejor5Cartas {
 				break;
 			case 2:
 				// two pair or pair
+				this.subRange.add(2);
 				if(bestValue == 0){
 //					col = aux.getColor().getPalo();
 					bestValue = Ranking.PAIR.getValor();
@@ -133,6 +143,7 @@ public class JugadaMejor5Cartas {
 				}
 				break;
 			case 3:
+				this.subRange.add(3);
 				color = false;
 				// full house or three of a kind
 				if(bestValue == 0){
@@ -153,6 +164,7 @@ public class JugadaMejor5Cartas {
 				
 				break;
 			case 4:
+				this.subRange.add(4);
 				color = false;
 				bestValue = Ranking.FOUR_OF_A_KIND.getValor();
 				this.bestHand = Ranking.FOUR_OF_A_KIND.getName()+ " " + aux.getValor().getName();
@@ -169,6 +181,75 @@ public class JugadaMejor5Cartas {
 		
 		if(red == 4 || black == 4){
 			draws.add("Flush");
+		}
+		
+		switch(this.subRange.size()){
+		case 2: // 2+3 full house
+			this.bestHand += " (";
+			for(int i = 0; i < this.listCard.size(); i++){
+				this.bestHand += this.listCard.get(i).getValor().getName() + this.listCard.get(i).getColor().getLetra();
+			}
+			this.bestHand += ")";
+			break;
+		case 3: // 1+2+2 two pair
+			this.bestHand += " (";
+			for(int i = 0; i < this.subRange.size(); i++){
+				if(this.subRange.get(i) >= 2)
+					this.bestHand += this.listCard.get(i).getValor().getName() + this.listCard.get(i).getColor().getLetra();
+			}
+			this.bestHand += ")";
+			break;
+		case 4: // 1+1+1+2 pair
+			this.bestHand += " (";
+			for(int i = 0; i < this.subRange.size(); i++){
+				if(this.subRange.get(i) == 2){
+					this.bestHand += this.listCard.get(i).getValor().getName() + this.listCard.get(i).getColor().getLetra();
+					this.bestHand += this.listCard.get(i+1).getValor().getName() + this.listCard.get(i+1).getColor().getLetra();
+				}
+			}
+			this.bestHand += ")";
+			break;
+		case 5: // 1+1+1+1+1 straight(flush) or flush or high card
+			this.bestHand += " (";
+			if(!color && !straight){
+				this.bestHand += this.listCard.get(0).getValor().getName() + this.listCard.get(0).getColor().getLetra();
+			} else {
+				for(int i = 0; i < this.listCard.size(); i++){
+					this.bestHand += this.listCard.get(i).getValor().getName() + this.listCard.get(i).getColor().getLetra();
+				}
+			}
+			
+			this.bestHand += ")";
+			break;
+		default:
+			break;
+		}
+	}
+	
+	void bestHand1(){
+		int bestValue = 0;
+		int cardValue = 0;
+		
+		for(int i = 0; i < this.card.length(); i=i+2){
+			Point point = Point.parsea(this.card.substring(i, i+1));
+			Palo palo = Palo.parsea(this.card.substring(i+1, i+2));
+			Carta carta = new Carta(point, palo);
+			this.listCard.add(carta);
+		}
+		Collections.sort(this.listCard);
+		
+		for(int i = 0; i < this.listCard.size(); i++){
+			Carta aux = this.listCard.get(i);
+			if(bestValue == 0){
+				bestValue = Ranking.HIGH_CARD.getValor();
+				cardValue = aux.getValor().getValor();
+				this.bestHand = Ranking.HIGH_CARD.getName() + Point.parsea(aux.getValor().getName()) + aux.getValor().getName() + aux.getColor().getPalo();
+			} else{
+				if(cardValue == aux.getValor().getValor()){ // mismo carta
+					
+				}
+			}
+			
 		}
 	}
 	

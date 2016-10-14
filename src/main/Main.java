@@ -24,7 +24,7 @@ public class Main {
 			for(int i = 0; i < datos.size();i++){
 				JugadaMejor5Cartas jugada = new JugadaMejor5Cartas(datos.get(i));
 				String str = " - Best hand: " + jugada.getBestHand();
-				System.out.println(str);
+//				System.out.println(str);
 				datosSalida.add(datos.get(i));
 				datosSalida.add(str);
 				Vector<String> draws = jugada.getDraws();

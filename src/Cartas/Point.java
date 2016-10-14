@@ -1,11 +1,11 @@
 package Cartas;
 
 public enum Point {
-	ACE("Aces", 14),
-	KING("Kings", 13),
-	QUEEN("Queens", 12),
-	JACK("Jacks", 11),
-	TEN("Tens", 10),
+	ACE("A", 14),
+	KING("K", 13),
+	QUEEN("Q", 12),
+	JACK("J", 11),
+	TEN("T", 10),
 	NINE("9", 9),
 	EIGHT("8", 8),
 	SEVEN("7", 7),
