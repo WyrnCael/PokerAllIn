@@ -20,6 +20,8 @@ public class Main {
 		Entrada entrada = new Entrada(args[1]);
 		datos = entrada.leerDatos();
 		
+		long finishReadFile = System.currentTimeMillis();
+		System.out.println("Tiempo tardade en leer: " + (finishReadFile-start) + "ms " + (finishReadFile-start) / 1000 + "s");
 		// args[0] es el opcion de la jugada
 		switch(args[0]){
 		case "1":
@@ -49,11 +51,15 @@ public class Main {
 			break;
 		}
 		
+		long finishProcess = System.currentTimeMillis();
+		System.out.println("Tiempo tardade en procesar: " + (finishProcess-finishReadFile) + "ms " + (finishProcess-finishReadFile) / 1000 + "s");
+		
 		Salida salida = new Salida(args[2]);
 		salida.guardarDatos(datosSalida);
 		
 		long end = System.currentTimeMillis();
 		long time = end-start;
+		System.out.println("Tiempo tardade en escribir: " + (end-finishProcess) + "ms " + (end-finishProcess) / 1000 + "s");
 		System.out.println("Tiempo de ejecucion: " + time + "ms " + time / 1000 + "s");
 	}
 
