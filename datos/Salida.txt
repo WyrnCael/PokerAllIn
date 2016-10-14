@@ -15,3 +15,7 @@ QhQcQsKhJc
 2hQcJsAh3c
  - Best hand: High card Aces
 
+3h5h8hKhJc
+ - Best hand: High card Kings
+ - Draw: Flush
+

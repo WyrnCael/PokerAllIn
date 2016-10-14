@@ -11,25 +11,37 @@ import Cartas.Point;
 import Cartas.Ranking;
 
 public class JugadaMejor5Cartas {
-	private String cartas;
+	
+	// Campos de clase
+	private String card;
 	private Map<Carta, Integer> map;
-	private String best;
+	private String bestHand;
 	private Vector<String> draws;
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param datos El parametro datos definen el String de cartas
+	 */
 	public JugadaMejor5Cartas(String datos){
-		this.cartas = datos;
+		this.card = datos;
 		map = new TreeMap<Carta, Integer>();
 		draws = new Vector<String>();
 		bestHand();
 	}
 	
+	/**
+	 * Metodo para calcular el mejor mano a partir del String de cartas
+	 * Utiliza la estructura de datos Treemap para facilitar el calculo
+	 */
 	private void bestHand(){
+		
 		int red = 0;
 		int black = 0;
 		
-		for(int i = 0; i < this.cartas.length(); i=i+2){
-			Point point = Point.parsea(this.cartas.substring(i, i+1));
-			Palo palo = Palo.parsea(this.cartas.substring(i+1, i+2));
+		for(int i = 0; i < this.card.length(); i=i+2){
+			Point point = Point.parsea(this.card.substring(i, i+1));
+			Palo palo = Palo.parsea(this.card.substring(i+1, i+2));
 			if(palo.getPalo().equals("Red")){
 				red++;
 			} else{
@@ -43,103 +55,107 @@ public class JugadaMejor5Cartas {
 			}
 		}
 		
-		Iterator<Carta> it = map.keySet().iterator();
-		int best = 0;
+		int bestValue = 0;
 		int count = 1;
 		boolean color = true;
-		int hueco = 0;
-		boolean escalera = true;
-		int valor = 0;
-		String col = "";
+		int gutshot = 0;
+		boolean straight = true;
+		int value = 0;
+//		String col = "";
 		
+		// Si numero rojo o negro es distinto de 5 ya no hay color
+		if(red != 5 && black != 5)
+			color = false;
+		
+		Iterator<Carta> it = map.keySet().iterator();
 		while(it.hasNext()){
 			Carta aux = it.next();
 			
 			switch(map.get(aux)){
 			case 1:
-				if(best == 0){
-					best = Ranking.HIGH_CARD.getValor();
-					col = aux.getColor().getPalo();
-					valor = aux.getValor().getValor();
-					this.best = Ranking.HIGH_CARD.getName() + " " + aux.getValor().getName();
-				} else if(escalera || color){
+				if(bestValue == 0){
+					bestValue = Ranking.HIGH_CARD.getValor();
+//					col = aux.getColor().getPalo();
+					value = aux.getValor().getValor();
+					this.bestHand = Ranking.HIGH_CARD.getName() + " " + aux.getValor().getName();
+				} else if(straight || color){
 					count++;
-					if(valor - aux.getValor().getValor() > 2){
-						escalera = false;
-					} else if (valor - aux.getValor().getValor() == 2){
-						escalera = false;
-						hueco++;
+					if(value - aux.getValor().getValor() > 2){
+						straight = false;
+					} else if (value - aux.getValor().getValor() == 2){
+						straight = false;
+						gutshot++;
 					}
 					
-					if(!col.equals(aux.getColor().getPalo())){
-						color = false;
-					}
+//					if(!col.equals(aux.getColor().getPalo())){
+//						color = false;
+//					}
 					
 					if(count == 5){
-						if(color && escalera){
-								best = Ranking.STRAIGHT_FLUSH.getValor();
-								this.best = Ranking.STRAIGHT_FLUSH.getName();
+						if(color && straight){
+								bestValue = Ranking.STRAIGHT_FLUSH.getValor();
+								this.bestHand = Ranking.STRAIGHT_FLUSH.getName();
 						}
 						else if(color){
-							best = Ranking.FLUSH.getValor();
-							this.best = Ranking.FLUSH.getName();
+							bestValue = Ranking.FLUSH.getValor();
+							this.bestHand = Ranking.FLUSH.getName();
 						}
-						else if (escalera){
-							best = Ranking.STRAIGHT.getValor();
-							this.best = Ranking.STRAIGHT.getName();
+						else if (straight){
+							bestValue = Ranking.STRAIGHT.getValor();
+							this.bestHand = Ranking.STRAIGHT.getName();
 						}
 					}
-					valor = aux.getValor().getValor();
+					value = aux.getValor().getValor();
 				}
 				
 				break;
 			case 2:
 				// two pair or pair
-				if(best == 0){
-					col = aux.getColor().getPalo();
-					best = Ranking.PAIR.getValor();
-					this.best = Ranking.PAIR.getName() + " of " + aux.getValor().getName();
+				if(bestValue == 0){
+//					col = aux.getColor().getPalo();
+					bestValue = Ranking.PAIR.getValor();
+					this.bestHand = Ranking.PAIR.getName() + " of " + aux.getValor().getName();
 				}
 				else{
-					if(Ranking.PAIR.getValor() == best){
+					if(Ranking.PAIR.getValor() == bestValue){
 						// two pair
-						best = Ranking.TWO_PAIR.getValor();
-						this.best = Ranking.TWO_PAIR.getName() + this.best.substring(4, this.best.length()) + aux.getValor().getName();
-					} else if(Ranking.PAIR.getValor() < best){
+						bestValue = Ranking.TWO_PAIR.getValor();
+						this.bestHand = Ranking.TWO_PAIR.getName() + this.bestHand.substring(4, this.bestHand.length()) + aux.getValor().getName();
+					} else if(Ranking.PAIR.getValor() < bestValue){
 						// full house
-						best = Ranking.FULL_HOUSE.getValor();
-						this.best = Ranking.FULL_HOUSE.getName() + this.best.substring(15, this.best.length()) + " " + aux.getValor().getName();
+						bestValue = Ranking.FULL_HOUSE.getValor();
+						this.bestHand = Ranking.FULL_HOUSE.getName() + this.bestHand.substring(15, this.bestHand.length()) + " " + aux.getValor().getName();
 					} else {
 						// High card
-						best = Ranking.PAIR.getValor();
-						this.best = Ranking.PAIR.getName() + aux.getValor().getName();
+						bestValue = Ranking.PAIR.getValor();
+						this.bestHand = Ranking.PAIR.getName() + aux.getValor().getName();
 					}
 				}
 				break;
 			case 3:
 				color = false;
 				// full house or three of a kind
-				if(best == 0){
-					best = Ranking.THREE_OF_A_KIND.getValor();
-					this.best = Ranking.THREE_OF_A_KIND.getName() + " " + aux.getValor().getName();
+				if(bestValue == 0){
+					bestValue = Ranking.THREE_OF_A_KIND.getValor();
+					this.bestHand = Ranking.THREE_OF_A_KIND.getName() + " " + aux.getValor().getName();
 				}
 				else{
-					if(best == Ranking.PAIR.getValor()){
+					if(bestValue == Ranking.PAIR.getValor()){
 						// full house
-						best = Ranking.FULL_HOUSE.getValor();
-						this.best = Ranking.FULL_HOUSE.getName() + " " + aux.getValor().getName() + this.best.substring(7, this.best.length());
+						bestValue = Ranking.FULL_HOUSE.getValor();
+						this.bestHand = Ranking.FULL_HOUSE.getName() + " " + aux.getValor().getName() + this.bestHand.substring(7, this.bestHand.length());
 					} else{
 						// Three of a kind
-						best = Ranking.THREE_OF_A_KIND.getValor();
-						this.best = Ranking.THREE_OF_A_KIND.getName() + " " + aux.getValor().getName();
+						bestValue = Ranking.THREE_OF_A_KIND.getValor();
+						this.bestHand = Ranking.THREE_OF_A_KIND.getName() + " " + aux.getValor().getName();
 					}
 				}
 				
 				break;
 			case 4:
 				color = false;
-				best = Ranking.FOUR_OF_A_KIND.getValor();
-				this.best = Ranking.FOUR_OF_A_KIND.getName()+ " " + aux.getValor().getName();
+				bestValue = Ranking.FOUR_OF_A_KIND.getValor();
+				this.bestHand = Ranking.FOUR_OF_A_KIND.getName()+ " " + aux.getValor().getName();
 				
 				break;
 			default:
@@ -147,7 +163,7 @@ public class JugadaMejor5Cartas {
 			}
 		}
 		
-		if(count == 4 && hueco < 2){
+		if(count == 4 && gutshot < 2){
 			draws.add("Straight Gutshot");
 		}
 		
@@ -156,10 +172,18 @@ public class JugadaMejor5Cartas {
 		}
 	}
 	
+	/**
+	 * Metodo que devuelve el mejor mano
+	 * @return El String del mejor mano
+	 */
 	public String getBestHand(){
-		return this.best;
+		return this.bestHand;
 	}
 	
+	/**
+	 * Metodo que devuelve los draws
+	 * @return El vector de String de los draws
+	 */
 	public Vector<String> getDraws(){
 		
 		return this.draws;
