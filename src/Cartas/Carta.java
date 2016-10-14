@@ -3,12 +3,12 @@ package Cartas;
 public class Carta implements Comparable{
 
 	private Point valor;
-	private Palo color;
+	private Palo palo;
 	
 	
 	public Carta(Point v, Palo c){
 		this.valor=v;
-		this.color=c;
+		this.palo=c;
 	}
 	
 	public Point getValor() {
@@ -16,12 +16,11 @@ public class Carta implements Comparable{
 	}
 
 	public Palo getColor() {
-		return color;
+		return palo;
 	}
 	
 	public String toString(){
-		return "";
-		//return this.valor.toChar() + this.color.toString();
+		return this.valor.getName() + this.palo.getLetra();
 	}
 	
 	@Override

@@ -9,6 +9,7 @@ import java.util.TreeMap;
 import java.util.Vector;
 
 import Cartas.Carta;
+import Cartas.Mano;
 import Cartas.Palo;
 import Cartas.Point;
 import Cartas.Ranking;
@@ -16,12 +17,11 @@ import Cartas.Ranking;
 public class JugadaMejor5Cartas {
 	
 	// Campos de clase
-	private String card;
+	private String cards;
 	private Map<Carta, Integer> map;
-	private List<Carta> listCard;
+	private Mano hand;
 	private String bestHand;
 	private Vector<String> draws;
-	private Vector<Integer> subRange;
 	
 	/**
 	 * Constructor
@@ -29,11 +29,10 @@ public class JugadaMejor5Cartas {
 	 * @param datos El parametro datos definen el String de cartas
 	 */
 	public JugadaMejor5Cartas(String datos){
-		this.card = datos;
-		map = new TreeMap<Carta, Integer>();
-		listCard = new ArrayList<Carta>();
-		draws = new Vector<String>();
-		subRange = new Vector<Integer>();
+		this.cards = datos;
+		this.map = new TreeMap<Carta, Integer>();
+		this.hand = new Mano();
+		this.draws = new Vector<String>();
 		bestHand();
 	}
 	
@@ -42,76 +41,84 @@ public class JugadaMejor5Cartas {
 	 * Utiliza la estructura de datos Treemap para facilitar el calculo
 	 */
 	private void bestHand(){
-		
-		int red = 0;
-		int black = 0;
-		for(int i = 0; i < this.card.length(); i=i+2){
-			Point point = Point.parsea(this.card.substring(i, i+1));
-			Palo palo = Palo.parsea(this.card.substring(i+1, i+2));
-			if(palo.getPalo().equals("Red")){
-				red++;
-			} else{
-				black++;
-			}
+		this.hand.parseaMano(this.cards);
+		for(int i = 0; i < this.cards.length(); i=i+2){
+			Point point = Point.parsea(this.cards.substring(i, i+1));
+			Palo palo = Palo.parsea(this.cards.substring(i+1, i+2));
+			
 			Carta carta = new Carta(point, palo);
-			this.listCard.add(carta);
 			if(this.map.containsKey(carta)){
 				this.map.put(carta, map.get(carta).intValue()+1);
 			} else {
 				this.map.put(carta, 1);
 			}
 		}
-		Collections.sort(this.listCard);
+		this.hand.ordenaPorValorMayorAMenor();
+//		Collections.sort(this.hand.getCartas());		// Otra forma de ordenar, puede quitar
 		
-		int bestValue = 0;
-		int count = 1;
-		boolean color = true;
-		int gutshot = 0;
-		boolean straight = true;
-		int value = 0;
-//		String col = "";
+		int bestValue = 0;			// Valor de mejor mano
+		int count = 0;				// Contador para escalera count=4 (straight gutshot) count=5 (straight)
+		boolean color = true;		// Boolean para comprobar si es del mismo color
+		int gutshot = 0;			// Numero de hueco del mano, gutshot <= 1 puede tener escalera
+		boolean straight = true;	// Boolean para comprobar si es una escalera
+		int value = 0;				// Variable auxiliar para guardar valor de la carta anterio, para poder comparar despues
+		String palo = "";			// Variable auxiliar para guardar palo de la carta anterio, para poder comparar despues
 		
-		// Si numero rojo o negro es distinto de 5 ya no hay color
-		if(red != 5 && black != 5)
-			color = false;
+		/* Contador para caso de doble pareja, segun entrada de cartas puede tener 3 casos:
+				- 1+2+2 : count2 = 3
+				- 2+1+2 : count2 = 3
+				- 2+2+1 : count2 = 2
+		   y con el valor de count2 podemos sacar cartas que queremos desde String cards
+		*/
+		int count2 = 0;
+		
 		
 		Iterator<Carta> it = map.keySet().iterator();
 		while(it.hasNext()){
 			Carta aux = it.next();
+			count++;
+			count2++;
 			
 			switch(map.get(aux)){
 			case 1:
-				this.subRange.add(1);
-				if(bestValue == 0){
+				if(bestValue == 0){		// Primera vuelta
 					bestValue = Ranking.HIGH_CARD.getValor();
-//					col = aux.getColor().getPalo();
+					palo = aux.getColor().getPalo();
 					value = aux.getValor().getValor();
-					this.bestHand = Ranking.HIGH_CARD.getName() + " " + aux.getValor().getName();
+					this.bestHand = Ranking.HIGH_CARD.getName() + " " + aux.getValor() + " (" + aux + ")";
 				} else if(straight || color){
-					count++;
+					
 					if(value - aux.getValor().getValor() > 2){
+						// Si la diferencia de valor de carta anterio y ahora es mayor que 2, no hay escalera ni gutshot
 						straight = false;
+						gutshot = 2;
 					} else if (value - aux.getValor().getValor() == 2){
+						// Si la diferencia es igual a 2, no hay escalera pero puede ser un gutshot
 						straight = false;
 						gutshot++;
 					}
 					
-//					if(!col.equals(aux.getColor().getPalo())){
-//						color = false;
-//					}
+					// Si el palo de la carta anterio es diferente que la de ahora, no hay color
+					if(!palo.equals(aux.getColor().getPalo())){
+						color = false;
+					}
 					
 					if(count == 5){
+						// caso 1+1+1+1+1
 						if(color && straight){
+								// color y straight son true, escalera de color
 								bestValue = Ranking.STRAIGHT_FLUSH.getValor();
-								this.bestHand = Ranking.STRAIGHT_FLUSH.getName();
+								this.bestHand = Ranking.STRAIGHT_FLUSH.getName() + " (" + this.hand + ")";
 						}
 						else if(color){
+							// solo color es true, color
 							bestValue = Ranking.FLUSH.getValor();
-							this.bestHand = Ranking.FLUSH.getName();
+							this.bestHand = Ranking.FLUSH.getName() + " (" + this.hand + ")";
 						}
 						else if (straight){
+							// solo straight es true, escalera
 							bestValue = Ranking.STRAIGHT.getValor();
-							this.bestHand = Ranking.STRAIGHT.getName();
+							this.bestHand = Ranking.STRAIGHT.getName() + " (" + this.hand + ")";
 						}
 					}
 					value = aux.getValor().getValor();
@@ -120,54 +127,89 @@ public class JugadaMejor5Cartas {
 				break;
 			case 2:
 				// two pair or pair
-				this.subRange.add(2);
 				if(bestValue == 0){
-//					col = aux.getColor().getPalo();
+					
+					// Primera vuelta (2+1+1+1, 2+2+1, 2+1+2)
+					palo = aux.getColor().getPalo();
 					bestValue = Ranking.PAIR.getValor();
-					this.bestHand = Ranking.PAIR.getName() + " of " + aux.getValor().getName();
+					value = aux.getValor().getValor();
+					this.bestHand = Ranking.PAIR.getName() + " of " + aux.getValor() + "s";
+					this.bestHand += " (" + this.hand.getCarta(0) + this.hand.getCarta(1) + ")";
 				}
 				else{
+					// Segunda, Tercera o Cuarta vuelta
 					if(Ranking.PAIR.getValor() == bestValue){
-						// two pair
+						
+						// El mejor mano que lleva hasta ahora es pareja (1+2+2, 2+1+2, 2+1+1)
 						bestValue = Ranking.TWO_PAIR.getValor();
-						this.bestHand = Ranking.TWO_PAIR.getName() + this.bestHand.substring(4, this.bestHand.length()) + aux.getValor().getName();
+						this.bestHand = Ranking.TWO_PAIR.getName() + this.bestHand.substring(4, this.bestHand.length() - 6) + aux.getValor() + "s";
+						String str = this.hand.toString();
+						this.bestHand += " (";
+						
+						if(count2 == 2){
+							// caso 2+2+1
+							this.bestHand += str.substring(0,str.length()-2);
+						} else{
+							// count2 == 3
+							if(this.hand.getCarta(0).getValor().getValor() > this.hand.getCarta(1).getValor().getValor()){
+								// caso 1+2+2
+								str = this.hand.toString();
+								this.bestHand += str.substring(2,str.length());
+							} else{
+								// caso 2+1+2 
+								str = this.hand.toString();
+								this.bestHand += str.substring(0,4) + str.substring(6,str.length());
+							}
+						}
+						this.bestHand += ")";
 					} else if(Ranking.PAIR.getValor() < bestValue){
-						// full house
+						
+						// El mejor mano que lleva hasta ahora es un trio (3+2)
 						bestValue = Ranking.FULL_HOUSE.getValor();
-						this.bestHand = Ranking.FULL_HOUSE.getName() + this.bestHand.substring(15, this.bestHand.length()) + " " + aux.getValor().getName();
+						this.bestHand = Ranking.FULL_HOUSE.getName() + this.bestHand.substring(15, this.bestHand.length()) + "s " + aux.getValor() + "s";
+						this.bestHand += " (" + this.hand + ")";
 					} else {
-						// High card
+						
+						// El mejor mano que lleva hasta ahora es carta mas alta
 						bestValue = Ranking.PAIR.getValor();
-						this.bestHand = Ranking.PAIR.getName() + aux.getValor().getName();
+						this.bestHand = Ranking.PAIR.getName() + " of " + aux.getValor() + "s";
+						this.bestHand += " (" + this.hand.getCarta(count2-1) + this.hand.getCarta(count2) + ")";
 					}
 				}
 				break;
 			case 3:
-				this.subRange.add(3);
-				color = false;
+				color = false;		// no puede ser color
+				
 				// full house or three of a kind
 				if(bestValue == 0){
+					// Primera vuelta (3+1+1 o 3+2)
 					bestValue = Ranking.THREE_OF_A_KIND.getValor();
-					this.bestHand = Ranking.THREE_OF_A_KIND.getName() + " " + aux.getValor().getName();
+					value = aux.getValor().getValor();
+					this.bestHand = Ranking.THREE_OF_A_KIND.getName() + " " + aux.getValor();
 				}
 				else{
+					// Segunda o Tercera vuelta
 					if(bestValue == Ranking.PAIR.getValor()){
-						// full house
+						
+						// Mejor mano que lleva hasta ahora es pareja (2+3)
 						bestValue = Ranking.FULL_HOUSE.getValor();
-						this.bestHand = Ranking.FULL_HOUSE.getName() + " " + aux.getValor().getName() + this.bestHand.substring(7, this.bestHand.length());
+						this.bestHand = Ranking.FULL_HOUSE.getName() + " " + aux.getValor() + "s" + this.bestHand.substring(7, this.bestHand.length() - 7);
+						this.hand.ordenaPorValorMenorAMayor();
+						this.bestHand += " (" + this.hand + ")";
 					} else{
-						// Three of a kind
+						
+						// Mejor mano que lleva hasta ahora es carta mas alta (1+3+1 o 1+1+3)
 						bestValue = Ranking.THREE_OF_A_KIND.getValor();
-						this.bestHand = Ranking.THREE_OF_A_KIND.getName() + " " + aux.getValor().getName();
+						this.bestHand = Ranking.THREE_OF_A_KIND.getName() + " " + aux.getValor();
 					}
 				}
 				
 				break;
 			case 4:
-				this.subRange.add(4);
+				// Si entrado en caso 4 carta del mismo valor, solo puede ser poker
 				color = false;
 				bestValue = Ranking.FOUR_OF_A_KIND.getValor();
-				this.bestHand = Ranking.FOUR_OF_A_KIND.getName()+ " " + aux.getValor().getName();
+				this.bestHand = Ranking.FOUR_OF_A_KIND.getName()+ " " + aux.getValor();
 				
 				break;
 			default:
@@ -175,82 +217,16 @@ public class JugadaMejor5Cartas {
 			}
 		}
 		
-		if(count == 4 && gutshot < 2){
+		// cuatro cartas diferentes y gutshot < 2, draw Straight Gutshot y mejor mano es peor que escalera
+		if(count == 4 && gutshot < 2 && bestValue < Ranking.STRAIGHT.getValor()){
 			draws.add("Straight Gutshot");
 		}
 		
-		if(red == 4 || black == 4){
+		// color es true y mejor mano es peor que color
+		if(color && bestValue < Ranking.FLUSH.getValor()){
 			draws.add("Flush");
 		}
 		
-		switch(this.subRange.size()){
-		case 2: // 2+3 full house
-			this.bestHand += " (";
-			for(int i = 0; i < this.listCard.size(); i++){
-				this.bestHand += this.listCard.get(i).getValor().getName() + this.listCard.get(i).getColor().getLetra();
-			}
-			this.bestHand += ")";
-			break;
-		case 3: // 1+2+2 two pair
-			this.bestHand += " (";
-			for(int i = 0; i < this.subRange.size(); i++){
-				if(this.subRange.get(i) >= 2)
-					this.bestHand += this.listCard.get(i).getValor().getName() + this.listCard.get(i).getColor().getLetra();
-			}
-			this.bestHand += ")";
-			break;
-		case 4: // 1+1+1+2 pair
-			this.bestHand += " (";
-			for(int i = 0; i < this.subRange.size(); i++){
-				if(this.subRange.get(i) == 2){
-					this.bestHand += this.listCard.get(i).getValor().getName() + this.listCard.get(i).getColor().getLetra();
-					this.bestHand += this.listCard.get(i+1).getValor().getName() + this.listCard.get(i+1).getColor().getLetra();
-				}
-			}
-			this.bestHand += ")";
-			break;
-		case 5: // 1+1+1+1+1 straight(flush) or flush or high card
-			this.bestHand += " (";
-			if(!color && !straight){
-				this.bestHand += this.listCard.get(0).getValor().getName() + this.listCard.get(0).getColor().getLetra();
-			} else {
-				for(int i = 0; i < this.listCard.size(); i++){
-					this.bestHand += this.listCard.get(i).getValor().getName() + this.listCard.get(i).getColor().getLetra();
-				}
-			}
-			
-			this.bestHand += ")";
-			break;
-		default:
-			break;
-		}
-	}
-	
-	void bestHand1(){
-		int bestValue = 0;
-		int cardValue = 0;
-		
-		for(int i = 0; i < this.card.length(); i=i+2){
-			Point point = Point.parsea(this.card.substring(i, i+1));
-			Palo palo = Palo.parsea(this.card.substring(i+1, i+2));
-			Carta carta = new Carta(point, palo);
-			this.listCard.add(carta);
-		}
-		Collections.sort(this.listCard);
-		
-		for(int i = 0; i < this.listCard.size(); i++){
-			Carta aux = this.listCard.get(i);
-			if(bestValue == 0){
-				bestValue = Ranking.HIGH_CARD.getValor();
-				cardValue = aux.getValor().getValor();
-				this.bestHand = Ranking.HIGH_CARD.getName() + Point.parsea(aux.getValor().getName()) + aux.getValor().getName() + aux.getColor().getPalo();
-			} else{
-				if(cardValue == aux.getValor().getValor()){ // mismo carta
-					
-				}
-			}
-			
-		}
 	}
 	
 	/**

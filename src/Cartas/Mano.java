@@ -5,30 +5,34 @@ import java.util.*;
 public class Mano {
 
 	
-	private ArrayList<Carta> cartas; 
+	private ArrayList<Carta> card; 
 	
 	public Mano(){
-		cartas = new ArrayList<Carta>();
+		card = new ArrayList<Carta>();
 	}
 
+	public Carta getCarta(int i){
+		return this.card.get(i);
+	}
+	
 	public List<Carta> getCartas() {
-		return cartas;
+		return card;
 	}
 
 	public void setCartas(ArrayList<Carta> cartas) {
-		this.cartas = cartas;
+		this.card = cartas;
 	}
 	
 	public void addCartas(Carta c){
-		cartas.add(c);
+		card.add(c);
 	}
 	
 	public void deleteCartas(Carta c){
-		cartas.remove(c);
+		card.remove(c);
 	}
 	
 	public void ordenaPorValorMenorAMayor(){
-		Collections.sort(cartas, new Comparator<Carta>() {
+		Collections.sort(card, new Comparator<Carta>() {
 	       	@Override
 			public int compare(Carta arg0, Carta arg1) {
 				// TODO Auto-generated method stub
@@ -38,7 +42,7 @@ public class Mano {
 	}
 	
 	public void ordenaPorValorMayorAMenor(){
-		Collections.sort(cartas, new Comparator<Carta>() {
+		Collections.sort(card, new Comparator<Carta>() {
 	       	@Override
 			public int compare(Carta arg0, Carta arg1) {
 				// TODO Auto-generated method stub
@@ -55,12 +59,11 @@ public class Mano {
 	}
 	
 	public String toString(){
-		String r = "";
-		for(int i=0 ; i < cartas.size(); i++){
-			r += " " + cartas.get(i).toString();
+		String str = "";
+		for(int i=0 ; i < card.size(); i++){
+			str += card.get(i);
 		}
-		
-		return r;
+		return str;
 	}
 	
 	

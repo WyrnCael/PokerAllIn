@@ -1,55 +1,52 @@
 package Cartas;
 
 public enum Point {
-	ACE("A", 14),
-	KING("K", 13),
-	QUEEN("Q", 12),
-	JACK("J", 11),
-	TEN("T", 10),
-	NINE("9", 9),
-	EIGHT("8", 8),
-	SEVEN("7", 7),
-	SIX("6", 6),
-	FIVE("5", 5),
-	FOUR("4", 4),
-	THREE("3", 3),
-	TWO("2", 2);
+	Ace("A", 14),
+	King("K", 13),
+	Queen("Q", 12),
+	Jack("J", 11),
+	Ten("T", 10),
+	Nine("9", 9),
+	Eight("8", 8),
+	Seven("7", 7),
+	Six("6", 6),
+	Five("5", 5),
+	Four("4", 4),
+	Three("3", 3),
+	Two("2", 2);
 	
-	private String nombre;
-	private int valor;
+	private String name;
+	private int value;
 	
-	public String toString(){
-		return this.nombre;
-	}
 	
-	Point(String point, int valor){
-		this.nombre = point;
-		this.valor = valor;
+	Point(String name, int valor){
+		this.name = name;
+		this.value = valor;
 	}
 	
 	public String getName(){
-		return this.nombre;
+		return this.name;
 	}
 	
 	public int getValor(){
-		return this.valor;
+		return this.value;
 	}
 	
 	public static Point parsea(String string){
 		switch(string){
-			case "2": 	return Point.TWO;
-			case "3": 	return Point.THREE;
-			case "4": 	return Point.FOUR;
-			case "5": 	return Point.FIVE;
-			case "6": 	return Point.SIX;
-			case "7": 	return Point.SEVEN;
-			case "8": 	return Point.EIGHT;
-			case "9": 	return Point.NINE;
-			case "T": 	return Point.TEN;
-			case "J": 	return Point.JACK;
-			case "Q": 	return Point.QUEEN;
-			case "K": 	return Point.KING;
-			case "A": 	return Point.ACE;
+			case "2": 	return Point.Two;
+			case "3": 	return Point.Three;
+			case "4": 	return Point.Four;
+			case "5": 	return Point.Five;
+			case "6": 	return Point.Six;
+			case "7": 	return Point.Seven;
+			case "8": 	return Point.Eight;
+			case "9": 	return Point.Nine;
+			case "T": 	return Point.Ten;
+			case "J": 	return Point.Jack;
+			case "Q": 	return Point.Queen;
+			case "K": 	return Point.King;
+			case "A": 	return Point.Ace;
 		}
 		
 		return null;
