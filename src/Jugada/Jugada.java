@@ -16,7 +16,7 @@ public class Jugada {
 		/* INICIO EJEMPLO PARA HACER COMPARACIONES DEL VALOR (POINT) */
 		
 		// Cogemos una carta
-		Card carta = actual.getCartas().get(0);
+		Card carta = actual.getCardsList().get(0);
 		
 		// El valor se mira asi:
 		carta.getValue().getValor(); // Quizas habria que cambiar el nombre
@@ -25,7 +25,7 @@ public class Jugada {
 		
 		// Y para hacer comparaciones, pues:
 			// Cogemos otra carta
-			Card otraCarta = actual.getCartas().get(1);
+			Card otraCarta = actual.getCardsList().get(1);
 			if (carta.getValue().getValor() == otraCarta.getValue().getValor()){}
 		
 		/* FIN DEL EJEMPLO */
@@ -35,7 +35,7 @@ public class Jugada {
 		Hand manoAnalizar = actual;
 		
 		// Ordenar auxiliar por valor
-		this.manoActual.ordenaPorValorMayorAMenor();
+//		this.manoActual.ordenaPorValorMayorAMenor();
 		
 		isStraightFlush(manoAnalizar);
 		

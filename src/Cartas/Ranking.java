@@ -14,9 +14,9 @@ public enum Ranking {
 	private String name;
 	private int valor;
 	
-	Ranking(String name, int valor){
+	private Ranking(String name, int value){
 		this.name = name;
-		this.valor = valor;
+		this.valor = value;
 	}
 	
 	public String getName(){

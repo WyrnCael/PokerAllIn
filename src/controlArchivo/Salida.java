@@ -13,7 +13,7 @@ public class Salida {
 	/**
 	 * Constructor
 	 * 
-	 * @param nombreArchivo El parametroArchivo define el nombre del archivo que va a guardar
+	 * @param nombreArchivo El parametro Archivo define el nombre del archivo que va a guardar
 	 */
 	public Salida(String nombreArchivo){
 		this.path = "datos/" + nombreArchivo;

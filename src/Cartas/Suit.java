@@ -10,9 +10,9 @@ public enum Suit {
 	private String color;
 	private char letra;
 	
-	Suit(String color, char letra){
+	private Suit(String color, char letter){
 		this.color = color;
-		this.letra = letra;
+		this.letra = letter;
 	}
 	
 	public String getPalo(){
@@ -21,16 +21,5 @@ public enum Suit {
 	
 	public char getChar(){
 		return this.letra;
-	}
-	
-	public static Suit parsea(String c){
-		switch(c){
-			case "h":	return Suit.Hearts;
-			case "d":	return Suit.Diamonds;
-			case "c":	return Suit.Clubs;
-			case "s":	return Suit.Spades;
-		}
-		
-		return null;
 	}
 }

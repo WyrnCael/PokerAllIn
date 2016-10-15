@@ -1,23 +1,16 @@
 package Jugada;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Vector;
 
 import Cartas.Card;
 import Cartas.Hand;
-import Cartas.Suit;
-import Cartas.Value;
 import Cartas.Ranking;
 
 public class JugadaMejor5Cartas {
 	
 	// Campos de clase
-	private String cards;
 	private Map<Card, Integer> map;
 	private Hand hand;
 	private String bestHand;
@@ -25,13 +18,11 @@ public class JugadaMejor5Cartas {
 	
 	/**
 	 * Constructor
-	 * 
-	 * @param datos El parametro datos definen el String de cartas
+	 * @param hand El parametro hand define el objeto de mano
 	 */
-	public JugadaMejor5Cartas(String datos){
-		this.cards = datos;
-		this.map = new TreeMap<Card, Integer>();
-		this.hand = new Hand();
+	public JugadaMejor5Cartas(Hand hand){
+		this.map = hand.getCardsMap();
+		this.hand = hand;
 		this.draws = new Vector<String>();
 		bestHand();
 	}
@@ -41,20 +32,6 @@ public class JugadaMejor5Cartas {
 	 * Utiliza la estructura de datos Treemap para facilitar el calculo
 	 */
 	private void bestHand(){
-		this.hand.parseaMano(this.cards);
-		for(int i = 0; i < this.cards.length(); i=i+2){
-			Value point = Value.parsea(this.cards.substring(i, i+1));
-			Suit palo = Suit.parsea(this.cards.substring(i+1, i+2));
-			
-			Card carta = new Card(point, palo);
-			if(this.map.containsKey(carta)){
-				this.map.put(carta, map.get(carta).intValue()+1);
-			} else {
-				this.map.put(carta, 1);
-			}
-		}
-		this.hand.ordenaPorValorMayorAMenor();
-//		Collections.sort(this.hand.getCartas());		// Otra forma de ordenar, puede quitar
 		
 		int bestValue = 0;			// Valor de mejor mano
 		int count = 0;				// Contador para escalera count=4 (straight gutshot) count=5 (straight)
@@ -194,7 +171,7 @@ public class JugadaMejor5Cartas {
 						// Mejor mano que lleva hasta ahora es pareja (2+3)
 						bestValue = Ranking.FULL_HOUSE.getValor();
 						this.bestHand = Ranking.FULL_HOUSE.getName() + " " + aux.getValue() + "s" + this.bestHand.substring(7, this.bestHand.length() - 7);
-						this.hand.ordenaPorValorMenorAMayor();
+						this.hand.reverse();
 						this.bestHand += " (" + this.hand + ")";
 					} else{
 						

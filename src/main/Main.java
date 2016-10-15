@@ -27,7 +27,8 @@ public class Main {
 		case "1":
 //			System.out.println("Mejor jugada con 5 cartas");
 			for(int i = 0; i < datos.size();i++){
-				JugadaMejor5Cartas jugada = new JugadaMejor5Cartas(datos.get(i));
+				Hand hand = new Hand(datos.get(i));
+				JugadaMejor5Cartas jugada = new JugadaMejor5Cartas(hand);
 				String str = " - Best hand: " + jugada.getBestHand();
 //				System.out.println(str);
 				datosSalida.add(datos.get(i));

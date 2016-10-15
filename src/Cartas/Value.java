@@ -19,7 +19,7 @@ public enum Value {
 	private int value;
 	
 	
-	Value(String name, int valor){
+	private Value(String name, int valor){
 		this.name = name;
 		this.value = valor;
 	}
@@ -30,25 +30,5 @@ public enum Value {
 	
 	public int getValor(){
 		return this.value;
-	}
-	
-	public static Value parsea(String string){
-		switch(string){
-			case "2": 	return Value.Two;
-			case "3": 	return Value.Three;
-			case "4": 	return Value.Four;
-			case "5": 	return Value.Five;
-			case "6": 	return Value.Six;
-			case "7": 	return Value.Seven;
-			case "8": 	return Value.Eight;
-			case "9": 	return Value.Nine;
-			case "T": 	return Value.Ten;
-			case "J": 	return Value.Jack;
-			case "Q": 	return Value.Queen;
-			case "K": 	return Value.King;
-			case "A": 	return Value.Ace;
-		}
-		
-		return null;
 	}
 }
