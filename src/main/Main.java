@@ -43,6 +43,23 @@ public class Main {
 			break;
 		case "2":
 			System.out.println("Mejor jugada con 2 cartas");
+			for(int i = 0; i < datos.size();i++){
+				String aux = datos.get(i).substring(0,4);
+				aux += datos.get(i).substring(7,datos.get(i).length());
+				System.out.println(aux);
+				Hand hand = new Hand(aux);
+				JugadaMejor5Cartas jugada = new JugadaMejor5Cartas(hand);
+				String str = " - Best hand: " + jugada.getBestHand();
+				System.out.println(str);
+				datosSalida.add(datos.get(i));
+				datosSalida.add(str);
+				Vector<String> draws = jugada.getDraws();
+				str = " - Draw: ";
+				for(int j = 0; j < draws.size(); j++){
+					datosSalida.add(str + draws.get(j));
+				}
+				datosSalida.add("");
+			}
 			break;
 		case "3":
 			System.out.println("Ordenar jugadores");

@@ -77,8 +77,8 @@ public class Card implements Comparable{
 	
 	@Override
 	public int compareTo(Object o){
-		int n1 = value.getValor();
-		int n2 = ((Card) o).getValue().getValor();
+		int n1 = value.getValue();
+		int n2 = ((Card) o).getValue().getValue();
 		if(n1 == n2)
 			return 0;
 		else if( n1 > n2)

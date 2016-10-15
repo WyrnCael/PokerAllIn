@@ -23,7 +23,7 @@ public class Hand {
 	 * @param i El parametro i define la posicion de la carta
 	 * @return cardsList es el objeto de carta en la posicion
 	 */
-	public Card getCarta(int i){
+	public Card getCard(int i){
 		return this.cardsList.get(i);
 	}
 	
@@ -48,7 +48,7 @@ public class Hand {
 	       	@Override
 			public int compare(Card arg0, Card arg1) {
 				// TODO Auto-generated method stub
-				return arg0.getValue().getValor() - arg1.getValue().getValor();
+				return arg0.getValue().getValue() - arg1.getValue().getValue();
 			}           
 	    });
 	}
@@ -72,7 +72,7 @@ public class Hand {
 	       	@Override
 			public int compare(Card arg0, Card arg1) {
 				// TODO Auto-generated method stub
-				return arg1.getValue().getValor() - arg0.getValue().getValor();
+				return arg1.getValue().getValue() - arg0.getValue().getValue();
 			}
 	    });
 	}

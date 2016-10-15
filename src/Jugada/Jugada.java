@@ -19,14 +19,14 @@ public class Jugada {
 		Card carta = actual.getCardsList().get(0);
 		
 		// El valor se mira asi:
-		carta.getValue().getValor(); // Quizas habria que cambiar el nombre
+		carta.getValue().getValue(); // Quizas habria que cambiar el nombre
 									 // a una de las dos funciones para evitar
 									 // confusiones.
 		
 		// Y para hacer comparaciones, pues:
 			// Cogemos otra carta
 			Card otraCarta = actual.getCardsList().get(1);
-			if (carta.getValue().getValor() == otraCarta.getValue().getValor()){}
+			if (carta.getValue().getValue() == otraCarta.getValue().getValue()){}
 		
 		/* FIN DEL EJEMPLO */
 		

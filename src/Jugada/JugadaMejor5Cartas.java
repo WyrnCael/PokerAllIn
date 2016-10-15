@@ -61,15 +61,15 @@ public class JugadaMejor5Cartas {
 				if(bestValue == 0){		// Primera vuelta
 					bestValue = Ranking.HIGH_CARD.getValor();
 					palo = aux.getSuit().getPalo();
-					value = aux.getValue().getValor();
+					value = aux.getValue().getValue();
 					this.bestHand = Ranking.HIGH_CARD.getName() + " " + aux.getValue() + " (" + aux + ")";
 				} else if(straight || color){
 					
-					if(value - aux.getValue().getValor() > 2){
+					if(value - aux.getValue().getValue() > 2){
 						// Si la diferencia de valor de carta anterio y ahora es mayor que 2, no hay escalera ni gutshot
 						straight = false;
 						gutshot = 2;
-					} else if (value - aux.getValue().getValor() == 2){
+					} else if (value - aux.getValue().getValue() == 2){
 						// Si la diferencia es igual a 2, no hay escalera pero puede ser un gutshot
 						straight = false;
 						gutshot++;
@@ -98,7 +98,7 @@ public class JugadaMejor5Cartas {
 							this.bestHand = Ranking.STRAIGHT.getName() + " (" + this.hand + ")";
 						}
 					}
-					value = aux.getValue().getValor();
+					value = aux.getValue().getValue();
 				}
 				
 				break;
@@ -109,9 +109,9 @@ public class JugadaMejor5Cartas {
 					// Primera vuelta (2+1+1+1, 2+2+1, 2+1+2)
 					palo = aux.getSuit().getPalo();
 					bestValue = Ranking.PAIR.getValor();
-					value = aux.getValue().getValor();
+					value = aux.getValue().getValue();
 					this.bestHand = Ranking.PAIR.getName() + " of " + aux.getValue() + "s";
-					this.bestHand += " (" + this.hand.getCarta(0) + this.hand.getCarta(1) + ")";
+					this.bestHand += " (" + this.hand.getCard(0) + this.hand.getCard(1) + ")";
 				}
 				else{
 					// Segunda, Tercera o Cuarta vuelta
@@ -128,7 +128,7 @@ public class JugadaMejor5Cartas {
 							this.bestHand += str.substring(0,str.length()-2);
 						} else{
 							// count2 == 3
-							if(this.hand.getCarta(0).getValue().getValor() > this.hand.getCarta(1).getValue().getValor()){
+							if(this.hand.getCard(0).getValue().getValue() > this.hand.getCard(1).getValue().getValue()){
 								// caso 1+2+2
 								str = this.hand.toString();
 								this.bestHand += str.substring(2,str.length());
@@ -143,14 +143,14 @@ public class JugadaMejor5Cartas {
 						
 						// El mejor mano que lleva hasta ahora es un trio (3+2)
 						bestValue = Ranking.FULL_HOUSE.getValor();
-						this.bestHand = Ranking.FULL_HOUSE.getName() + this.bestHand.substring(15, this.bestHand.length()) + "s " + aux.getValue() + "s";
+						this.bestHand = Ranking.FULL_HOUSE.getName() + this.bestHand.substring(15, this.bestHand.length() - 12) + aux.getValue() + "s";
 						this.bestHand += " (" + this.hand + ")";
 					} else {
 						
 						// El mejor mano que lleva hasta ahora es carta mas alta
 						bestValue = Ranking.PAIR.getValor();
 						this.bestHand = Ranking.PAIR.getName() + " of " + aux.getValue() + "s";
-						this.bestHand += " (" + this.hand.getCarta(count2-1) + this.hand.getCarta(count2) + ")";
+						this.bestHand += " (" + this.hand.getCard(count2-1) + this.hand.getCard(count2) + ")";
 					}
 				}
 				break;
@@ -161,8 +161,9 @@ public class JugadaMejor5Cartas {
 				if(bestValue == 0){
 					// Primera vuelta (3+1+1 o 3+2)
 					bestValue = Ranking.THREE_OF_A_KIND.getValor();
-					value = aux.getValue().getValor();
-					this.bestHand = Ranking.THREE_OF_A_KIND.getName() + " " + aux.getValue();
+					value = aux.getValue().getValue();
+					this.bestHand = Ranking.THREE_OF_A_KIND.getName() + " " + aux.getValue() + "s";
+					this.bestHand += " (" + this.hand + ")";
 				}
 				else{
 					// Segunda o Tercera vuelta
@@ -178,6 +179,13 @@ public class JugadaMejor5Cartas {
 						// Mejor mano que lleva hasta ahora es carta mas alta (1+3+1 o 1+1+3)
 						bestValue = Ranking.THREE_OF_A_KIND.getValor();
 						this.bestHand = Ranking.THREE_OF_A_KIND.getName() + " " + aux.getValue();
+						if(count2 == 3){	// 1+1+3
+							this.hand.reverse();
+							this.bestHand += " (" + this.hand + ")";				
+						} else{
+							this.bestHand += " (" + this.hand.getCard(1) + this.hand.getCard(2) +
+									this.hand.getCard(3) + this.hand.getCard(0) + this.hand.getCard(4) + ")";
+						}
 					}
 				}
 				
@@ -187,6 +195,12 @@ public class JugadaMejor5Cartas {
 				color = false;
 				bestValue = Ranking.FOUR_OF_A_KIND.getValor();
 				this.bestHand = Ranking.FOUR_OF_A_KIND.getName()+ " " + aux.getValue();
+				if(count2 == 2){
+					this.hand.reverse();
+					this.bestHand += " (" + this.hand + ")";
+				} else{
+					this.bestHand += " (" + this.hand + ")";
+				}
 				
 				break;
 			default:

@@ -28,7 +28,7 @@ public enum Value {
 		return this.name;
 	}
 	
-	public int getValor(){
+	public int getValue(){
 		return this.value;
 	}
 }
