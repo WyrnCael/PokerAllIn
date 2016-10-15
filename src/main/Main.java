@@ -2,7 +2,7 @@ package main;
 
 import java.util.Vector;
 
-import Cartas.Mano;
+import Cartas.Hand;
 import Jugada.JugadaMejor5Cartas;
 import controlArchivo.Entrada;
 import controlArchivo.Salida;

@@ -2,37 +2,37 @@ package Jugada;
 
 import java.util.*;
 
-import Cartas.Carta;
-import Cartas.Mano;
+import Cartas.Card;
+import Cartas.Hand;
 
 public class Jugada {
 
-	private Mano manoActual;
+	private Hand manoActual;
 	private Vector<String> draws;
-	private Mano mejorJugada;
+	private Hand mejorJugada;
 	
-	public void compruebaMano(Mano actual, Mano mejorJugada,Vector<String> draws ){
+	public void compruebaMano(Hand actual, Hand mejorJugada,Vector<String> draws ){
 		
 		/* INICIO EJEMPLO PARA HACER COMPARACIONES DEL VALOR (POINT) */
 		
 		// Cogemos una carta
-		Carta carta = actual.getCartas().get(0);
+		Card carta = actual.getCartas().get(0);
 		
 		// El valor se mira asi:
-		carta.getValor().getValor(); // Quizas habria que cambiar el nombre
+		carta.getValue().getValor(); // Quizas habria que cambiar el nombre
 									 // a una de las dos funciones para evitar
 									 // confusiones.
 		
 		// Y para hacer comparaciones, pues:
 			// Cogemos otra carta
-			Carta otraCarta = actual.getCartas().get(1);
-			if (carta.getValor().getValor() == otraCarta.getValor().getValor()){}
+			Card otraCarta = actual.getCartas().get(1);
+			if (carta.getValue().getValor() == otraCarta.getValue().getValor()){}
 		
 		/* FIN DEL EJEMPLO */
 		
 		// Guardar actual en una variable auxiliar
 		this.manoActual = actual;
-		Mano manoAnalizar = actual;
+		Hand manoAnalizar = actual;
 		
 		// Ordenar auxiliar por valor
 		this.manoActual.ordenaPorValorMayorAMenor();
@@ -55,39 +55,39 @@ public class Jugada {
 		
 	}
 	
-	private void isStraightFlush(Mano mano){
+	private void isStraightFlush(Hand mano){
 
 	}
 	
-	private void isFourOfAKind(Mano mano){
+	private void isFourOfAKind(Hand mano){
 		
 	}
 	
-	private void isFullHouse(Mano mano){
+	private void isFullHouse(Hand mano){
 		
 	}
 	
-	private void isFlush(Mano mano){
+	private void isFlush(Hand mano){
 		
 	}
 	
-	private void isStraight(Mano mano){
+	private void isStraight(Hand mano){
 		
 	}
 	
-	private void isThreeOfAKind(Mano mano){
+	private void isThreeOfAKind(Hand mano){
 		
 	}
 	
-	private void isTwoPair(Mano mano){
+	private void isTwoPair(Hand mano){
 		
 	}
 	
-	private void isHighCard(Mano mano){
+	private void isHighCard(Hand mano){
 		
 	}
 	
-	public Mano getMejorJugada(){
+	public Hand getMejorJugada(){
 		return this.mejorJugada;
 	}
 	

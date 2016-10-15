@@ -1,6 +1,6 @@
 package Cartas;
 
-public enum Palo {
+public enum Suit {
 	Hearts("Red", 'h'),
 	Diamonds("Red", 'd'),
 	Clubs("Black", 'c'),
@@ -10,7 +10,7 @@ public enum Palo {
 	private String color;
 	private char letra;
 	
-	Palo(String color, char letra){
+	Suit(String color, char letra){
 		this.color = color;
 		this.letra = letra;
 	}
@@ -19,16 +19,16 @@ public enum Palo {
 		return this.color;
 	}
 	
-	public char getLetra(){
+	public char getChar(){
 		return this.letra;
 	}
 	
-	public static Palo parsea(String c){
+	public static Suit parsea(String c){
 		switch(c){
-			case "h":	return Palo.Hearts;
-			case "d":	return Palo.Diamonds;
-			case "c":	return Palo.Clubs;
-			case "s":	return Palo.Spades;
+			case "h":	return Suit.Hearts;
+			case "d":	return Suit.Diamonds;
+			case "c":	return Suit.Clubs;
+			case "s":	return Suit.Spades;
 		}
 		
 		return null;
