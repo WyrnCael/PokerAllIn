@@ -8,14 +8,9 @@ public class Card implements Comparable{
 	
 	/**
 	 * Constructor
-	 * @param v El parametro v define el valor de la carta
-	 * @param s El parametro s define el palo de la carta
+	 * @param value El parametro value define el valor de la carta
+	 * @param suit El parametro suit define el palo de la carta
 	 */
-	public Card(Value v, Suit s){
-		this.value = v;
-		this.suit = s;
-	}
-	
 	public Card(String value, String suit){
 		this.value = parseValue(value);
 		this.suit = parseSuit(suit);
