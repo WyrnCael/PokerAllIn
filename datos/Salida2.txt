@@ -6,3 +6,9 @@ AhAc;3;QhJhTh
 AhAc;5;As2s3h4dJd
  - Best hand: Three of a kind Aces (AhAcAsJd4d3h2s)
 
+AhKh;5;KsQsJsTs9s
+ - Best hand: Straight flush (AhKhKsQsJsTs9s)
+
+AhKh;5;KsQsJsTs9c
+ - Best hand: Straight (AhKhKsQsJsTs9c)
+
