@@ -99,13 +99,9 @@ public class BestHand {
 				}
 				// Caso doble trio mas pareja, con segundo trio mayor pareja:
 				else if(parejas.size() >= 2 && trios.size() >= 6 && parejas.get(0).getValue().getValue() < trios.get(4).getValue().getValue()){
-					for(int i = 0 ; i < 3; i++){
+					for(int i = 0 ; i < 5; i++){
 						bestCards.add(trios.get(i));
-					}
-					// Cogemos dos de ese trio
-					for(int i = 4 ; i < 6; i++){
-						bestCards.add(trios.get(i));
-					}						
+					}					
 				}
 				// Caso doble trio:
 				if(trios.size() >= 6){
