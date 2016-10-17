@@ -70,7 +70,7 @@ public class BestHand {
 					color.add(cards.get(i));
 				}
 			}
-		}
+		} 
 		
 		public Ranking getJugada(){
 			bestCards = new ArrayList<Card>();
