@@ -104,7 +104,7 @@ public class BestHand {
 					}					
 				}
 				// Caso doble trio:
-				if(trios.size() >= 6){
+				else if(trios.size() >= 6){
 					for(int i = 0 ; i < 5; i++){
 						bestCards.add(trios.get(i));
 					}		
