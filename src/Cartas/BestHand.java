@@ -291,7 +291,7 @@ public class BestHand {
 			}
 			else if(poker.size() >= 4){
 				if(poker.get(0).getValue() == Value.Ace){
-					// Hay poker de ases, miramos las cuatro.
+					// Hay poker de ases, miramos las cuatro
 					for(int i = 0; i < 4; i++){
 						if(poker.get(i).getSuit() == suit){
 							return poker.get(i);
