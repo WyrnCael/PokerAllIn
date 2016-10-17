@@ -8,7 +8,6 @@ public class Hand {
 	private List<Card> cardsList; 
 	private Map<Card,Integer> cardsMapValue;
 	private Map<Card,Integer> cardsMapSuit;
-	private Map<CardOnlyValue,Integer> cardsReference;
 	
 	/**
 	 * Constructor
@@ -25,13 +24,12 @@ public class Hand {
 				if(Character.compare(p1, p2) < 0)
 					return 1;
 				else if(Character.compare(p1, p2) > 0)
-						return -1;
+					return -1;
 				else
 					return 0;
 			}
 
 		});
-		cardsReference = new TreeMap<CardOnlyValue,Integer>();	
 	}
 	
 	/**
@@ -63,15 +61,10 @@ public class Hand {
 		return this.cardsMapSuit;
 	}
 	
-	public Map<CardOnlyValue,Integer> getReferenceCardsMap(){
-		return this.cardsReference;
-	}
-	
 	public void reverse(){
 		Collections.sort(cardsList, new Comparator<Card>() {
 	       	@Override
 			public int compare(Card arg0, Card arg1) {
-				// TODO Auto-generated method stub
 				return arg0.getValue().getValue() - arg1.getValue().getValue();
 			}           
 	    });
@@ -86,12 +79,9 @@ public class Hand {
 			
 			Card card = new Card(entrada.substring(i, i+1),entrada.substring(i+1, i+2));
 			this.cardsList.add(card);
-			CardOnlyValue cardAux = new CardOnlyValue(card.getValue());			
-			if(this.cardsReference.containsKey(cardAux)){
-				this.cardsMapValue.put(card, cardsReference.get(cardAux) + 1);
-				this.cardsReference.put(cardAux, cardsReference.get(cardAux) + 1);
+			if(this.cardsMapValue.containsKey(card)){
+				this.cardsMapValue.put(card, this.cardsMapValue.get(card).intValue() + 1);
 			} else {
-				this.cardsReference.put(cardAux, 1);
 				this.cardsMapValue.put(card, 1);
 			}
 			
@@ -104,10 +94,10 @@ public class Hand {
 		Collections.sort(cardsList, new Comparator<Card>() {
 	       	@Override
 			public int compare(Card arg0, Card arg1) {
-				// TODO Auto-generated method stub
 				return arg1.getValue().getValue() - arg0.getValue().getValue();
 			}
 	    });
+//		Collections.sort(cardsList);
 	}
 	
 	public String toString(){

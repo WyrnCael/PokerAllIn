@@ -1,48 +1,21 @@
-AhAc;3;QhJhTh
- - Best hand: Pair[Ac, Ah]
+AdAs;5;2s3s4s5sKs
+ - Best hand: Straight flush (5s4s3s2sAs)
 
-AhAc;5;As2s3h4dJd
- - Best hand: Three of a kind[Ac, Ah, As]
+AhKs;5;KhQsJsTs9s
+ - Best hand: Straight flush (KsQsJsTs9s)
 
-AhKh;5;KsQsJsTs9s
- - Best hand: Straight flush[Ks, Qs, Js, Ts, 9s]
+QhJs;5;JhTs9s8s7s
+ - Best hand: Straight flush (JsTs9s8s7s)
 
 AhKh;5;KsQsJsTs9c
- - Best hand: Straight[Ah, Kh, Qs, Js, Ts]
+ - Best hand: Straight (AhKhQsJsTs)
 
 AsKs;5;KhQsJsTs9c
- - Best hand: Straight flush[As, Ks, Qs, Js, Ts]
+ - Best hand: Straight flush (AsKsQsJsTs)
 
 AsKs;5;KhQsJsTs7s
- - Best hand: Straight flush[As, Ks, Qs, Js, Ts]
+ - Best hand: Straight flush (AsKsQsJsTs)
 
-AhKs;5;KhQsJsTs7s
- - Best hand: Flush[Ks, Qs, Js, Ts, 7s]
-
-AhKs;5;AsQsAcTsAd
- - Best hand: Four of a kind[Ac, Ad, Ah, As]
-
-AhKs;5;2sQsAcTs7s
- - Best hand: Flush[Ks, Qs, Ts, 7s, 2s]
-
-Ks3s;5;QsTs7s
- - Best hand: Flush[Ks, Qs, Ts, 7s, 3s]
-
-AhKh;5;QsJsTs9c5h4h3h2h
- - Best hand: Straight flush[5h, 4h, 3h, 2h, Ah]
-
-AhKh;5;QsJsTs9c6h5h4h3h2h
- - Best hand: Straight flush[6h, 5h, 4h, 3h, 2h]
-
-KhTh;5;2s6s9d
- - Best hand: High card[Kh]
-
-AhKh;5;QsJs8s9c5h4c3h2h
- - Best hand: Flush[Ah, Kh, 5h, 3h, 2h]
-
-KcKs;5;AsTdTsKhTh
- - Best hand: Full house[Kc, Kh, Ks, Td, Th]
-
-KdQs;5;TdTcQd8d9d
- - Best hand: Flush[Kd, Qd, Td, 9d, 8d]
+AhAs;5;AcAdJsTs7s
+ - Best hand: Four of a kind (AhAsAcAd)
 

@@ -123,19 +123,15 @@ public class Card implements Comparable{
 	}
 	
 	@Override
-	public int compareTo(Object o){
+	public int compareTo(Object o) {
 		int n1 = value.getValue();
-		int n2 = ((Card) o).getValue().getValue();
-		Suit s2 = ((Card) o).getSuit();
-		if(n1 == n2 && Character.compare(suit.getChar(),s2.getChar()) == 0)
+		int n2 = ((Card)o).getValue().getValue();
+		if(n1==n2)
 			return 0;
-		else if (n1 == n2 && Character.compare(suit.getChar(),s2.getChar()) < 0)
-			return -1;
-		else if (n1 == n2 && Character.compare(suit.getChar(),s2.getChar()) > 0)
+		else if(n1>n2)
 			return 1;
-		else if( n1 > n2)
-			return -1;
 		else
-			return 1;
+			return -1;
+		
 	}
 }
