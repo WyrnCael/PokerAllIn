@@ -37,3 +37,12 @@ AhKh;5;QsJsTs9c6h5h4h3h2h
 KhTh;5;2s6s9d
  - Best hand: High card[Kh]
 
+AhKh;5;QsJs8s9c5h4c3h2h
+ - Best hand: Flush[Ah, Kh, 5h, 3h, 2h]
+
+KcKs;5;AsTdTsKhTh
+ - Best hand: Full house[Kc, Kh, Ks, Td, Th]
+
+KdQs;5;TdTcQd8d9d
+ - Best hand: Flush[Kd, Qd, Td, 9d, 8d]
+

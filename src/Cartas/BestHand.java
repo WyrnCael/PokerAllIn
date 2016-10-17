@@ -86,12 +86,42 @@ public class BestHand {
 				}				
 				return Ranking.FOUR_OF_A_KIND;
 			}
-			else if(trios.size() >= 3 && parejas.size() >= 2){
-				for(int i = 0 ; i < 2; i++){
-					bestCards.add(parejas.get(i));
-				}	
-				for(int i = 0 ; i < 3; i++){
-					bestCards.add(trios.get(i));
+			else if(trios.size() >= 3 && (parejas.size() >= 2 || trios.size() >= 6)){
+				// Caso doble trio mas pareja, con pareja mayor que segundo trio:
+				if(parejas.size() >= 2 && trios.size() >= 6 && parejas.get(0).getValue().getValue() >= trios.get(4).getValue().getValue()){
+					for(int i = 0 ; i < 3; i++){
+						bestCards.add(trios.get(i));
+					}
+					
+					for(int i = 0 ; i < 2; i++){
+						bestCards.add(parejas.get(i));
+					}				
+				}
+				// Caso doble trio mas pareja, con segundo trio mayor pareja:
+				else if(parejas.size() >= 2 && trios.size() >= 6 && parejas.get(0).getValue().getValue() < trios.get(4).getValue().getValue()){
+					for(int i = 0 ; i < 3; i++){
+						bestCards.add(trios.get(i));
+					}
+					// Cogemos dos de ese trio
+					for(int i = 4 ; i < 6; i++){
+						bestCards.add(trios.get(i));
+					}						
+				}
+				// Caso doble trio:
+				if(trios.size() >= 6){
+					for(int i = 0 ; i < 5; i++){
+						bestCards.add(trios.get(i));
+					}		
+				}
+				// Caso trio mas pareja:
+				else if (parejas.size() >= 2){
+					for(int i = 0 ; i < 3; i++){
+						bestCards.add(trios.get(i));
+					}
+					
+					for(int i = 0 ; i < 2; i++){
+						bestCards.add(parejas.get(i));
+					}						
 				}
 				return Ranking.FULL_HOUSE;
 			}

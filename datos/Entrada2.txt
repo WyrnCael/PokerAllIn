@@ -11,3 +11,6 @@ Ks3s;5;QsTs7s
 AhKh;5;QsJsTs9c5h4h3h2h
 AhKh;5;QsJsTs9c6h5h4h3h2h
 KhTh;5;2s6s9d
+AhKh;5;QsJs8s9c5h4c3h2h
+KcKs;5;AsTdTsKhTh
+KdQs;5;TdTcQd8d9d

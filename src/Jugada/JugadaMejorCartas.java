@@ -1,9 +1,13 @@
 package Jugada;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import Cartas.BestHand;
 import Cartas.Card;
 import Cartas.CardOnlyValue;
@@ -114,31 +118,28 @@ public class JugadaMejorCartas {
 		}
 		
 		// Comprobamos color
-		Iterator<Card> it2 = this.hand.getCardsSuitMap().keySet().iterator();
-		if(it2.hasNext()){
-			Card aux2 = it2.next();
-			// Comrpobamos que hay 5 o mas cartas del mismo color
-			if(this.hand.getCardsSuitMap().get(aux2) >= 5){
-				// Hay color, cogemos las 5 cartas mas altas:
-				Suit color = aux2.getSuit();
-				cards = new ArrayList<Card>();		
-				
-				// Para ello se recorren todas las cartas de ese color
-				// hacia abajo, a partir de la que teniamos guardad que 
-				// será la mas alta.				
-				int i = aux2.getValue().getValue(), cont = 0;
-				// Mientras no haya 5 cartas cogidas
-				while(cont < 5){
-					Card existeCarta = new Card(i, color);
-					// Si la carta existe la guardamos
-					if(this.mapValue.containsKey(existeCarta)){
-						cards.add(existeCarta);
-						cont++;
-					}
-					i--;
+		Card aux2 = entriesSortedByValues(this.hand.getCardsSuitMap()).first().getKey();
+		// Comrpobamos que hay 5 o mas cartas del mismo color
+		if(this.hand.getCardsSuitMap().get(aux2) >= 5){
+			// Hay color, cogemos las 5 cartas mas altas:
+			Suit color = aux2.getSuit();
+			cards = new ArrayList<Card>();		
+			
+			// Para ello se recorren todas las cartas de ese color
+			// hacia abajo, a partir de la que teniamos guardad que 
+			// será la mas alta.				
+			int i = aux2.getValue().getValue(), cont = 0;
+			// Mientras no haya 5 cartas cogidas
+			while(cont < 5){
+				Card existeCarta = new Card(i, color);
+				// Si la carta existe la guardamos
+				if(this.mapValue.containsKey(existeCarta)){
+					cards.add(existeCarta);
+					cont++;
 				}
-				bestHand.setJugada(Ranking.FLUSH, cards);
+				i--;
 			}
+			bestHand.setJugada(Ranking.FLUSH, cards);
 		}		
 	}
 	
@@ -159,4 +160,18 @@ public class JugadaMejorCartas {
 		return this.draws;
 	}
 	*/
+	
+	static <K,V extends Comparable<? super V>>
+	SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
+	    SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
+	        new Comparator<Map.Entry<K,V>>() {
+	            @Override public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
+	                int res = e2.getValue().compareTo(e1.getValue());
+	                return res != 0 ? res : 1;
+	            }
+	        }
+	    );
+	    sortedEntries.addAll(map.entrySet());
+	    return sortedEntries;
+	}
 }
