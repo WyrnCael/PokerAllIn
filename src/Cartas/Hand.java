@@ -6,18 +6,34 @@ public class Hand {
 
 	// Campo de la clase
 	private List<Card> cardsList; 
-	private Map<Card,Integer> cardsMap;
+	private Map<Card,Integer> cardsMapValue;
+	private Map<Card,Integer> cardsMapSuit;
+	private Map<CardOnlyValue,Integer> cardsReference;
 	
 	/**
 	 * Constructor
 	 * @param datos El parametro datos definen las cartas que tienen en la mano
 	 */
-	public Hand(String datos){
+	public Hand(){
 		cardsList = new ArrayList<Card>();
-		cardsMap = new TreeMap<Card,Integer>();
-		parse(datos);
-	}
+		cardsMapValue = new TreeMap<Card,Integer>();	
+		cardsMapSuit = new TreeMap<Card, Integer>(new Comparator<Card>() {
+			@Override
+			public int compare(Card o1, Card o2) {
+				char p1 = ((Card) o1).getSuit().getChar();
+				char p2 = ((Card) o2).getSuit().getChar();
+				if(Character.compare(p1, p2) < 0)
+					return 1;
+				else if(Character.compare(p1, p2) > 0)
+						return -1;
+				else
+					return 0;
+			}
 
+		});
+		cardsReference = new TreeMap<CardOnlyValue,Integer>();	
+	}
+	
 	/**
 	 * El metodo para obtener la carta de la posicion i
 	 * @param i El parametro i define la posicion de la carta
@@ -39,8 +55,16 @@ public class Hand {
 	 * El metodo para obtener el mapa de las cartas
 	 * @return cardsMap es el objeto del mapa de cartas
 	 */
-	public Map<Card,Integer> getCardsMap(){
-		return this.cardsMap;
+	public Map<Card,Integer> getCardsValueMap(){
+		return this.cardsMapValue;
+	}
+	
+	public Map<Card,Integer> getCardsSuitMap(){
+		return this.cardsMapSuit;
+	}
+	
+	public Map<CardOnlyValue,Integer> getReferenceCardsMap(){
+		return this.cardsReference;
 	}
 	
 	public void reverse(){
@@ -57,15 +81,24 @@ public class Hand {
 	 * Metodo para parsea los datos de entrada en forma de lista y mapa
 	 * @param entrada El parametro entrada define String de cartas
 	 */
-	private void parse(String entrada){
+	public void parseaEInserta(String entrada){
 		for(int i = 0; i < entrada.length(); i=i+2){
 			
 			Card card = new Card(entrada.substring(i, i+1),entrada.substring(i+1, i+2));
 			this.cardsList.add(card);
-			if(this.cardsMap.containsKey(card)){
-				this.cardsMap.put(card, cardsMap.get(card).intValue()+1);
+			CardOnlyValue cardAux = new CardOnlyValue(card.getValue());			
+			if(this.cardsReference.containsKey(cardAux)){
+				this.cardsMapValue.put(card, cardsReference.get(cardAux) + 1);
+				this.cardsReference.put(cardAux, cardsReference.get(cardAux) + 1);
 			} else {
-				this.cardsMap.put(card, 1);
+				this.cardsReference.put(cardAux, 1);
+				this.cardsMapValue.put(card, 1);
+			}
+			
+			if(this.cardsMapSuit.containsKey(card)){
+				this.cardsMapSuit.put(card, cardsMapSuit.get(card) + 1);
+			} else {
+				this.cardsMapSuit.put(card, 1);
 			}
 		}
 		Collections.sort(cardsList, new Comparator<Card>() {

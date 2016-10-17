@@ -1,14 +1,39 @@
 AhAc;3;QhJhTh
- - Best hand: Pair of Aces (AhAc)
- - Draw: Straight Gutshot
- - Draw: Flush
+ - Best hand: Pair[Ac, Ah]
 
 AhAc;5;As2s3h4dJd
- - Best hand: Three of a kind Aces (AhAcAsJd4d3h2s)
+ - Best hand: Three of a kind[Ac, Ah, As]
 
 AhKh;5;KsQsJsTs9s
- - Best hand: Straight flush (AhKhKsQsJsTs9s)
+ - Best hand: Straight flush[Ks, Qs, Js, Ts, 9s]
 
 AhKh;5;KsQsJsTs9c
- - Best hand: Straight (AhKhKsQsJsTs9c)
+ - Best hand: Straight[Ah, Kh, Qs, Js, Ts]
+
+AsKs;5;KhQsJsTs9c
+ - Best hand: Straight flush[As, Ks, Qs, Js, Ts]
+
+AsKs;5;KhQsJsTs7s
+ - Best hand: Straight flush[As, Ks, Qs, Js, Ts]
+
+AhKs;5;KhQsJsTs7s
+ - Best hand: Flush[Ks, Qs, Js, Ts, 7s]
+
+AhKs;5;AsQsAcTsAd
+ - Best hand: Four of a kind[Ac, Ad, Ah, As]
+
+AhKs;5;2sQsAcTs7s
+ - Best hand: Flush[Ks, Qs, Ts, 7s, 2s]
+
+Ks3s;5;QsTs7s
+ - Best hand: Flush[Ks, Qs, Ts, 7s, 3s]
+
+AhKh;5;QsJsTs9c5h4h3h2h
+ - Best hand: Straight flush[5h, 4h, 3h, 2h, Ah]
+
+AhKh;5;QsJsTs9c6h5h4h3h2h
+ - Best hand: Straight flush[6h, 5h, 4h, 3h, 2h]
+
+KhTh;5;2s6s9d
+ - Best hand: High card[Kh]
 

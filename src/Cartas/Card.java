@@ -1,5 +1,6 @@
 package Cartas;
 
+@SuppressWarnings("rawtypes")
 public class Card implements Comparable{
 
 	// Campos de la clase 
@@ -14,6 +15,52 @@ public class Card implements Comparable{
 	public Card(String value, String suit){
 		this.value = parseValue(value);
 		this.suit = parseSuit(suit);
+	}
+	
+	// Constructor con valor como int y suit directo
+	public Card(int value, Suit suit){
+		switch(value){
+		case 2:
+			this.value = Value.Two;
+			break;
+		case 3:
+			this.value = Value.Three;
+			break;
+		case 4:
+			this.value = Value.Four;
+			break;
+		case 5:
+			this.value = Value.Five;
+			break;
+		case 6:
+			this.value = Value.Six;
+			break;
+		case 7:
+			this.value = Value.Seven;
+			break;
+		case 8:
+			this.value = Value.Eight;
+			break;
+		case 9:
+			this.value = Value.Nine;
+			break;
+		case 10:
+			this.value = Value.Ten;
+			break;
+		case 11:
+			this.value = Value.Jack;
+			break;
+		case 12:
+			this.value = Value.Queen;
+			break;
+		case 13:
+			this.value = Value.King;
+			break;
+		case 14:
+			this.value = Value.Ace;
+			break;
+		}
+		this.suit = suit;
 	}
 	
 	/**
@@ -79,12 +126,16 @@ public class Card implements Comparable{
 	public int compareTo(Object o){
 		int n1 = value.getValue();
 		int n2 = ((Card) o).getValue().getValue();
-		if(n1 == n2)
+		Suit s2 = ((Card) o).getSuit();
+		if(n1 == n2 && Character.compare(suit.getChar(),s2.getChar()) == 0)
 			return 0;
+		else if (n1 == n2 && Character.compare(suit.getChar(),s2.getChar()) < 0)
+			return -1;
+		else if (n1 == n2 && Character.compare(suit.getChar(),s2.getChar()) > 0)
+			return 1;
 		else if( n1 > n2)
 			return -1;
 		else
 			return 1;
 	}
-
 }

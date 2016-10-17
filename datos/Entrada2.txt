@@ -2,3 +2,12 @@ AhAc;3;QhJhTh
 AhAc;5;As2s3h4dJd
 AhKh;5;KsQsJsTs9s
 AhKh;5;KsQsJsTs9c
+AsKs;5;KhQsJsTs9c
+AsKs;5;KhQsJsTs7s
+AhKs;5;KhQsJsTs7s
+AhKs;5;AsQsAcTsAd
+AhKs;5;2sQsAcTs7s
+Ks3s;5;QsTs7s
+AhKh;5;QsJsTs9c5h4h3h2h
+AhKh;5;QsJsTs9c6h5h4h3h2h
+KhTh;5;2s6s9d

@@ -22,4 +22,20 @@ public enum Suit {
 	public char getChar(){
 		return this.letra;
 	}
+	
+	public int getValorAsociado(){
+		switch (this.letra){
+		case 'h':
+			return 1;
+		case 'd':
+			return 2;
+		case 'c':
+			return 3;
+		case 's':
+			return 4;
+		default:		
+			return -1;
+		}
+	}
 }
+
