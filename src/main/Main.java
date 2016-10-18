@@ -1,8 +1,10 @@
 package main;
 
+import java.util.List;
 import java.util.Vector;
 
 import Cartas.Hand;
+import Cartas.Ranking;
 import Jugada.JugadaMejorCartas;
 import controlArchivo.Entrada;
 import controlArchivo.Salida;
@@ -55,11 +57,11 @@ public class Main {
 				System.out.println(str);
 				datosSalida.add(datos.get(i));
 				datosSalida.add(str);
-				/*Vector<String> draws = jugada.getDraws();
 				str = " - Draw: ";
+				List<Ranking> draws = jugada.getDraws();
 				for(int j = 0; j < draws.size(); j++){
 					datosSalida.add(str + draws.get(j));
-				}*/
+				}
 				datosSalida.add("");
 			}
 			break;

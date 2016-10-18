@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.Vector;
 
 import Cartas.BestHand;
 import Cartas.Card;
@@ -20,7 +19,6 @@ public class JugadaMejorCartas {
 	private Map<Card, Integer> mapValue;
 	private Hand hand;
 	private BestHand bestHand;
-	private Vector<String> draws;
 	private Suit suit1;
 
 	/**
@@ -32,7 +30,6 @@ public class JugadaMejorCartas {
 		this.mapValue = hand.getCardsValueMap();
 		this.hand = hand;
 		this.bestHand = new BestHand();
-		this.draws = new Vector<String>();
 		bestHand();
 	}
 
@@ -151,8 +148,9 @@ public class JugadaMejorCartas {
 	 * 
 	 * @return El vector de String de los draws
 	 */
-	 public Vector<String> getDraws(){
-		 return this.draws;
+	 public List<Ranking> getDraws(){
+		 
+		 return this.bestHand.getDraws();
 	 }
 
 	static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map) {

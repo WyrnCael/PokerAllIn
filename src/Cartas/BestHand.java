@@ -124,6 +124,28 @@ public class BestHand {
 			return Ranking.HIGH_CARD;
 		}
 	}
+	
+	public List<Ranking> getDraws() {
+		ArrayList<Ranking> draws = new ArrayList<Ranking>();
+		if (escaleraDeColor.size() >= 5) {
+			return draws;
+		}
+		
+		if(escaleraDeColor.size() == 4){
+			draws.add(Ranking.STRAIGHT_FLUSH);
+		}
+		
+		else if (color.size() == 4) {
+			
+			draws.add(Ranking.FLUSH);
+			
+		} else if (color.size() < 5 && escaleraFinal.size() == 5 ) {
+			
+			draws.add(Ranking.STRAIGHT);
+			
+		}
+		return draws;
+	}
 
 	public void anadeAEscalera(Card carta) {
 		// Comprobamos en la escalera principal que la diferencia es 1 con la
@@ -207,7 +229,10 @@ public class BestHand {
 	}
 
 	private Card compruebaSiHayAs() {
-		return cartaAlta.get(0);
+		if(this.hand.getCard(0).getValue() == Value.Ace)
+			return this.hand.getCard(0);
+		else
+			return null;
 	}
 	
 	public List<Card> getCartaAltaList(){
@@ -216,11 +241,12 @@ public class BestHand {
 
 	private Card compruebaSiHayAsdeColor(Suit suit) {
 		int i = 0;
-		for (i = 0; i < this.hand.getCardsList().size(); i++) {
-			if (suit == this.hand.getCard(i).getSuit())
-				break;
+		for (i = 0; i < this.hand.getCardsList().size() && i < 4; i++) {
+			if (this.hand.getCard(i).getValue() == Value.Ace &&
+					suit == this.hand.getCard(i).getSuit())
+				return this.hand.getCard(i);
 		}
-		return this.hand.getCard(i);
+		return null;
 	}
 
 	public String toString() {
