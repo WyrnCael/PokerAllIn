@@ -1,10 +1,7 @@
 package main;
 
 import java.util.List;
-import java.util.Vector;
-
 import Cartas.Hand;
-import Cartas.Ranking;
 import Jugada.JugadaMejorCartas;
 import controlArchivo.Entrada;
 import controlArchivo.Salida;
@@ -77,6 +74,7 @@ public class Main {
 			break;
 		}
 		
+		entrada.close();
 		salida.close();
 		
 		long finishProcess = System.currentTimeMillis();

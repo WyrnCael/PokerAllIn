@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Vector;
 
 public class Entrada {
 	
@@ -26,9 +25,6 @@ public class Entrada {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Archivo no encontrado");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Error en leer los datos");
 		}
 	}
 	
