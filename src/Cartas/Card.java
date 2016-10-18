@@ -17,52 +17,6 @@ public class Card implements Comparable{
 		this.suit = parseSuit(suit);
 	}
 	
-	// Constructor con valor como int y suit directo
-	public Card(int value, Suit suit){
-		switch(value){
-		case 2:
-			this.value = Value.Two;
-			break;
-		case 3:
-			this.value = Value.Three;
-			break;
-		case 4:
-			this.value = Value.Four;
-			break;
-		case 5:
-			this.value = Value.Five;
-			break;
-		case 6:
-			this.value = Value.Six;
-			break;
-		case 7:
-			this.value = Value.Seven;
-			break;
-		case 8:
-			this.value = Value.Eight;
-			break;
-		case 9:
-			this.value = Value.Nine;
-			break;
-		case 10:
-			this.value = Value.Ten;
-			break;
-		case 11:
-			this.value = Value.Jack;
-			break;
-		case 12:
-			this.value = Value.Queen;
-			break;
-		case 13:
-			this.value = Value.King;
-			break;
-		case 14:
-			this.value = Value.Ace;
-			break;
-		}
-		this.suit = suit;
-	}
-	
 	/**
 	 * El metodo para obtener el valor de la carta
 	 * @return value es el valor de la carta

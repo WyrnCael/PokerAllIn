@@ -100,30 +100,6 @@ public class JugadaMejorCartas {
 			}
 		}
 
-		// Comprobamos color
-		//Card aux2 = entriesSortedByValues(this.hand.getCardsSuitMap()).first().getKey();
-		// Comrpobamos que hay 5 o mas cartas del mismo color
-		/*if (this.hand.getCardsSuitMap().get(aux2) >= 5) {
-			// Hay color, cogemos las 5 cartas mas altas:
-			Suit color = aux2.getSuit();
-			cards = new ArrayList<Card>();
-
-			// Para ello se recorren todas las cartas de ese color
-			// hacia abajo, a partir de la que teniamos guardad que
-			// ser� la mas alta.
-			int i = aux2.getValue().getValue(), cont = 0;
-			// Mientras no haya 5 cartas cogidas
-			while (cont < 5) {
-				Card existeCarta = new Card(i, color);
-				// Si la carta existe la guardamos
-				if (this.mapValue.containsKey(existeCarta)) {
-					cards.add(existeCarta);
-					cont++;
-				}
-				i--;
-			}
-			bestHand.setJugada(Ranking.FLUSH, cards);
-		}*/
 	}
 	
 	@SuppressWarnings("serial")
@@ -148,7 +124,7 @@ public class JugadaMejorCartas {
 	 * 
 	 * @return El vector de String de los draws
 	 */
-	 public List<Ranking> getDraws(){
+	 public List<String> getDraws(){
 		 
 		 return this.bestHand.getDraws();
 	 }

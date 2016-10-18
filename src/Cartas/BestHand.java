@@ -17,7 +17,14 @@ public class BestHand {
 	private List<Card> color;
 	private List<Card> cartaAlta;
 	
+	private List<Card> escaleraGutshot;
+	
 	private Hand hand;
+	private int gutshot;
+	private boolean esEscaleraGutshot;
+	private boolean esEscaleraOpenEnded;
+	private int bestValue;
+	
 
 	/**
 	 * Constructor
@@ -40,6 +47,10 @@ public class BestHand {
 		color = new ArrayList<Card>();
 		cartaAlta = new ArrayList<Card>();
 		hand = new Hand();
+		escaleraGutshot = new ArrayList<Card>();
+		gutshot = 0;
+		esEscaleraGutshot = false;
+		esEscaleraOpenEnded = false;
 	}
 	
 	public void setHand(Hand hand){
@@ -125,25 +136,28 @@ public class BestHand {
 		}
 	}
 	
-	public List<Ranking> getDraws() {
-		ArrayList<Ranking> draws = new ArrayList<Ranking>();
+	public List<String> getDraws() {
+		ArrayList<String> draws = new ArrayList<String>();
 		if (escaleraDeColor.size() >= 5) {
 			return draws;
 		}
 		
 		if(escaleraDeColor.size() == 4){
-			draws.add(Ranking.STRAIGHT_FLUSH);
+			draws.add(Ranking.STRAIGHT_FLUSH.getName());
 		}
 		
-		else if (color.size() == 4) {
+		if (color.size() == 4) {
 			
-			draws.add(Ranking.FLUSH);
-			
-		} else if (color.size() < 5 && escaleraFinal.size() == 5 ) {
-			
-			draws.add(Ranking.STRAIGHT);
-			
+			draws.add(Ranking.FLUSH.getName());
 		}
+		if (this.bestValue < Ranking.STRAIGHT.getValor() && escaleraGutshot.size() == 4 && this.esEscaleraGutshot) {
+			
+			draws.add(Ranking.STRAIGHT.getName() + " Gutshot");
+		}
+		if(this.esEscaleraOpenEnded){
+			draws.add(Ranking.STRAIGHT.getName() + " OpenEnded");
+		}
+		
 		return draws;
 	}
 
@@ -156,15 +170,38 @@ public class BestHand {
 		if (escaleraPrincipal.size() == 0) {
 			escaleraPrincipal.add(carta);
 		}
+		if (this.escaleraGutshot.size() == 0) {
+			this.escaleraGutshot.add(carta);
+		}
+		if(escaleraPrincipal.size() == 4){
+			this.esEscaleraOpenEnded = true;
+		}
 		else if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
 				- carta.getValue().getValue() == 1) {
 			escaleraPrincipal.add(carta);
+			this.escaleraGutshot.add(carta);
 			if(carta.getValue().getValue() == 2){
 				Card as = compruebaSiHayAs();
 				escaleraPrincipal.add(as);
 			}
 		} else if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
 				- carta.getValue().getValue() > 1) {
+			if(escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
+					- carta.getValue().getValue() > 2) {
+				this.escaleraGutshot.clear();
+				this.gutshot = 0;
+				this.esEscaleraGutshot = false;
+			} else{
+				if(this.esEscaleraGutshot){
+					this.esEscaleraGutshot = false;
+					this.escaleraGutshot.remove(this.gutshot);
+				} else{
+					this.esEscaleraGutshot = true;
+					this.gutshot = escaleraPrincipal.size() - 1;
+				}
+			}
+			
+			this.escaleraGutshot.add(carta);
 			reiniciaEscaleras();
 			escaleras.get(0).add(carta);
 		}
@@ -187,7 +224,8 @@ public class BestHand {
 					escaleraColorActual.add(as);
 				}
 			}
-		} else {
+		}
+		else {
 			escaleraColorActual = new ArrayList<Card>();
 			escaleraColorActual.add(carta);
 		}
@@ -250,7 +288,9 @@ public class BestHand {
 	}
 
 	public String toString() {
-		String str = getJugada().getName() + " (";
+		Ranking rk = getJugada();
+		this.bestValue = rk.getValor();
+		String str = rk.getName() + " (";
 		for (int i = 0; i < this.bestCards.size() && i < 5; i++) {
 			str += this.bestCards.get(i);
 		}

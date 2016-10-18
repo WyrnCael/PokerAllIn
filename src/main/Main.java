@@ -58,7 +58,7 @@ public class Main {
 				datosSalida.add(datos.get(i));
 				datosSalida.add(str);
 				str = " - Draw: ";
-				List<Ranking> draws = jugada.getDraws();
+				List<String> draws = jugada.getDraws();
 				for(int j = 0; j < draws.size(); j++){
 					datosSalida.add(str + draws.get(j));
 				}
