@@ -150,13 +150,15 @@ public class BestHand {
 			
 			draws.add(Ranking.FLUSH.getName());
 		}
-		if (this.bestValue < Ranking.STRAIGHT.getValor() && escaleraGutshot.size() == 4 && this.esEscaleraGutshot) {
-			
-			draws.add(Ranking.STRAIGHT.getName() + " Gutshot");
-		}
+		
 		if(this.esEscaleraOpenEnded){
 			draws.add(Ranking.STRAIGHT.getName() + " OpenEnded");
 		}
+		else if (this.bestValue < Ranking.STRAIGHT.getValor() && escaleraGutshot.size() >= 4 && this.esEscaleraGutshot) {
+			
+			draws.add(Ranking.STRAIGHT.getName() + " Gutshot");
+		}
+		
 		
 		return draws;
 	}
@@ -172,13 +174,13 @@ public class BestHand {
 		}
 		if (this.escaleraGutshot.size() == 0) {
 			this.escaleraGutshot.add(carta);
-		}
-		if(escaleraPrincipal.size() == 4){
-			this.esEscaleraOpenEnded = true;
-		}
+		}		
 		else if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
 				- carta.getValue().getValue() == 1) {
 			escaleraPrincipal.add(carta);
+			if(escaleraPrincipal.size() == 4){
+				this.esEscaleraOpenEnded = true;
+			}
 			this.escaleraGutshot.add(carta);
 			if(carta.getValue().getValue() == 2){
 				Card as = compruebaSiHayAs();
