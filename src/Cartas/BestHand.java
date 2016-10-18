@@ -190,9 +190,12 @@ public class BestHand {
 				- carta.getValue().getValue() > 1) {
 			if(escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
 					- carta.getValue().getValue() > 2) {
-				this.escaleraGutshot.clear();
-				this.gutshot = 0;
-				this.esEscaleraGutshot = false;
+				if(this.escaleraGutshot.size() < 4 && !this.esEscaleraGutshot){
+					this.escaleraGutshot.clear();
+					this.gutshot = 0;
+					//this.esEscaleraGutshot = false;
+				}
+				
 			} else{
 				if(this.esEscaleraGutshot){
 					this.esEscaleraGutshot = false;

@@ -30,6 +30,7 @@ AhAc;5;KhQhJh6h3h
 AhAc;5;AdQhJhTh2c
  - Best hand: Three of a kind (AhAcAd)
  - Draw: Flush
+ - Draw: Straight Gutshot
 
 AhAc;5;8d4s3h5h2c
  - Best hand: Straight (5h4s3h2cAh)
