@@ -115,7 +115,7 @@ public class JugadaMejorCartas {
 	 * @return El String del mejor mano
 	 */
 	public String getBestHand() {
-		System.out.println(this.bestHand.getCartaAltaList());
+		//System.out.println(this.bestHand.getCartaAltaList());
 		return this.bestHand.toString();
 	}
 

@@ -16,11 +16,9 @@ public class Main {
 		
 		long start = System.currentTimeMillis();
 		
-		Vector<String> datos = new Vector<String>();
-		Vector<String> datosSalida = new Vector<String>();
-		
 		Entrada entrada = new Entrada(args[1]);
-		datos = entrada.leerDatos();
+		
+		Salida salida = new Salida(args[2]);
 		
 		long finishReadFile = System.currentTimeMillis();
 		System.out.println("Tiempo tardade en leer: " + (finishReadFile-start) + "ms " + (finishReadFile-start) / 1000 + "s");
@@ -28,41 +26,47 @@ public class Main {
 		switch(args[0]){
 		case "1":
 //			System.out.println("Mejor jugada con 5 cartas");
-			for(int i = 0; i < datos.size();i++){
+			String linea = entrada.leerDato();
+			while(linea != null){
 				Hand hand = new Hand();
-				hand.parseaEInserta(datos.get(i));
+				hand.parseaEInserta(linea);
 				JugadaMejorCartas jugada = new JugadaMejorCartas(hand);
 				String str = " - Best hand: " + jugada.getBestHand();
 //				System.out.println(str);
-				datosSalida.add(datos.get(i));
-				datosSalida.add(str);
+				salida.guardarDato(linea);
+				salida.guardarDato(str);
 				/*Vector<String> draws = jugada.getDraws();
 				str = " - Draw: ";
 				for(int j = 0; j < draws.size(); j++){
 					datosSalida.add(str + draws.get(j));
 				}*/
-				datosSalida.add("");
+				salida.guardarDato("");
+				
+				linea = entrada.leerDato();
 			}
 			break;
 		case "2":
 			System.out.println("Mejor jugada con 2 cartas");
-			for(int i = 0; i < datos.size();i++){
-				String aux = datos.get(i).substring(0,4);
-				aux += datos.get(i).substring(7,datos.get(i).length());
+			linea = entrada.leerDato();
+			while(linea != null){
+				String aux = linea.substring(0,4);
+				aux += linea.substring(7,linea.length());
 				System.out.println(aux);
 				Hand hand = new Hand();
 				hand.parseaEInserta(aux);
 				JugadaMejorCartas jugada = new JugadaMejorCartas(hand);
 				String str = " - Best hand: " + jugada.getBestHand();
 				System.out.println(str);
-				datosSalida.add(datos.get(i));
-				datosSalida.add(str);
+				salida.guardarDato(linea);
+				salida.guardarDato(str);
 				str = " - Draw: ";
 				List<String> draws = jugada.getDraws();
 				for(int j = 0; j < draws.size(); j++){
-					datosSalida.add(str + draws.get(j));
+					salida.guardarDato(str + draws.get(j));
 				}
-				datosSalida.add("");
+				salida.guardarDato("");
+				
+				linea = entrada.leerDato();
 			}
 			break;
 		case "3":
@@ -73,12 +77,11 @@ public class Main {
 			break;
 		}
 		
+		salida.close();
+		
 		long finishProcess = System.currentTimeMillis();
 		System.out.println("Tiempo tardade en procesar: " + (finishProcess-finishReadFile) + "ms " + (finishProcess-finishReadFile) / 1000 + "s");
-		
-		Salida salida = new Salida(args[2]);
-		salida.guardarDatos(datosSalida);
-		
+				
 		long end = System.currentTimeMillis();
 		long time = end-start;
 		System.out.println("Tiempo tardade en escribir: " + (end-finishProcess) + "ms " + (end-finishProcess) / 1000 + "s");

@@ -9,6 +9,8 @@ import java.util.Vector;
 public class Entrada {
 	
 	private String path;
+	private FileReader fr;
+	private BufferedReader br;
 	
 	/**
 	 * Constructor
@@ -17,6 +19,17 @@ public class Entrada {
 	 */
 	public Entrada(String nombreArchivo){
 		this.path = "datos/" + nombreArchivo;
+		
+		try {
+			fr = new FileReader(this.path);
+			br = new BufferedReader(fr);			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Archivo no encontrado");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error en leer los datos");
+		}
 	}
 	
 	/**
@@ -24,22 +37,11 @@ public class Entrada {
 	 * 
 	 * @return vector de String con los datos del fichero de entrada
 	 */
-	public Vector<String> leerDatos(){
-		Vector<String> datos = new Vector<String>();
-		
-		try {
-			FileReader fr = new FileReader(this.path);
-			BufferedReader br = new BufferedReader(fr);
-			
-			String str = "";
-			while((str = br.readLine()) != null){
-				datos.add(str);
-				System.out.println(str);
-			}
-			
-			br.close();
-			fr.close();
-			
+	public String leerDato(){
+		String str = null;
+		try {			
+			str = br.readLine();
+			System.out.println(str);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Archivo no encontrado");
@@ -48,6 +50,19 @@ public class Entrada {
 			System.out.println("Error en leer los datos");
 		}
 		
-		return datos;
+		return str;
+	}
+	
+	public void close(){
+		try {
+			br.close();
+			fr.close();			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Archivo no encontrado");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error en leer los datos");
+		}
 	}
 }

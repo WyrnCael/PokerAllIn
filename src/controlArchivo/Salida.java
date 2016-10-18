@@ -9,6 +9,8 @@ import java.util.Vector;
 public class Salida {
 	
 	private String path;
+	private FileWriter fw;
+	private BufferedWriter bw;
 	
 	/**
 	 * Constructor
@@ -17,6 +19,14 @@ public class Salida {
 	 */
 	public Salida(String nombreArchivo){
 		this.path = "datos/" + nombreArchivo;
+		try {
+			this.fw = new FileWriter(new File(this.path));
+			this.bw = new BufferedWriter(fw);
+						
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -24,16 +34,20 @@ public class Salida {
 	 * 
 	 * @param datos El parametro datos definen los datos que va a guardar en el archivo
 	 */
-	public void guardarDatos(Vector<String> datos){
+	public void guardarDato(String linea){
 		try {
-			FileWriter fw = new FileWriter(new File(this.path));
-			BufferedWriter bw = new BufferedWriter(fw);
-			for(int i = 0; i< datos.size(); i++){
-				bw.write(datos.get(i) + "\n");
-			}
+			this.bw.write(linea + "\n");
 			
-			bw.close();
-			fw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void close(){
+		try {
+			this.bw.close();
+			this.fw.close();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
