@@ -1,7 +1,1 @@
-AdAs;5;2s3s4s5sKs
-AhKs;5;KhQsJsTs9s
-QhJs;5;JhTs9s8s7s
-AhKh;5;KsQsJsTs9c
-AsKs;5;KhQsJsTs9c
-AsKs;5;KhQsJsTs7s
-AhAs;5;AcAdJsTs7s
+AcKc;5;2s3s4s5s7s

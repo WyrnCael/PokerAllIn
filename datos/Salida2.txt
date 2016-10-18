@@ -1,21 +1,3 @@
-AdAs;5;2s3s4s5sKs
+AsKs;5;2s3s4s5s7s
  - Best hand: Straight flush (5s4s3s2sAs)
-
-AhKs;5;KhQsJsTs9s
- - Best hand: Straight flush (KsQsJsTs9s)
-
-QhJs;5;JhTs9s8s7s
- - Best hand: Straight flush (JsTs9s8s7s)
-
-AhKh;5;KsQsJsTs9c
- - Best hand: Straight (AhKhQsJsTs)
-
-AsKs;5;KhQsJsTs9c
- - Best hand: Straight flush (AsKsQsJsTs)
-
-AsKs;5;KhQsJsTs7s
- - Best hand: Straight flush (AsKsQsJsTs)
-
-AhAs;5;AcAdJsTs7s
- - Best hand: Four of a kind (AhAsAcAd)
 
