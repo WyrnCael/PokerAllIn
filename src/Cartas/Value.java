@@ -31,4 +31,8 @@ public enum Value {
 	public int getValue(){
 		return this.value;
 	}
+	
+	public String toString(){
+		return this.name();
+	}
 }

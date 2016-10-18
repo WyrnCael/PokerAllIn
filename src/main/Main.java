@@ -1,9 +1,11 @@
 package main;
 
+import java.util.List;
 import java.util.Vector;
 
 import Cartas.Hand;
-import Jugada.JugadaMejor5Cartas;
+import Cartas.Ranking;
+import Jugada.JugadaMejorCartas;
 import controlArchivo.Entrada;
 import controlArchivo.Salida;
 
@@ -27,17 +29,18 @@ public class Main {
 		case "1":
 //			System.out.println("Mejor jugada con 5 cartas");
 			for(int i = 0; i < datos.size();i++){
-				Hand hand = new Hand(datos.get(i));
-				JugadaMejor5Cartas jugada = new JugadaMejor5Cartas(hand);
+				Hand hand = new Hand();
+				hand.parseaEInserta(datos.get(i));
+				JugadaMejorCartas jugada = new JugadaMejorCartas(hand);
 				String str = " - Best hand: " + jugada.getBestHand();
 //				System.out.println(str);
 				datosSalida.add(datos.get(i));
 				datosSalida.add(str);
-				Vector<String> draws = jugada.getDraws();
+				/*Vector<String> draws = jugada.getDraws();
 				str = " - Draw: ";
 				for(int j = 0; j < draws.size(); j++){
 					datosSalida.add(str + draws.get(j));
-				}
+				}*/
 				datosSalida.add("");
 			}
 			break;
@@ -47,14 +50,15 @@ public class Main {
 				String aux = datos.get(i).substring(0,4);
 				aux += datos.get(i).substring(7,datos.get(i).length());
 				System.out.println(aux);
-				Hand hand = new Hand(aux);
-				JugadaMejor5Cartas jugada = new JugadaMejor5Cartas(hand);
+				Hand hand = new Hand();
+				hand.parseaEInserta(aux);
+				JugadaMejorCartas jugada = new JugadaMejorCartas(hand);
 				String str = " - Best hand: " + jugada.getBestHand();
 				System.out.println(str);
 				datosSalida.add(datos.get(i));
 				datosSalida.add(str);
-				Vector<String> draws = jugada.getDraws();
 				str = " - Draw: ";
+				List<Ranking> draws = jugada.getDraws();
 				for(int j = 0; j < draws.size(); j++){
 					datosSalida.add(str + draws.get(j));
 				}

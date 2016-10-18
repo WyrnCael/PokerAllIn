@@ -7,8 +7,6 @@ import Cartas.Hand;
 
 public class Jugada {
 
-	private Hand manoActual;
-	private Vector<String> draws;
 	private Hand mejorJugada;
 	
 	public void compruebaMano(Hand actual, Hand mejorJugada,Vector<String> draws ){
@@ -30,8 +28,6 @@ public class Jugada {
 		
 		/* FIN DEL EJEMPLO */
 		
-		// Guardar actual en una variable auxiliar
-		this.manoActual = actual;
 		Hand manoAnalizar = actual;
 		
 		// Ordenar auxiliar por valor
