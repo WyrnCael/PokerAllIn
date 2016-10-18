@@ -207,7 +207,7 @@ public class BestHand {
 	}
 
 	private Card compruebaSiHayAs() {
-		return cartaAlta.get(5);
+		return cartaAlta.get(0);
 	}
 	
 	public List<Card> getCartaAltaList(){

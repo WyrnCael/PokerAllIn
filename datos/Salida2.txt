@@ -1,3 +1,3 @@
-AsKs;5;2s3s4s5s7s
- - Best hand: Straight flush (5s4s3s2sAs)
+AsKs;5;2h3h4h5h7h
+ - Best hand: Straight flush (5h4h3h2h7h)
 
