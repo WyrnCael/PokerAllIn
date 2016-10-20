@@ -37,7 +37,7 @@ public class Entrada {
 		String str = null;
 		try {			
 			str = br.readLine();
-			System.out.println(str);
+			//System.out.println(str);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Archivo no encontrado");

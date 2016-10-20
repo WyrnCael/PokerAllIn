@@ -73,6 +73,8 @@ public class Main {
 			System.out.println("Ordenar jugadores");
 			linea = entrada.leerDato();		
 			while(linea != null){
+				System.out.println(linea);
+				salida.guardarDato(linea);
 				ComparadorJugadores comparador = new ComparadorJugadores();
 				
 				// Leemos el numero de jugadores
