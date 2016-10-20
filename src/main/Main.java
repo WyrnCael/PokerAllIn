@@ -1,7 +1,10 @@
 package main;
 
 import java.util.List;
+
 import Cartas.Hand;
+import Jugada.ComparadorJugadores;
+import Jugada.ComparadorJugadores.Jugador;
 import Jugada.JugadaMejorCartas;
 import controlArchivo.Entrada;
 import controlArchivo.Salida;
@@ -26,9 +29,9 @@ public class Main {
 			String linea = entrada.leerDato();
 			while(linea != null){
 				Hand hand = new Hand();
-				hand.parseaEInserta(linea);
+				hand.insertaCarta(linea);
 				JugadaMejorCartas jugada = new JugadaMejorCartas(hand);
-				String str = " - Best hand: " + jugada.getBestHand();
+				String str = " - Best hand: " + jugada.getBestHandString();
 //				System.out.println(str);
 				salida.guardarDato(linea);
 				salida.guardarDato(str);
@@ -50,9 +53,9 @@ public class Main {
 				aux += linea.substring(7,linea.length());
 				System.out.println(aux);
 				Hand hand = new Hand();
-				hand.parseaEInserta(aux);
+				hand.insertaCarta(aux);
 				JugadaMejorCartas jugada = new JugadaMejorCartas(hand);
-				String str = " - Best hand: " + jugada.getBestHand();
+				String str = " - Best hand: " + jugada.getBestHandString();
 				System.out.println(str);
 				salida.guardarDato(linea);
 				salida.guardarDato(str);
@@ -68,6 +71,37 @@ public class Main {
 			break;
 		case "3":
 			System.out.println("Ordenar jugadores");
+			linea = entrada.leerDato();		
+			while(linea != null){
+				ComparadorJugadores comparador = new ComparadorJugadores();
+				
+				// Leemos el numero de jugadores
+				int nJugadores = Integer.valueOf(linea.substring(0,1));
+				
+				// Leemos las cartas comunes
+				String comunes = linea.substring(2+(7*nJugadores),linea.length());
+				
+				// Leemos los jugadores
+				for(int i = 2; i < 2+(7*nJugadores); i=i+7){
+					String nomb = linea.substring(i,i+2);
+					String jug = linea.substring(i+2,i+6);
+					Hand hand = new Hand();
+					hand.insertaCarta(jug+comunes);
+					comparador.anadeJugador(hand, nomb);
+				}
+				
+				List<Jugador> manosOrdenadas = comparador.getJugadoresOrdenadosMejorPeor();
+				for(int j = 0; j < manosOrdenadas.size(); j++){
+					Jugador jugadorSalida = manosOrdenadas.get(j);
+					String out = jugadorSalida.getNombre() + ": " + jugadorSalida.getCartasIniciales() + " " + jugadorSalida.getJugada().getBestHandString();
+					salida.guardarDato(out);
+					System.out.println(out);
+				}
+				salida.guardarDato("");
+				System.out.println("");
+								
+				linea = entrada.leerDato();
+			}
 			break;
 		default:
 			System.out.println("Fuera del rango de opcion");

@@ -85,7 +85,7 @@ public class BestHand {
 		}
 	}
 
-	private Ranking getJugada() {
+	public Ranking getJugada() {
 		bestCards = new ArrayList<Card>();
 		if (escaleraDeColor.size() >= 5) {
 			
@@ -290,6 +290,14 @@ public class BestHand {
 				return this.hand.getCard(i);
 		}
 		return null;
+	}
+	
+	public Hand getManoOrdenada(){
+		return this.hand;
+	}
+	
+	public List<Card> getBestCards(){
+		return bestCards;
 	}
 
 	public String toString() {

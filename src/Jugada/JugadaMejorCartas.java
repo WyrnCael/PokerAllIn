@@ -28,6 +28,7 @@ public class JugadaMejorCartas {
 	 */
 	public JugadaMejorCartas(Hand hand) {
 		this.mapValue = hand.getCardsValueMap();
+		hand.calcula();
 		this.hand = hand;
 		this.bestHand = new BestHand();
 		bestHand();
@@ -114,9 +115,14 @@ public class JugadaMejorCartas {
 	 * 
 	 * @return El String del mejor mano
 	 */
-	public String getBestHand() {
+	public String getBestHandString() {
 		//System.out.println(this.bestHand.getCartaAltaList());
 		return this.bestHand.toString();
+	}
+	
+	public BestHand getBestHand() {
+		//System.out.println(this.bestHand.getCartaAltaList());
+		return this.bestHand;
 	}
 
 	/**

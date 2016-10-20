@@ -70,15 +70,28 @@ public class Hand {
 	    });
 	}
 	
+	public void insertaCarta(String entrada){
+		for(int i = 0; i < entrada.length(); i=i+2){
+			
+			Card card = new Card(entrada.substring(i, i+1),entrada.substring(i+1, i+2));
+			this.cardsList.add(card);			
+		}
+		Collections.sort(cardsList, new Comparator<Card>() {
+	       	@Override
+			public int compare(Card arg0, Card arg1) {
+				return arg1.getValue().getValue() - arg0.getValue().getValue();
+			}
+	    });
+//		Collections.sort(cardsList);
+	}
+	
 	/**
 	 * Metodo para parsea los datos de entrada en forma de lista y mapa
 	 * @param entrada El parametro entrada define String de cartas
 	 */
-	public void parseaEInserta(String entrada){
-		for(int i = 0; i < entrada.length(); i=i+2){
-			
-			Card card = new Card(entrada.substring(i, i+1),entrada.substring(i+1, i+2));
-			this.cardsList.add(card);
+	public void calcula(){
+		for(int i = 0; i < cardsList.size(); i++){
+			Card card = cardsList.get(i);
 			if(this.cardsMapValue.containsKey(card)){
 				this.cardsMapValue.put(card, this.cardsMapValue.get(card).intValue() + 1);
 			} else {
