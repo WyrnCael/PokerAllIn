@@ -46,12 +46,14 @@ public class Jugador implements Comparable<Object> {
 			switch (jugada1.getJugada().getValor()) {
 			// Carta alta
 			case 1:
-				if (jugada1.getCartaAltaList().get(0).getValue().getValue() > jugada2.getCartaAltaList().get(0)
-						.getValue().getValue()) {
-					return -1;
-				} else {
-					return 1;
+				for(int i = 0;i<jugada1.getCartaAltaList().size();i++){
+					if(jugada1.getCartaAltaList().get(i).getValue().getValue() > jugada2.getCartaAltaList().get(i).getValue().getValue()){
+						return -1;
+					} else if(jugada1.getCartaAltaList().get(i).getValue().getValue() < jugada2.getCartaAltaList().get(i).getValue().getValue()){
+						return 1;
+					}
 				}
+				return 0;
 				// Pareja y trio.
 			case 2: // Esto funciona? Mis pruebas dicen que si. Opinen.
 			case 4:

@@ -115,7 +115,7 @@ public class Hand {
 	
 	public String toString(){
 		String str = "";
-		for(int i=0 ; i < cardsList.size(); i++){
+		for(int i=0 ; i < cardsList.size() && i < 5; i++){
 			str += cardsList.get(i);
 		}
 		return str;
