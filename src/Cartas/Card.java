@@ -20,21 +20,21 @@ public class Card implements Comparable<Object> {
 	}
 
 	/**
-	 * El metodo para obtener el valor de la carta
+	 * El metodo que devuelve el valor de la carta
 	 * 
 	 * @return value es el valor de la carta
 	 */
 	public Value getValue() {
-		return this.value;
+		return value;
 	}
 
 	/**
-	 * El metodo para obtener el palo de la carta
+	 * El metodo que devuelve el palo de la carta
 	 * 
 	 * @return suit es el palo de la carta
 	 */
 	public Suit getSuit() {
-		return this.suit;
+		return suit;
 	}
 
 	/**
@@ -72,6 +72,9 @@ public class Card implements Comparable<Object> {
 			return Value.King;
 		case "A":
 			return Value.Ace;
+		default:
+			System.out.println("Error en parsear el valor");
+			break;
 		}
 		return null;
 	}
@@ -93,6 +96,9 @@ public class Card implements Comparable<Object> {
 			return Suit.Clubs;
 		case "s":
 			return Suit.Spades;
+		default:
+			System.out.println("Erro en parsear el palo");
+			break;
 		}
 		return null;
 	}
@@ -108,9 +114,9 @@ public class Card implements Comparable<Object> {
 		if (n1 == n2)
 			return 0;
 		else if (n1 > n2)
-			return 1;
-		else
 			return -1;
+		else
+			return 1;
 
 	}
 }
