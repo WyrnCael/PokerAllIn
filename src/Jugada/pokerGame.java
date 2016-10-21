@@ -21,6 +21,12 @@ public class pokerGame {
 		processGame();
 	}
 
+	/**
+	 * El metodo para parsear el dato de la entrada
+	 * 
+	 * @param game
+	 *            El parametro game contiene los datos de la partida
+	 */
 	private void parseGame(String game) {
 		// Leemos el numero de jugadores
 		int numPlayers = Integer.valueOf(game.substring(0, 1));
@@ -50,19 +56,17 @@ public class pokerGame {
 	}
 
 	/**
-	 * Metodo que devuelve el resultado de la partida
-	 * 
-	 * @return players es una lista ordenada segun el valor del mejor mano que
-	 *         tiene cada jugador
+	 * El metodo que progresa la partida ordenando los jugadores segun el valor
+	 * de su mejor mano que puede formar
 	 */
 	private void processGame() {
 		// Ordenamos
 		Collections.sort(players);
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		String str = "";
-		for(int i = 0; i < this.players.size(); i++){
+		for (int i = 0; i < this.players.size(); i++) {
 			str += this.players.get(i).toString() + "\n";
 		}
 		return str;

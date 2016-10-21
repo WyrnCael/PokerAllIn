@@ -1,11 +1,8 @@
 package main;
 
-import java.util.List;
-
 import Cartas.Hand;
 import Jugada.pokerGame;
-import Jugada.JugadaMejorCartas;
-import Jugador.player;
+import Jugada.BestHand;
 import controlArchivo.InputFile;
 import controlArchivo.OutPutFile;
 
@@ -28,7 +25,7 @@ public class Main {
 			String line = entrada.readLine();
 			while(line != null){
 				Hand hand = new Hand(line);
-				JugadaMejorCartas jugada = new JugadaMejorCartas(hand);
+				BestHand jugada = new BestHand(hand);
 				salida.saveResult(line);
 				salida.saveResult(jugada.toString());
 				
@@ -39,21 +36,14 @@ public class Main {
 			System.out.println("Mejor jugada con 2 cartas");
 			line = entrada.readLine();
 			while(line != null){
-				String aux = line.substring(0,4);
-				aux += line.substring(7,line.length());
-				System.out.println(aux);
-				Hand hand = new Hand(aux);
-				JugadaMejorCartas jugada = new JugadaMejorCartas(hand);
-				String str = " - Best hand: " + jugada.getBestHand();
-				System.out.println(str);
+				String str = line.substring(0,4);
+				str += line.substring(7,line.length());
+				
+				Hand hand = new Hand(str);
+				BestHand jugada = new BestHand(hand);
+				
 				salida.saveResult(line);
-				salida.saveResult(str);
-				str = " - Draw: ";
-				List<String> draws = jugada.getDraws();
-				for(int j = 0; j < draws.size(); j++){
-					salida.saveResult(str + draws.get(j));
-				}
-				salida.saveResult("");
+				salida.saveResult(jugada.toString());
 				
 				line = entrada.readLine();
 			}
@@ -62,11 +52,10 @@ public class Main {
 			System.out.println("Ordenar jugadores");
 			line = entrada.readLine();		
 			while(line != null){
-				System.out.println(line);
-				salida.saveResult(line);
 				pokerGame game = new pokerGame(line);
+				
+				salida.saveResult(line);
 				salida.saveResult(game.toString());
-				System.out.println(game.toString());
 								
 				line = entrada.readLine();
 			}
