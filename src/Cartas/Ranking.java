@@ -12,19 +12,19 @@ public enum Ranking {
 	HIGH_CARD("High card", 1);
 	
 	private String name;
-	private int valor;
+	private int value;
 	
 	private Ranking(String name, int value){
 		this.name = name;
-		this.valor = value;
+		this.value = value;
 	}
 	
 	public String getName(){
 		return this.name;
 	}
 	
-	public int getValor(){
-		return this.valor;
+	public int getValue(){
+		return this.value;
 	}
 	
 }

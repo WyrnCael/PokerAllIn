@@ -31,7 +31,7 @@ public class BestHand {
 	 * @param datos
 	 *            El parametro datos definen las cartas que tienen en la mano
 	 */
-	public BestHand() {
+	public BestHand(Hand hand) {
 		bestCards = new ArrayList<Card>();
 		parejas = new ArrayList<Card>();
 		trios = new ArrayList<Card>();
@@ -46,15 +46,11 @@ public class BestHand {
 		escaleraDeColor = new ArrayList<Card>();
 		color = new ArrayList<Card>();
 		cartaAlta = new ArrayList<Card>();
-		hand = new Hand();
+		this.hand = hand;
 		escaleraGutshot = new ArrayList<Card>();
 		gutshot = 0;
 		esEscaleraGutshot = false;
 		esEscaleraOpenEnded = false;
-	}
-
-	public void setHand(Hand hand) {
-		this.hand = hand;
 	}
 
 	public void setJugada(Ranking jugada, List<Card> cards) {
@@ -183,7 +179,7 @@ public class BestHand {
 
 		if (this.esEscaleraOpenEnded) {
 			draws.add(Ranking.STRAIGHT.getName() + " OpenEnded");
-		} else if (this.bestValue < Ranking.STRAIGHT.getValor() && escaleraGutshot.size() >= 4
+		} else if (this.bestValue < Ranking.STRAIGHT.getValue() && escaleraGutshot.size() >= 4
 				&& this.esEscaleraGutshot) {
 
 			draws.add(Ranking.STRAIGHT.getName() + " Gutshot");
@@ -241,8 +237,8 @@ public class BestHand {
 
 		// La insertamos en su color si es la siguiente a la ultima, sino
 		// empezamos de 0 esa escalera
-		int valorAsociado = carta.getSuit().getValorAsociado();
-		List<Card> escaleraColorActual = escaleras.get(valorAsociado);
+		int numSuit = carta.getSuit().getNum();
+		List<Card> escaleraColorActual = escaleras.get(numSuit);
 		if (escaleraColorActual.size() == 0) {
 			escaleraColorActual.add(carta);
 		}
@@ -261,7 +257,7 @@ public class BestHand {
 			escaleraColorActual = new ArrayList<Card>();
 			escaleraColorActual.add(carta);
 		}
-		escaleras.set(valorAsociado, escaleraColorActual);
+		escaleras.set(numSuit, escaleraColorActual);
 		compruebaEscalera();
 
 	}
@@ -305,10 +301,6 @@ public class BestHand {
 			return null;
 	}
 
-	public List<Card> getCartaAltaList() {
-		return this.cartaAlta;
-	}
-
 	private Card compruebaSiHayAsdeColor(Suit suit) {
 		int i = 0;
 		for (i = 0; i < this.hand.getCardsList().size() && i < 4; i++) {
@@ -318,18 +310,12 @@ public class BestHand {
 		return null;
 	}
 
-	public Hand getManoOrdenada() {
-		return this.hand;
-	}
-
 	public List<Card> getBestCards() {
 		return bestCards;
 	}
 
 	public String toString() {
-		Ranking rk = getJugada();
-		this.bestValue = rk.getValor();
-		String str = rk.getName() + " (";
+		String str = " (";
 		for (int i = 0; i < this.bestCards.size() && i < 5; i++) {
 			str += this.bestCards.get(i);
 		}

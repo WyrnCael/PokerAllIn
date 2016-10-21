@@ -5,8 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Entrada {
+public class InputFile {
 	
+	// campos de la clase
 	private String path;
 	private FileReader fr;
 	private BufferedReader br;
@@ -14,10 +15,10 @@ public class Entrada {
 	/**
 	 * Constructor
 	 * 
-	 * @param nombreArchivo El parametro Archivo define el nombre del archivo que va a guardar
+	 * @param fileName El parametro fileName define el nombre del archivo que va a guardar
 	 */
-	public Entrada(String nombreArchivo){
-		this.path = "datos/" + nombreArchivo;
+	public InputFile(String fileName){
+		this.path = "datos/" + fileName;
 		
 		try {
 			fr = new FileReader(this.path);
@@ -29,11 +30,11 @@ public class Entrada {
 	}
 	
 	/**
-	 * Metodo que lea los datos del fichero
+	 * Metodo que lea una linea del datos de entrada desde archivo
 	 * 
-	 * @return vector de String con los datos del fichero de entrada
+	 * @return str es la linea leida desde la entrada
 	 */
-	public String leerDato(){
+	public String readLine(){
 		String str = null;
 		try {			
 			str = br.readLine();
@@ -46,6 +47,9 @@ public class Entrada {
 		return str;
 	}
 	
+	/**
+	 * Metodo que cierra el archivo de entrada
+	 */
 	public void close(){
 		try {
 			br.close();

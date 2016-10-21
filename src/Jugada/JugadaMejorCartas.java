@@ -20,6 +20,7 @@ public class JugadaMejorCartas {
 	private Hand hand;
 	private BestHand bestHand;
 	private Suit suit1;
+	private Ranking rank;
 
 	/**
 	 * Constructor
@@ -28,15 +29,13 @@ public class JugadaMejorCartas {
 	 */
 	public JugadaMejorCartas(Hand hand) {
 		this.mapValue = hand.getCardsValueMap();
-		hand.calcula();
 		this.hand = hand;
-		this.bestHand = new BestHand();
+		this.bestHand = new BestHand(this.hand);
 		bestHand();
 	}
 
 	private void bestHand() {
 		List<Card> cards;
-		this.bestHand.setHand(this.hand);
 		Card aux2 = entriesSortedByValues(this.hand.getCardsSuitMap()).first().getKey();
 		this.suit1 = aux2.getSuit();
 		for (int i = 0; i < this.hand.getCardsList().size(); i++) {
@@ -100,7 +99,7 @@ public class JugadaMejorCartas {
 				break;
 			}
 		}
-
+		this.rank = this.bestHand.getJugada();
 	}
 	
 	@SuppressWarnings("serial")
@@ -109,20 +108,13 @@ public class JugadaMejorCartas {
 			this.bestHand.setJugada(Ranking.FLUSH, new ArrayList<Card>(){{ add(card); }});
 		}
 	}
-
-	/**
-	 * Metodo que devuelve el mejor mano
-	 * 
-	 * @return El String del mejor mano
-	 */
-	public String getBestHandString() {
-		//System.out.println(this.bestHand.getCartaAltaList());
-		return this.bestHand.toString();
-	}
 	
 	public BestHand getBestHand() {
-		//System.out.println(this.bestHand.getCartaAltaList());
 		return this.bestHand;
+	}
+	
+	public Ranking getRank(){
+		return this.rank;
 	}
 
 	/**
@@ -133,6 +125,10 @@ public class JugadaMejorCartas {
 	 public List<String> getDraws(){
 		 
 		 return this.bestHand.getDraws();
+	 }
+	 
+	 public String toString(){
+		return this.rank.getName() + this.bestHand.toString();
 	 }
 
 	static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map) {

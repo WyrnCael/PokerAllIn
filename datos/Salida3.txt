@@ -1,54 +1,54 @@
 4;J17hKc;J2TsJh;J3Tc8c;J4QsKc;5d2s8cAh6h
-J3: AhTc8c8c6h Pair (8c8c)
-J4: AhKcQs8c6h High card (Ah)
-J1: AhKc8c7h6h High card (Ah)
-J2: AhJhTs8c6h High card (Ah)
+J3: Pair (8c8c2s5d6h)
+J4: High card (2s5d6h8cQs)
+J2: High card (2s5d6h8cTs)
+J1: High card (2s5d6h7h8c)
 
 4;J1AhAc;J2JsJh;J37c8c;J44sKc;5dKs6cTh9h
-J3: KsTh9h8c7c Straight (Th9h8c7c6c)
-J1: AhAcKsTh9h Pair (AhAc)
-J4: KcKsTh9h6c Pair (KcKs)
-J2: KsJsJhTh9h Pair (JsJh)
+J1: Pair (AhAc5d6c9h)
+J4: Pair (KcKs4s5d6c)
+J2: Pair (JsJh5d6c9h)
+J3: High card (5d6c7c8c9h)
 
 4;J1AhJc;J2AsKh;J37c8c;J44sKc;AdQs6cTh9h
-J3: AdQsTh9h8c Straight (Th9h8c7c6c)
-J2: AsAdKhQsTh Pair (AsAd)
-J1: AhAdQsJcTh Pair (AhAd)
-J4: AdKcQsTh9h High card (Ad)
+J1: Pair (AhAd6c9hTh)
+J2: Pair (AsAd6c9hTh)
+J3: High card (6c7c8c9hTh)
+J4: High card (4s6c9hThQs)
 
 4;J1AhAc;J2KsKh;J3Jc8c;J44sJc;JdJsAcKh9h
-J1: AhAcAcKhJd Full house (AhAcAcJdJs)
-J2: AcKsKhKhJd Full house (KsKhKhJdJs)
-J3: AcKhJcJdJs Three of a kind (JcJdJs)
-J4: AcKhJcJdJs Three of a kind (JcJdJs)
+J1: Full house (AhAcAcJdJs)
+J2: Full house (KsKhKhJdJs)
+J3: Three of a kind (JcJdJs8c9h)
+J4: Three of a kind (JcJdJs4s9h)
 
 4;J1AhAc;J2KsKh;J3Jc8c;J49sJc;JdJsAcKh2h
-J1: AhAcAcKhJd Full house (AhAcAcJdJs)
-J2: AcKsKhKhJd Full house (KsKhKhJdJs)
-J3: AcKhJcJdJs Three of a kind (JcJdJs)
-J4: AcKhJcJdJs Three of a kind (JcJdJs)
+J1: Full house (AhAcAcJdJs)
+J2: Full house (KsKhKhJdJs)
+J4: Three of a kind (JcJdJs2h9s)
+J3: Three of a kind (JcJdJs2h8c)
 
 4;J1KhKc;J2AsAh;J3JcTc;J4JsJc;JdTsAcKh2h
-J2: AsAhAcKhJd Three of a kind (AsAhAc)
-J1: AcKhKcKhJd Three of a kind (KhKcKh)
-J4: AcKhJsJcJd Three of a kind (JsJcJd)
-J3: AcKhJcJdTc Two pair (JcJdTcTs)
+J2: Three of a kind (AsAhAc2hTs)
+J1: Three of a kind (KhKcKh2hTs)
+J4: Three of a kind (JsJcJd2hTs)
+J3: Two pair (TcTsJcJd2h)
 
 4;J1As3c;J2ThAh;J3JcTc;J4JsJc;JdTsAcKh3h
-J4: AcKhJsJcJd Three of a kind (JsJcJd)
-J2: AhAcKhJdTh Two pair (AhAcThTs)
-J1: AsAcKhJdTs Two pair (AsAc3c3h)
-J3: AcKhJcJdTc Two pair (JcJdTcTs)
+J4: Three of a kind (JsJcJd3hTs)
+J2: Two pair (ThTsAhAc3h)
+J3: Two pair (TcTsJcJd3h)
+J1: Two pair (3c3hAsAcTs)
 
 4;J1As3c;J2ThAh;J3JcTc;J4JsJc;Jd5sAcKh5h
-J4: AcKhJsJcJd Full house (JsJcJd5s5h)
-J2: AhAcKhJdTh Two pair (AhAc5s5h)
-J1: AsAcKhJd5s Two pair (AsAc5s5h)
-J3: AcKhJcJdTc Two pair (JcJd5s5h)
+J4: Full house (JsJcJd5s5h)
+J2: Two pair (5s5hAhAcTh)
+J1: Two pair (5s5hAsAc3c)
+J3: Two pair (5s5hJcJdTc)
 
 4;J1As3c;J2ThAh;J3JcTc;J4JsJc;Ad5sAcKh5h
-J1: AsAdAcKh5s Full house (AsAdAc5s5h)
-J2: AhAdAcKhTh Full house (AhAdAc5s5h)
-J4: AdAcKhJsJc Two pair (AdAcJsJc5s)
-J3: AdAcKhJcTc Two pair (AdAc5s5h)
+J1: Full house (AsAdAc5s5h)
+J2: Full house (AhAdAc5s5h)
+J3: Two pair (5s5hAdAcTc)
+J4: Two pair (5s5hJsJcAd)
 

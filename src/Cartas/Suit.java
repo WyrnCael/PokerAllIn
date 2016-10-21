@@ -1,41 +1,39 @@
 package Cartas;
 
 public enum Suit {
-	Hearts("Red", 'h'),
-	Diamonds("Red", 'd'),
-	Clubs("Black", 'c'),
-	Spades("Black", 's');
+	Hearts('h', 1),
+	Diamonds('d', 2),
+	Clubs('c', 3),
+	Spades('s', 4);
 	
+	// Campos de la clase
+	private char letter;
+	private int num;
 	
-	private String color;
-	private char letra;
-	
-	private Suit(String color, char letter){
-		this.color = color;
-		this.letra = letter;
+	/**
+	 * Constructor
+	 * @param letter El parametro letter define el char del palo
+	 * @param num El parametro num define el numero del palo
+	 */
+	private Suit(char letter, int num){
+		this.letter = letter;
+		this.num = num;
 	}
 	
-	public String getPalo(){
-		return this.color;
-	}
-	
+	/**
+	 * Metodo que devuelve el char del palo
+	 * @return this.letter es el char del palo
+	 */
 	public char getChar(){
-		return this.letra;
+		return this.letter;
 	}
 	
-	public int getValorAsociado(){
-		switch (this.letra){
-		case 'h':
-			return 1;
-		case 'd':
-			return 2;
-		case 'c':
-			return 3;
-		case 's':
-			return 4;
-		default:		
-			return -1;
-		}
+	/**
+	 * Metodo que devuelve el numero del palo
+	 * @return this.num es el numero del palo
+	 */
+	public int getNum(){
+		return this.num;
 	}
 }
 

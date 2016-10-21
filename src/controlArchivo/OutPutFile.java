@@ -5,8 +5,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Salida {
+public class OutPutFile {
 	
+	// Campos de la clase
 	private String path;
 	private FileWriter fw;
 	private BufferedWriter bw;
@@ -14,10 +15,10 @@ public class Salida {
 	/**
 	 * Constructor
 	 * 
-	 * @param nombreArchivo El parametro Archivo define el nombre del archivo que va a guardar
+	 * @param fileName El parametro fileName define el nombre del archivo que va a guardar
 	 */
-	public Salida(String nombreArchivo){
-		this.path = "datos/" + nombreArchivo;
+	public OutPutFile(String fileName){
+		this.path = "datos/" + fileName;
 		try {
 			this.fw = new FileWriter(new File(this.path));
 			this.bw = new BufferedWriter(fw);
@@ -29,20 +30,21 @@ public class Salida {
 	}
 	
 	/**
-	 * Metodo que guarda los datos en el archivo
-	 * 
-	 * @param datos El parametro datos definen los datos que va a guardar en el archivo
+	 * Metodo que guarda el resultado de un mano
+	 * @param result El parametro result es el resultado calculado de un mano
 	 */
-	public void guardarDato(String linea){
+	public void saveResult(String result){
 			try {
-				this.bw.write(linea + "\n");
+				this.bw.write(result + "\n");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Error en escribir datos");
 			}
-
 	}
 	
+	/**
+	 * Metodo que cierra el archivo de salida
+	 */
 	public void close(){
 			try {
 				this.bw.close();

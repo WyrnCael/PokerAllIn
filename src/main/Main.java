@@ -3,11 +3,11 @@ package main;
 import java.util.List;
 
 import Cartas.Hand;
-import Jugada.ComparadorJugadores;
+import Jugada.pokerGame;
 import Jugada.JugadaMejorCartas;
-import Jugador.Jugador;
-import controlArchivo.Entrada;
-import controlArchivo.Salida;
+import Jugador.player;
+import controlArchivo.InputFile;
+import controlArchivo.OutPutFile;
 
 public class Main {
 
@@ -16,9 +16,9 @@ public class Main {
 		
 		long start = System.currentTimeMillis();
 		
-		Entrada entrada = new Entrada(args[1]);
+		InputFile entrada = new InputFile(args[1]);
 		
-		Salida salida = new Salida(args[2]);
+		OutPutFile salida = new OutPutFile(args[2]);
 		
 		long finishReadFile = System.currentTimeMillis();
 		System.out.println("Tiempo tardade en leer: " + (finishReadFile-start) + "ms " + (finishReadFile-start) / 1000 + "s");
@@ -26,83 +26,80 @@ public class Main {
 		switch(args[0]){
 		case "1":
 //			System.out.println("Mejor jugada con 5 cartas");
-			String linea = entrada.leerDato();
-			while(linea != null){
-				Hand hand = new Hand();
-				hand.insertaCarta(linea);
+			String line = entrada.readLine();
+			while(line != null){
+				Hand hand = new Hand(line);
 				JugadaMejorCartas jugada = new JugadaMejorCartas(hand);
-				String str = " - Best hand: " + jugada.getBestHandString();
+				String str = " - Best hand: " + jugada.getBestHand();
 //				System.out.println(str);
-				salida.guardarDato(linea);
-				salida.guardarDato(str);
+				salida.saveResult(line);
+				salida.saveResult(str);
 				/*Vector<String> draws = jugada.getDraws();
 				str = " - Draw: ";
 				for(int j = 0; j < draws.size(); j++){
 					datosSalida.add(str + draws.get(j));
 				}*/
-				salida.guardarDato("");
+				salida.saveResult("");
 				
-				linea = entrada.leerDato();
+				line = entrada.readLine();
 			}
 			break;
 		case "2":
 			System.out.println("Mejor jugada con 2 cartas");
-			linea = entrada.leerDato();
-			while(linea != null){
-				String aux = linea.substring(0,4);
-				aux += linea.substring(7,linea.length());
+			line = entrada.readLine();
+			while(line != null){
+				String aux = line.substring(0,4);
+				aux += line.substring(7,line.length());
 				System.out.println(aux);
-				Hand hand = new Hand();
-				hand.insertaCarta(aux);
+				Hand hand = new Hand(aux);
 				JugadaMejorCartas jugada = new JugadaMejorCartas(hand);
-				String str = " - Best hand: " + jugada.getBestHandString();
+				String str = " - Best hand: " + jugada.getBestHand();
 				System.out.println(str);
-				salida.guardarDato(linea);
-				salida.guardarDato(str);
+				salida.saveResult(line);
+				salida.saveResult(str);
 				str = " - Draw: ";
 				List<String> draws = jugada.getDraws();
 				for(int j = 0; j < draws.size(); j++){
-					salida.guardarDato(str + draws.get(j));
+					salida.saveResult(str + draws.get(j));
 				}
-				salida.guardarDato("");
+				salida.saveResult("");
 				
-				linea = entrada.leerDato();
+				line = entrada.readLine();
 			}
 			break;
 		case "3":
 			System.out.println("Ordenar jugadores");
-			linea = entrada.leerDato();		
-			while(linea != null){
-				System.out.println(linea);
-				salida.guardarDato(linea);
-				ComparadorJugadores comparador = new ComparadorJugadores();
+			line = entrada.readLine();		
+			while(line != null){
+				System.out.println(line);
+				salida.saveResult(line);
+				pokerGame comparador = new pokerGame();
 				
 				// Leemos el numero de jugadores
-				int nJugadores = Integer.valueOf(linea.substring(0,1));
+				int nJugadores = Integer.valueOf(line.substring(0,1));
 				
 				// Leemos las cartas comunes
-				String comunes = linea.substring(2+(7*nJugadores),linea.length());
+				String comunes = line.substring(2+(7*nJugadores),line.length());
 				
 				// Leemos los jugadores
 				for(int i = 2; i < 2+(7*nJugadores); i=i+7){
-					String nomb = linea.substring(i,i+2);
-					String jug = linea.substring(i+2,i+6);
-					Hand hand = new Hand();
-					hand.insertaCarta(jug+comunes);
-					comparador.anadeJugador(hand, nomb);
+					String name = line.substring(i,i+2);
+					String jug = line.substring(i+2,i+6);
+					Hand hand = new Hand(jug);
+					comparador.addPlayer(name, hand);
 				}
 				
-				List<Jugador> manosOrdenadas = comparador.getJugadoresOrdenadosMejorPeor();
+				List<player> manosOrdenadas = comparador.getGameResult();
 				for(int j = 0; j < manosOrdenadas.size(); j++){
-					Jugador jugadorSalida = manosOrdenadas.get(j);
-					String out = jugadorSalida.getNombre() + ": " + jugadorSalida.getCartasIniciales() + " " + jugadorSalida.getJugada().getBestHandString();
-					salida.guardarDato(out);
+					player jugadorSalida = manosOrdenadas.get(j);
+					String out = jugadorSalida.toString();
+					salida.saveResult(out);
 					System.out.println(out);
 				}
-				salida.guardarDato("");
+				salida.saveResult("");
 				System.out.println("");
 								
-				linea = entrada.leerDato();
+				line = entrada.readLine();
 			}
 			break;
 		default:
