@@ -1,8 +1,8 @@
-4;J1AhKc;J2TsJh;J3Tc8c;J4QsKc;5d2s8c3h6h
-J3: Tc8c8c6h5d3h2s Pair (8c8c)
-J1: AhKc8c6h5d3h2s High card (Ah)
-J4: KcQs8c6h5d3h2s High card (Kc)
-J2: JhTs8c6h5d3h2s High card (Jh)
+4;J17hKc;J2TsJh;J3Tc8c;J4QsKc;5d2s8cAh6h
+J3: AhTc8c8c6h5d2s Pair (8c8c)
+J1: AhKc8c7h6h5d2s High card (Ah)
+J2: AhJhTs8c6h5d2s High card (Ah)
+J4: AhKcQs8c6h5d2s High card (Ah)
 
 4;J1AhAc;J2JsJh;J37c8c;J44sKc;5dKs6cTh9h
 J3: KsTh9h8c7c6c5d Straight (Th9h8c7c6c)

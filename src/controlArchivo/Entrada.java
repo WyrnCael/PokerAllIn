@@ -38,9 +38,6 @@ public class Entrada {
 		try {			
 			str = br.readLine();
 			//System.out.println(str);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Archivo no encontrado");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error en leer los datos");
@@ -53,9 +50,6 @@ public class Entrada {
 		try {
 			br.close();
 			fr.close();			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Archivo no encontrado");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error en leer los datos");

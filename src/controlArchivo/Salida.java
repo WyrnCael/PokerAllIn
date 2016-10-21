@@ -24,7 +24,7 @@ public class Salida {
 						
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error en abrir el archivo de salida");
 		}
 	}
 	
@@ -34,23 +34,22 @@ public class Salida {
 	 * @param datos El parametro datos definen los datos que va a guardar en el archivo
 	 */
 	public void guardarDato(String linea){
-		try {
-			this.bw.write(linea + "\n");
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				this.bw.write(linea + "\n");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Error en escribir datos");
+			}
+
 	}
 	
 	public void close(){
-		try {
-			this.bw.close();
-			this.fw.close();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				this.bw.close();
+				this.fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Error en cerrar el archivo");
+			}
 	}
 }

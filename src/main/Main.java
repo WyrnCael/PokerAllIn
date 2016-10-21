@@ -4,8 +4,8 @@ import java.util.List;
 
 import Cartas.Hand;
 import Jugada.ComparadorJugadores;
-import Jugada.ComparadorJugadores.Jugador;
 import Jugada.JugadaMejorCartas;
+import Jugador.Jugador;
 import controlArchivo.Entrada;
 import controlArchivo.Salida;
 

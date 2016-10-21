@@ -1,7 +1,6 @@
 package Cartas;
 
-@SuppressWarnings("rawtypes")
-public class Card implements Comparable{
+public class Card implements Comparable<Object>{
 
 	// Campos de la clase 
 	private Value value;
