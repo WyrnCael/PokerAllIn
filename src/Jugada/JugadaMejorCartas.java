@@ -128,7 +128,12 @@ public class JugadaMejorCartas {
 	 }
 	 
 	 public String toString(){
-		return this.rank.getName() + this.bestHand.toString();
+		String str = " - Best hand: " + this.rank.getName() + this.bestHand.toString();
+		List<String> draws = this.bestHand.getDraws();
+		for(int i = 0;i < draws.size();i++){
+			str += " - Draw: " + draws.get(i);
+		}
+		return str;
 	 }
 
 	static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map) {

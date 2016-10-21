@@ -25,21 +25,12 @@ public class Main {
 		// args[0] es el opcion de la jugada
 		switch(args[0]){
 		case "1":
-//			System.out.println("Mejor jugada con 5 cartas");
 			String line = entrada.readLine();
 			while(line != null){
 				Hand hand = new Hand(line);
 				JugadaMejorCartas jugada = new JugadaMejorCartas(hand);
-				String str = " - Best hand: " + jugada.getBestHand();
-//				System.out.println(str);
 				salida.saveResult(line);
-				salida.saveResult(str);
-				/*Vector<String> draws = jugada.getDraws();
-				str = " - Draw: ";
-				for(int j = 0; j < draws.size(); j++){
-					datosSalida.add(str + draws.get(j));
-				}*/
-				salida.saveResult("");
+				salida.saveResult(jugada.toString());
 				
 				line = entrada.readLine();
 			}
@@ -73,31 +64,9 @@ public class Main {
 			while(line != null){
 				System.out.println(line);
 				salida.saveResult(line);
-				pokerGame comparador = new pokerGame();
-				
-				// Leemos el numero de jugadores
-				int nJugadores = Integer.valueOf(line.substring(0,1));
-				
-				// Leemos las cartas comunes
-				String comunes = line.substring(2+(7*nJugadores),line.length());
-				
-				// Leemos los jugadores
-				for(int i = 2; i < 2+(7*nJugadores); i=i+7){
-					String name = line.substring(i,i+2);
-					String jug = line.substring(i+2,i+6);
-					Hand hand = new Hand(jug);
-					comparador.addPlayer(name, hand);
-				}
-				
-				List<player> manosOrdenadas = comparador.getGameResult();
-				for(int j = 0; j < manosOrdenadas.size(); j++){
-					player jugadorSalida = manosOrdenadas.get(j);
-					String out = jugadorSalida.toString();
-					salida.saveResult(out);
-					System.out.println(out);
-				}
-				salida.saveResult("");
-				System.out.println("");
+				pokerGame game = new pokerGame(line);
+				salida.saveResult(game.toString());
+				System.out.println(game.toString());
 								
 				line = entrada.readLine();
 			}

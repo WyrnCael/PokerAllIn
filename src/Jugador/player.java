@@ -31,7 +31,7 @@ public class player implements Comparable<Object> {
 		}
 		// Si son iguales se compara por jugada.
 		else {
-			switch (jugada1.getJugada().getValue()) {
+			switch (this.jugada.getRank().getValue()) {
 			// Carta alta
 			case 1:
 				k = 1;

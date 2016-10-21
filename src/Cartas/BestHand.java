@@ -53,6 +53,11 @@ public class BestHand {
 		esEscaleraOpenEnded = false;
 	}
 
+	/**
+	 * Metodo que pone las cartas a la lista del jugada que pueda formar
+	 * @param jugada	El parametro jugada define el enumerado de la jugada
+	 * @param cards		El parametro cards definen las carta que forma esta jugada
+	 */
 	public void setJugada(Ranking jugada, List<Card> cards) {
 		switch (jugada) {
 		case HIGH_CARD:
@@ -81,6 +86,10 @@ public class BestHand {
 		}
 	}
 
+	/**
+	 * Metodo que devuelve el mejor mano
+	 * @return Devuelve el objeto Ranking del mejor mano
+	 */
 	public Ranking getJugada() {
 		bestCards = new ArrayList<Card>();
 		if (escaleraDeColor.size() >= 5) {
@@ -319,7 +328,7 @@ public class BestHand {
 		for (int i = 0; i < this.bestCards.size() && i < 5; i++) {
 			str += this.bestCards.get(i);
 		}
-		str += ")";
+		str += ") \n";
 		return str;
 	}
 }

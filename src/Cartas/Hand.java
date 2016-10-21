@@ -30,7 +30,7 @@ public class Hand {
 			}
 
 		});
-		insertCard(cards);
+		parseCard(cards);
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class Hand {
 	 * El metodo para insertar la carta en la mano
 	 * @param input El parametro input define los datos de entrada
 	 */
-	private void insertCard(String input){
+	private void parseCard(String input){
 		for(int i = 0; i < input.length(); i=i+2){
 			Card card = new Card(input.substring(i, i+1),input.substring(i+1, i+2));
 			this.cardsList.add(card);			
