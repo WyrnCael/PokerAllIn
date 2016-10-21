@@ -16,20 +16,20 @@ public class BestHand {
 	private List<Card> escaleraDeColor;
 	private List<Card> color;
 	private List<Card> cartaAlta;
-	
+
 	private List<Card> escaleraGutshot;
-	
+
 	private Hand hand;
 	private int gutshot;
 	private boolean esEscaleraGutshot;
 	private boolean esEscaleraOpenEnded;
 	private int bestValue;
-	
 
 	/**
 	 * Constructor
 	 * 
-	 * @param datos El parametro datos definen las cartas que tienen en la mano
+	 * @param datos
+	 *            El parametro datos definen las cartas que tienen en la mano
 	 */
 	public BestHand() {
 		bestCards = new ArrayList<Card>();
@@ -52,8 +52,8 @@ public class BestHand {
 		esEscaleraGutshot = false;
 		esEscaleraOpenEnded = false;
 	}
-	
-	public void setHand(Hand hand){
+
+	public void setHand(Hand hand) {
 		this.hand = hand;
 	}
 
@@ -88,78 +88,107 @@ public class BestHand {
 	public Ranking getJugada() {
 		bestCards = new ArrayList<Card>();
 		if (escaleraDeColor.size() >= 5) {
-			
+
 			bestCards.addAll(escaleraDeColor);
 			return Ranking.STRAIGHT_FLUSH;
-			
+
 		} else if (poker.size() >= 4) {
+
+			for (int i = 0; i < this.cartaAlta.size() && poker.size() != 5; i++) {
+				if(this.cartaAlta.get(i).getValue() != poker.get(0).getValue()){
+					poker.add(this.cartaAlta.get(i));
+				}
+			}
 			
 			bestCards.addAll(poker);
 			return Ranking.FOUR_OF_A_KIND;
-			
+
 		} else if (trios.size() >= 3 && (parejas.size() >= 2 || trios.size() >= 6)) {
-			
+
 			bestCards.addAll(trios);
-			if(parejas.size() >= 2){
-				bestCards.addAll(parejas);
+			
+			if (parejas.size() >= 2) {
+				bestCards.add(parejas.get(0));
+				bestCards.add(parejas.get(1));
 			}
+			
 			return Ranking.FULL_HOUSE;
-			
+
 		} else if (color.size() >= 5) {
-			
+
 			bestCards.addAll(color);
 			return Ranking.FLUSH;
-			
+
 		} else if (escaleraFinal.size() >= 5) {
-			
+
 			bestCards.addAll(escaleraFinal);
 			return Ranking.STRAIGHT;
-			
+
 		} else if (trios.size() >= 3) {
+
+			for (int i = 0; i < this.cartaAlta.size() && trios.size() != 5; i++) {
+				if(this.cartaAlta.get(i).getValue() != trios.get(0).getValue()){
+					trios.add(this.cartaAlta.get(i));
+				}
+			}
 			
 			bestCards.addAll(trios);
 			return Ranking.THREE_OF_A_KIND;
-			
+
 		} else if (parejas.size() >= 4) {
+
+			for (int i = 0; i < this.cartaAlta.size() && parejas.size() != 5; i++) {
+				if(this.cartaAlta.get(i).getValue() != parejas.get(0).getValue() &&
+						this.cartaAlta.get(i).getValue() != parejas.get(2).getValue()){
+					parejas.add(this.cartaAlta.get(i));
+				}
+			}
 			
 			bestCards.addAll(parejas);
 			return Ranking.TWO_PAIR;
-			
+
 		} else if (parejas.size() >= 2) {
+
+			for (int i = 0; i < this.cartaAlta.size() && parejas.size() != 5; i++) {
+				if(this.cartaAlta.get(i).getValue() != parejas.get(0).getValue()){
+					parejas.add(this.cartaAlta.get(i));
+				}
+			}
 			
 			bestCards.addAll(parejas);
 			return Ranking.PAIR;
-			
+
 		} else {
-			bestCards.add(cartaAlta.get(0));
+			for (int i = 0; i < 5 ; i++) {
+				bestCards.add(this.cartaAlta.get(i));
+			}
 			return Ranking.HIGH_CARD;
 		}
 	}
-	
+
 	public List<String> getDraws() {
 		ArrayList<String> draws = new ArrayList<String>();
 		if (escaleraDeColor.size() >= 5) {
 			return draws;
 		}
-		
-		if(escaleraDeColor.size() == 4){
+
+		if (escaleraDeColor.size() == 4) {
 			draws.add(Ranking.STRAIGHT_FLUSH.getName());
 		}
-		
+
 		if (color.size() == 4) {
-			
+
 			draws.add(Ranking.FLUSH.getName());
 		}
-		
-		if(this.esEscaleraOpenEnded){
+
+		if (this.esEscaleraOpenEnded) {
 			draws.add(Ranking.STRAIGHT.getName() + " OpenEnded");
-		}
-		else if (this.bestValue < Ranking.STRAIGHT.getValor() && escaleraGutshot.size() >= 4 && this.esEscaleraGutshot) {
-			
+		} else if (this.bestValue < Ranking.STRAIGHT.getValor() && escaleraGutshot.size() >= 4
+				&& this.esEscaleraGutshot) {
+
 			draws.add(Ranking.STRAIGHT.getName() + " Gutshot");
 		}
-		
-		
+
 		return draws;
 	}
 
@@ -174,38 +203,37 @@ public class BestHand {
 		}
 		if (this.escaleraGutshot.size() == 0) {
 			this.escaleraGutshot.add(carta);
-		}		
-		else if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
+		} else if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
 				- carta.getValue().getValue() == 1) {
 			escaleraPrincipal.add(carta);
-			if(escaleraPrincipal.size() == 4){
+			if (escaleraPrincipal.size() == 4) {
 				this.esEscaleraOpenEnded = true;
 			}
 			this.escaleraGutshot.add(carta);
-			if(carta.getValue().getValue() == 2){
+			if (carta.getValue().getValue() == 2) {
 				Card as = compruebaSiHayAs();
 				escaleraPrincipal.add(as);
 			}
 		} else if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
 				- carta.getValue().getValue() > 1) {
-			if(escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
+			if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
 					- carta.getValue().getValue() > 2) {
-				if(this.escaleraGutshot.size() < 4 && !this.esEscaleraGutshot){
+				if (this.escaleraGutshot.size() < 4 && !this.esEscaleraGutshot) {
 					this.escaleraGutshot.clear();
 					this.gutshot = 0;
-					//this.esEscaleraGutshot = false;
+					// this.esEscaleraGutshot = false;
 				}
-				
-			} else{
-				if(this.esEscaleraGutshot){
+
+			} else {
+				if (this.esEscaleraGutshot) {
 					this.esEscaleraGutshot = false;
 					this.escaleraGutshot.remove(this.gutshot);
-				} else{
+				} else {
 					this.esEscaleraGutshot = true;
 					this.gutshot = escaleraPrincipal.size() - 1;
 				}
 			}
-			
+
 			this.escaleraGutshot.add(carta);
 			reiniciaEscaleras();
 			escaleras.get(0).add(carta);
@@ -223,14 +251,13 @@ public class BestHand {
 		else if (escaleraColorActual.get(escaleraColorActual.size() - 1).getValue().getValue()
 				- carta.getValue().getValue() == 1) {
 			escaleraColorActual.add(carta);
-			if(carta.getValue().getValue() == 2){
+			if (carta.getValue().getValue() == 2) {
 				Card as = compruebaSiHayAsdeColor(carta.getSuit());
-				if (as != null){
+				if (as != null) {
 					escaleraColorActual.add(as);
 				}
 			}
-		}
-		else {
+		} else {
 			escaleraColorActual = new ArrayList<Card>();
 			escaleraColorActual.add(carta);
 		}
@@ -266,37 +293,36 @@ public class BestHand {
 	}
 
 	private void reiniciaEscaleras() {
-		for(int i=0;i<escaleras.size();i++){
+		for (int i = 0; i < escaleras.size(); i++) {
 			escaleras.get(i).clear();
 		}
 	}
 
 	private Card compruebaSiHayAs() {
-		if(this.hand.getCard(0).getValue() == Value.Ace)
+		if (this.hand.getCard(0).getValue() == Value.Ace)
 			return this.hand.getCard(0);
 		else
 			return null;
 	}
-	
-	public List<Card> getCartaAltaList(){
+
+	public List<Card> getCartaAltaList() {
 		return this.cartaAlta;
 	}
 
 	private Card compruebaSiHayAsdeColor(Suit suit) {
 		int i = 0;
 		for (i = 0; i < this.hand.getCardsList().size() && i < 4; i++) {
-			if (this.hand.getCard(i).getValue() == Value.Ace &&
-					suit == this.hand.getCard(i).getSuit())
+			if (this.hand.getCard(i).getValue() == Value.Ace && suit == this.hand.getCard(i).getSuit())
 				return this.hand.getCard(i);
 		}
 		return null;
 	}
-	
-	public Hand getManoOrdenada(){
+
+	public Hand getManoOrdenada() {
 		return this.hand;
 	}
-	
-	public List<Card> getBestCards(){
+
+	public List<Card> getBestCards() {
 		return bestCards;
 	}
 

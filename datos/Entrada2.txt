@@ -1,4 +1,6 @@
 AsAc;5;2hJsTh9s8h
+As5s;5;2h7s9d3dTh
+AsAc;5;AhAd9s8hTh
 AhAc;3;QhJhTh
 AhAc;5;Qh7sTh9s8h
 AhKs;5;2h3h4h5h7h

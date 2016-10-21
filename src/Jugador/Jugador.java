@@ -34,6 +34,7 @@ public class Jugador implements Comparable<Object> {
 		BestHand jugada2 = ((Jugador) arg1).getJugada().getBestHand();
 		Hand mano1 = jugada1.getManoOrdenada();
 		Hand mano2 = jugada2.getManoOrdenada();
+		System.out.println(mano1);
 
 		// Si una jugada es mejor se devuelve la mejor
 		if (jugada1.getJugada().getValor() > jugada2.getJugada().getValor()) {
