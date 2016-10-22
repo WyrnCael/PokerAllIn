@@ -1,9 +1,9 @@
 package Cartas;
 
 public enum Ranking {
-	STRAIGHT_FLUSH("Straight flush", 9),
+	STRAIGHT_FLUSH("Straight Flush", 9),
 	FOUR_OF_A_KIND("Four of a kind", 8),
-	FULL_HOUSE("Full house", 7),
+	FULL_HOUSE("Full House", 7),
 	FLUSH("Flush", 6),
 	STRAIGHT("Straight", 5),
 	THREE_OF_A_KIND("Three of a kind",4),

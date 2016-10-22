@@ -591,8 +591,10 @@ public class BestHand {
 			str += this.bestHand.getCard(i);
 		}
 		str += ")\n";
-		for (int i = 0; i < draws.size(); i++) {
-			str += " - Draw: " + draws.get(i) + "\n";
+		if(this.hand.size() < 7){
+			for (int i = 0; i < draws.size(); i++) {
+				str += " - Draw: " + draws.get(i) + "\n";
+			}
 		}
 		return str;
 	}
