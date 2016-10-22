@@ -125,10 +125,6 @@ public class Hand {
 		}
 		Collections.sort(cardsList);
 	}
-	
-	public int size(){
-		return this.cardsList.size();
-	}
 
 	public String toString() {
 		String str = "";

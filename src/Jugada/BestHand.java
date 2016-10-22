@@ -587,7 +587,7 @@ public class BestHand {
 			str += this.bestHand.getCard(i);
 		}
 		str += ")\n";
-		if (this.hand.size() < 7) {
+		if (this.hand.getCardsList().size() < 7) {
 			for (int i = 0; i < draws.size(); i++) {
 				str += " - Draw: " + draws.get(i) + "\n";
 			}
