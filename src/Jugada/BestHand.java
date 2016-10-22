@@ -30,11 +30,11 @@ public class BestHand {
 	private List<Card> poker;
 	private List<Card> finalStraight;
 	private List<Card> straightFlush;
-	private List<List<Card>> escaleras; // En el 0 estara la escalera original
+	private List<List<Card>> straight; // En el 0 estara la escalera original
 										// y luego por colores segun el valor
 										// asociado.
 
-	private List<List<Card>> escalerasGutshot;
+	private List<List<Card>> straightGutshot;
 
 	private int gutshot;
 	private int flushGutshot;
@@ -42,7 +42,7 @@ public class BestHand {
 	private boolean isStraightOpenEnded;
 	private boolean isStraightFlushGutshot;
 	private boolean isStraightFlushOpenEnded;
-	
+
 	/**
 	 * Constructor
 	 * 
@@ -64,26 +64,26 @@ public class BestHand {
 		finalStraight = new ArrayList<Card>();
 		straightFlush = new ArrayList<Card>();
 
-		escaleras = new ArrayList<List<Card>>();
-		escaleras.add(new ArrayList<Card>());
-		escaleras.add(new ArrayList<Card>());
-		escaleras.add(new ArrayList<Card>());
-		escaleras.add(new ArrayList<Card>());
-		escaleras.add(new ArrayList<Card>());
+		straight = new ArrayList<List<Card>>();
+		straight.add(new ArrayList<Card>());
+		straight.add(new ArrayList<Card>());
+		straight.add(new ArrayList<Card>());
+		straight.add(new ArrayList<Card>());
+		straight.add(new ArrayList<Card>());
 
-		escalerasGutshot = new ArrayList<List<Card>>();
-		escalerasGutshot.add(new ArrayList<Card>());
-		escalerasGutshot.add(new ArrayList<Card>());
-		escalerasGutshot.add(new ArrayList<Card>());
-		escalerasGutshot.add(new ArrayList<Card>());
-		escalerasGutshot.add(new ArrayList<Card>());
+		straightGutshot = new ArrayList<List<Card>>();
+		straightGutshot.add(new ArrayList<Card>());
+		straightGutshot.add(new ArrayList<Card>());
+		straightGutshot.add(new ArrayList<Card>());
+		straightGutshot.add(new ArrayList<Card>());
+		straightGutshot.add(new ArrayList<Card>());
 		gutshot = 0;
 		flushGutshot = 0;
 		isStraightGutshot = false;
 		isStraightOpenEnded = false;
 		isStraightFlushGutshot = false;
 		isStraightFlushOpenEnded = false;
-		
+
 		insertCardsToList();
 		bestHand();
 		Draws();
@@ -365,24 +365,20 @@ public class BestHand {
 	private void Draws() {
 		if (this.rank != Ranking.STRAIGHT_FLUSH) {
 
-			if (straightFlush.size() == 4) {
-				draws.add(Ranking.STRAIGHT_FLUSH.getName());
+			if (this.isStraightFlushOpenEnded) {
+				draws.add(Ranking.STRAIGHT_FLUSH.getName() + " OpenEnded");
+			}
+			if (this.isStraightFlushGutshot && flushGutshot == 1) {
+				draws.add(Ranking.STRAIGHT_FLUSH.getName() + " Gutshot");
 			}
 
 			if (this.rank.getValue() < Ranking.FLUSH.getValue() && flush.size() == 4) {
 
 				draws.add(Ranking.FLUSH.getName());
 			}
-			
-			if(this.rank.getValue() < Ranking.STRAIGHT_FLUSH.getValue() && ( this.isStraightFlushOpenEnded || (this.isStraightFlushGutshot && flushGutshot == 1))){
-				if (this.isStraightFlushOpenEnded) {
-					draws.add(Ranking.STRAIGHT_FLUSH.getName() + " OpenEnded");
-				}
-				if (this.isStraightFlushGutshot && flushGutshot == 1) {
-					draws.add(Ranking.STRAIGHT_FLUSH.getName() + " Gutshot");
-				}
-			}
-			else if(this.rank.getValue() < Ranking.STRAIGHT.getValue()) {
+
+			if (!this.isStraightFlushOpenEnded && !this.isStraightFlushGutshot
+					&& this.rank.getValue() < Ranking.STRAIGHT.getValue()) {
 				if (this.isStraightOpenEnded) {
 					draws.add(Ranking.STRAIGHT.getName() + " OpenEnded");
 				}
@@ -397,115 +393,115 @@ public class BestHand {
 	/**
 	 * El metodo que anade la carta a la lista de escaleras
 	 * 
-	 * @param carta
-	 *            El parametro define la carta que va anadir
+	 * @param card
+	 *            El parametro card define la carta que va anadir
 	 */
-	private void addToStraight(Card carta) {
+	private void addToStraight(Card card) {
 		// Comprobamos en la escalera principal que la diferencia es 1 con la
 		// ultima insertada.
 		// Si no existia
-		List<Card> escaleraPrincipal = escaleras.get(0);
+		List<Card> tmpStraight = straight.get(0);
 
-		if (this.escalerasGutshot.get(0).size() == 0) {
-			this.escalerasGutshot.get(0).add(carta);
+		if (this.straightGutshot.get(0).size() == 0) {
+			this.straightGutshot.get(0).add(card);
 		}
-		if (escaleraPrincipal.size() == 0) {
-			escaleraPrincipal.add(carta);
-		} else if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
-				- carta.getValue().getValue() == 1) {
-			escaleraPrincipal.add(carta);
-			this.escalerasGutshot.get(0).add(carta);
-			if (escaleraPrincipal.size() == 4) {
+		if (tmpStraight.size() == 0) {
+			tmpStraight.add(card);
+		} else if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue()
+				- card.getValue().getValue() == 1) {
+			tmpStraight.add(card);
+			this.straightGutshot.get(0).add(card);
+			if (tmpStraight.size() == 4) {
 				this.isStraightOpenEnded = true;
 			}
-			if (carta.getValue().getValue() == 2) {
+			if (card.getValue().getValue() == 2) {
 				Card as = checkAce();
-				if(as != null){
-					escaleraPrincipal.add(as);
-					this.escalerasGutshot.get(0).add(as);
+				if (as != null) {
+					tmpStraight.add(as);
+					this.straightGutshot.get(0).add(as);
 				}
-				
+
 			}
-		} else if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
-				- carta.getValue().getValue() > 1) {
-			if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
-					- carta.getValue().getValue() > 2) {
+		} else if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue()
+				- card.getValue().getValue() > 1) {
+			if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue()
+					- card.getValue().getValue() > 2) {
 				if (!isStraightGutshot) {
-					this.escalerasGutshot.get(0).clear();
+					this.straightGutshot.get(0).clear();
 					this.gutshot = 0;
 				}
 
 			} else {
 				if (gutshot == 0) { // no habia gutshot antes
 					gutshot++;
-					this.escalerasGutshot.get(0).add(carta);
+					this.straightGutshot.get(0).add(card);
 				} else {
-					escalerasGutshot.get(0).clear();
+					straightGutshot.get(0).clear();
 					gutshot = 0;
 				}
 			}
-			escaleras.get(0).clear();
-			escaleras.get(0).add(carta);
+			straight.get(0).clear();
+			straight.get(0).add(card);
 		}
 
-		if (escalerasGutshot.get(0).size() == 4) {
+		if (straightGutshot.get(0).size() == 4) {
 			this.isStraightGutshot = true;
 		}
 
 		// La insertamos en su color si es la siguiente a la ultima, sino
 		// empezamos de 0 esa escalera
-		int numSuit = carta.getSuit().getNum();
-		List<Card> escaleraColorActual = escaleras.get(numSuit);
-		
-		if (this.escalerasGutshot.get(numSuit).size() == 0) {
-			this.escalerasGutshot.get(numSuit).add(carta);
+		int numSuit = card.getSuit().getNum();
+		List<Card> tmpStraightFlush = straight.get(numSuit);
+
+		if (this.straightGutshot.get(numSuit).size() == 0) {
+			this.straightGutshot.get(numSuit).add(card);
 		}
-		
-		if (escaleraColorActual.size() == 0) {
-			escaleraColorActual.add(carta);
+
+		if (tmpStraightFlush.size() == 0) {
+			tmpStraightFlush.add(card);
 		}
 		// Caso especial, que sea 2, por lo que un As del mismo color puede
 		// valer:
-		else if (escaleraColorActual.get(escaleraColorActual.size() - 1).getValue().getValue()
-				- carta.getValue().getValue() == 1) {
-			escaleraColorActual.add(carta);
-			this.escalerasGutshot.get(numSuit).add(carta);
-			if (escaleraColorActual.size() == 4) {
+		else if (tmpStraightFlush.get(tmpStraightFlush.size() - 1).getValue().getValue()
+				- card.getValue().getValue() == 1) {
+			tmpStraightFlush.add(card);
+			this.straightGutshot.get(numSuit).add(card);
+			if (tmpStraightFlush.size() == 4) {
 				this.isStraightFlushOpenEnded = true;
 			}
-			if (carta.getValue().getValue() == 2) {
-				Card as = checkAceSuit(carta.getSuit());
+			if (card.getValue().getValue() == 2) {
+				Card as = checkAceSuit(card.getSuit());
 				if (as != null) {
-					escaleraColorActual.add(as);
-					this.escalerasGutshot.get(numSuit).add(as);
+					tmpStraightFlush.add(as);
+					this.straightGutshot.get(numSuit).add(as);
 				}
 			}
-		} else if (escaleraColorActual.get(escaleraColorActual.size() - 1).getValue().getValue()
-				- carta.getValue().getValue() > 1) {
-			if (escaleraColorActual.get(escaleraColorActual.size() - 1).getValue().getValue()
-					- carta.getValue().getValue() > 2) {
+		} else if (tmpStraightFlush.get(tmpStraightFlush.size() - 1).getValue().getValue()
+				- card.getValue().getValue() > 1) {
+			if (tmpStraightFlush.get(tmpStraightFlush.size() - 1).getValue().getValue()
+					- card.getValue().getValue() > 2) {
 				if (!isStraightFlushGutshot) {
-					this.escalerasGutshot.get(numSuit).clear();
+					this.straightGutshot.get(numSuit).clear();
 					this.flushGutshot = 0;
 				}
 
 			} else {
 				if (flushGutshot == 0) { // no habia gutshot antes
 					flushGutshot++;
-					this.escalerasGutshot.get(numSuit).add(carta);
+					this.straightGutshot.get(numSuit).add(card);
 				} else {
-					escalerasGutshot.get(numSuit).clear();
+					straightGutshot.get(numSuit).clear();
 					flushGutshot = 0;
 				}
 			}
-			escaleraColorActual.clear();
-			escaleraColorActual.add(carta);
+			tmpStraightFlush.clear();
+			tmpStraightFlush.add(card);
 		}
-		
-		if (escalerasGutshot.get(numSuit).size() == 4) {
+
+		if (straightGutshot.get(numSuit).size() == 4) {
 			this.isStraightFlushGutshot = true;
 		}
-		
+
 		checkStraight();
 	}
 
@@ -513,17 +509,17 @@ public class BestHand {
 	 * El metodo que comprueba si existe escalera
 	 */
 	private void checkStraight() {
-		if (escaleras.get(0).size() >= 5) {
+		if (straight.get(0).size() >= 5) {
 			// Comprobamos la escalera de color
 			for (int i = 1; i <= 4; i++) {
-				if (escaleras.get(i).size() >= 5) {
+				if (straight.get(i).size() >= 5) {
 					// Si no habia escalera de color o la actual es superior a
 					// la guardada
-					if (straightFlush.size() < 5 || straightFlush.get(0).getValue().getValue() < escaleras.get(i).get(0)
+					if (straightFlush.size() < 5 || straightFlush.get(0).getValue().getValue() < straight.get(i).get(0)
 							.getValue().getValue()) {
 						ArrayList<Card> escaleraColorAux = new ArrayList<Card>();
 						for (int j = 0; j < 5; j++) {
-							escaleraColorAux.add(escaleras.get(i).get(j));
+							escaleraColorAux.add(straight.get(i).get(j));
 						}
 						straightFlush = escaleraColorAux;
 					}
@@ -531,9 +527,9 @@ public class BestHand {
 			}
 			// Asignamos a la escalera final si es superior a la que habia y es
 			// escalera
-			if (escaleras.get(0).size() >= 5 && (finalStraight.size() < 5
-					|| finalStraight.get(0).getValue().getValue() < escaleras.get(0).get(0).getValue().getValue())) {
-				finalStraight = escaleras.get(0);
+			if (straight.get(0).size() >= 5 && (finalStraight.size() < 5
+					|| finalStraight.get(0).getValue().getValue() < straight.get(0).get(0).getValue().getValue())) {
+				finalStraight = straight.get(0);
 			}
 		}
 	}
@@ -591,7 +587,7 @@ public class BestHand {
 			str += this.bestHand.getCard(i);
 		}
 		str += ")\n";
-		if(this.hand.size() < 7){
+		if (this.hand.size() < 7) {
 			for (int i = 0; i < draws.size(); i++) {
 				str += " - Draw: " + draws.get(i) + "\n";
 			}
