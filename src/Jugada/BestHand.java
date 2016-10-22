@@ -374,7 +374,7 @@ public class BestHand {
 				draws.add(Ranking.FLUSH.getName());
 			}
 			
-			if(this.rank.getValue() < Ranking.STRAIGHT_FLUSH.getValue()){
+			if(this.rank.getValue() < Ranking.STRAIGHT_FLUSH.getValue() && ( this.isStraightFlushOpenEnded || (this.isStraightFlushGutshot && flushGutshot == 1))){
 				if (this.isStraightFlushOpenEnded) {
 					draws.add(Ranking.STRAIGHT_FLUSH.getName() + " OpenEnded");
 				}
@@ -382,7 +382,7 @@ public class BestHand {
 					draws.add(Ranking.STRAIGHT_FLUSH.getName() + " Gutshot");
 				}
 			}
-			if(this.rank.getValue() < Ranking.STRAIGHT.getValue()) {
+			else if(this.rank.getValue() < Ranking.STRAIGHT.getValue()) {
 				if (this.isStraightOpenEnded) {
 					draws.add(Ranking.STRAIGHT.getName() + " OpenEnded");
 				}
