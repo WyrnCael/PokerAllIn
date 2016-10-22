@@ -2,6 +2,7 @@ package Poker_All_In;
 
 import FileIO.InputFile;
 import FileIO.OutPutFile;
+import GUI.MainWindow;
 import Game.BestHandWith2Card;
 import Game.BestHandWith5Card;
 import Game.Game;
@@ -19,7 +20,7 @@ public class Poker_All_In {
 		OutPutFile salida = new OutPutFile(args[2]);
 
 		String line;
-		Game game = null;
+		Game game = null;	
 		
 		// args[0] es el opcion de la jugada
 		switch (args[0]) {
@@ -35,12 +36,15 @@ public class Poker_All_In {
 		case "4":
 			game = new OmahaGame();
 			break;
+		case "5":
+			MainWindow.getInstance();
+			break;
 		default:
 			System.out.println("Fuera del rango de opcion");
 			break;
 		}
 
-		line = entrada.readLine();
+		/*line = entrada.readLine();
 		while (line != null) {
 			
 			game.parseGame(line);
@@ -50,7 +54,7 @@ public class Poker_All_In {
 			game.clear();
 			line = entrada.readLine();
 		}
-		
+		*/
 		entrada.close();
 		salida.close();
 
