@@ -34,12 +34,15 @@ public class BestHand {
 										// y luego por colores segun el valor
 										// asociado.
 
-	private List<Card> escaleraGutshot;
+	private List<List<Card>> escalerasGutshot;
 
 	private int gutshot;
+	private int flushGutshot;
 	private boolean isStraightGutshot;
 	private boolean isStraightOpenEnded;
-
+	private boolean isStraightFlushGutshot;
+	private boolean isStraightFlushOpenEnded;
+	
 	/**
 	 * Constructor
 	 * 
@@ -68,11 +71,19 @@ public class BestHand {
 		escaleras.add(new ArrayList<Card>());
 		escaleras.add(new ArrayList<Card>());
 
-		escaleraGutshot = new ArrayList<Card>();
+		escalerasGutshot = new ArrayList<List<Card>>();
+		escalerasGutshot.add(new ArrayList<Card>());
+		escalerasGutshot.add(new ArrayList<Card>());
+		escalerasGutshot.add(new ArrayList<Card>());
+		escalerasGutshot.add(new ArrayList<Card>());
+		escalerasGutshot.add(new ArrayList<Card>());
 		gutshot = 0;
+		flushGutshot = 0;
 		isStraightGutshot = false;
 		isStraightOpenEnded = false;
-
+		isStraightFlushGutshot = false;
+		isStraightFlushOpenEnded = false;
+		
 		insertCardsToList();
 		bestHand();
 		Draws();
@@ -362,8 +373,16 @@ public class BestHand {
 
 				draws.add(Ranking.FLUSH.getName());
 			}
-
-			if (this.rank.getValue() < Ranking.STRAIGHT.getValue()) {
+			
+			if(this.rank.getValue() < Ranking.STRAIGHT_FLUSH.getValue()){
+				if (this.isStraightFlushOpenEnded) {
+					draws.add(Ranking.STRAIGHT_FLUSH.getName() + " OpenEnded");
+				}
+				if (this.isStraightFlushGutshot && flushGutshot == 1) {
+					draws.add(Ranking.STRAIGHT_FLUSH.getName() + " Gutshot");
+				}
+			}
+			else if(this.rank.getValue() < Ranking.STRAIGHT.getValue()) {
 				if (this.isStraightOpenEnded) {
 					draws.add(Ranking.STRAIGHT.getName() + " OpenEnded");
 				}
@@ -387,38 +406,41 @@ public class BestHand {
 		// Si no existia
 		List<Card> escaleraPrincipal = escaleras.get(0);
 
-		if (this.escaleraGutshot.size() == 0) {
-			this.escaleraGutshot.add(carta);
+		if (this.escalerasGutshot.get(0).size() == 0) {
+			this.escalerasGutshot.get(0).add(carta);
 		}
 		if (escaleraPrincipal.size() == 0) {
 			escaleraPrincipal.add(carta);
 		} else if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
 				- carta.getValue().getValue() == 1) {
 			escaleraPrincipal.add(carta);
-			this.escaleraGutshot.add(carta);
+			this.escalerasGutshot.get(0).add(carta);
 			if (escaleraPrincipal.size() == 4) {
 				this.isStraightOpenEnded = true;
 			}
 			if (carta.getValue().getValue() == 2) {
 				Card as = checkAce();
-				escaleraPrincipal.add(as);
-				this.escaleraGutshot.add(as);
+				if(as != null){
+					escaleraPrincipal.add(as);
+					this.escalerasGutshot.get(0).add(as);
+				}
+				
 			}
 		} else if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
 				- carta.getValue().getValue() > 1) {
 			if (escaleraPrincipal.get(escaleraPrincipal.size() - 1).getValue().getValue()
 					- carta.getValue().getValue() > 2) {
 				if (!isStraightGutshot) {
-					this.escaleraGutshot.clear();
+					this.escalerasGutshot.get(0).clear();
 					this.gutshot = 0;
 				}
 
 			} else {
 				if (gutshot == 0) { // no habia gutshot antes
 					gutshot++;
-					this.escaleraGutshot.add(carta);
+					this.escalerasGutshot.get(0).add(carta);
 				} else {
-					escaleraGutshot.clear();
+					escalerasGutshot.get(0).clear();
 					gutshot = 0;
 				}
 			}
@@ -426,7 +448,7 @@ public class BestHand {
 			escaleras.get(0).add(carta);
 		}
 
-		if (escaleraGutshot.size() == 4) {
+		if (escalerasGutshot.get(0).size() == 4) {
 			this.isStraightGutshot = true;
 		}
 
@@ -434,6 +456,11 @@ public class BestHand {
 		// empezamos de 0 esa escalera
 		int numSuit = carta.getSuit().getNum();
 		List<Card> escaleraColorActual = escaleras.get(numSuit);
+		
+		if (this.escalerasGutshot.get(numSuit).size() == 0) {
+			this.escalerasGutshot.get(numSuit).add(carta);
+		}
+		
 		if (escaleraColorActual.size() == 0) {
 			escaleraColorActual.add(carta);
 		}
@@ -442,17 +469,43 @@ public class BestHand {
 		else if (escaleraColorActual.get(escaleraColorActual.size() - 1).getValue().getValue()
 				- carta.getValue().getValue() == 1) {
 			escaleraColorActual.add(carta);
+			this.escalerasGutshot.get(numSuit).add(carta);
+			if (escaleraColorActual.size() == 4) {
+				this.isStraightFlushOpenEnded = true;
+			}
 			if (carta.getValue().getValue() == 2) {
 				Card as = checkAceSuit(carta.getSuit());
 				if (as != null) {
 					escaleraColorActual.add(as);
+					this.escalerasGutshot.get(numSuit).add(as);
 				}
 			}
-		} else {
-			escaleraColorActual = new ArrayList<Card>();
+		} else if (escaleraColorActual.get(escaleraColorActual.size() - 1).getValue().getValue()
+				- carta.getValue().getValue() > 1) {
+			if (escaleraColorActual.get(escaleraColorActual.size() - 1).getValue().getValue()
+					- carta.getValue().getValue() > 2) {
+				if (!isStraightFlushGutshot) {
+					this.escalerasGutshot.get(numSuit).clear();
+					this.flushGutshot = 0;
+				}
+
+			} else {
+				if (flushGutshot == 0) { // no habia gutshot antes
+					flushGutshot++;
+					this.escalerasGutshot.get(numSuit).add(carta);
+				} else {
+					escalerasGutshot.get(numSuit).clear();
+					flushGutshot = 0;
+				}
+			}
+			escaleraColorActual.clear();
 			escaleraColorActual.add(carta);
 		}
-		escaleras.set(numSuit, escaleraColorActual);
+		
+		if (escalerasGutshot.get(numSuit).size() == 4) {
+			this.isStraightFlushGutshot = true;
+		}
+		
 		checkStraight();
 	}
 
