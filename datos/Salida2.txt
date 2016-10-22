@@ -1,14 +1,17 @@
 AsAc;5;2hJsTh9s8h
  - Best hand: Pair (AsAcJsTh9s)
+ - Draw: Straight OpenEnded
 
 AhAc;3;QhJhTh
  - Best hand: Pair (AhAcQhJhTh)
  - Draw: Flush
  - Draw: Straight flush Gutshot
+ - Draw: Straight Gutshot
 
 AhAc;5;Qh7sTh9s8h
  - Best hand: Pair (AhAcQhTh9s)
  - Draw: Flush
+ - Draw: Straight OpenEnded
 
 AhKs;5;2h3h4h5h7h
  - Best hand: Straight flush (5h4h3h2hAh)
@@ -17,6 +20,7 @@ AhAc;3;QhJhTh
  - Best hand: Pair (AhAcQhJhTh)
  - Draw: Flush
  - Draw: Straight flush Gutshot
+ - Draw: Straight Gutshot
 
 AhAc;5;As2s3h4dJd
  - Best hand: Three of a kind (AhAcAsJd4d)
@@ -29,13 +33,17 @@ AhAc;5;AdQhJhTh2c
  - Best hand: Three of a kind (AhAcAdQhJh)
  - Draw: Flush
  - Draw: Straight flush Gutshot
+ - Draw: Straight Gutshot
 
 AhAc;5;8d4s3h5h2c
  - Best hand: Straight (5h4s3h2cAh)
 
 AhAc;5;6d4s3h5h8c
  - Best hand: Pair (AhAc8c6d5h)
+ - Draw: Straight OpenEnded
+ - Draw: Straight Gutshot
 
 AhAc;5;6d4s3h5hJc
  - Best hand: Pair (AhAcJc6d5h)
+ - Draw: Straight OpenEnded
 

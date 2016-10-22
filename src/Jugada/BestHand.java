@@ -382,7 +382,7 @@ public class BestHand {
 					draws.add(Ranking.STRAIGHT_FLUSH.getName() + " Gutshot");
 				}
 			}
-			else if(this.rank.getValue() < Ranking.STRAIGHT.getValue()) {
+			if(this.rank.getValue() < Ranking.STRAIGHT.getValue()) {
 				if (this.isStraightOpenEnded) {
 					draws.add(Ranking.STRAIGHT.getName() + " OpenEnded");
 				}
