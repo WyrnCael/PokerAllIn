@@ -17,14 +17,14 @@ J1: Pair (AhAdQsJcTh)
 J4: High card (AdKcQsTh9h)
 
 4;J1AhAc;J2KsKh;J3Jc8c;J44sJc;JdJsAcKh9h
-J1: Full house (AhAcAcJdJs)
-J2: Full house (KsKhKhJdJs)
+J1: Full House (AhAcAcJdJs)
+J2: Full House (KsKhKhJdJs)
 J3: Three of a kind (JcJdJsAcKh)
 J4: Three of a kind (JcJdJsAcKh)
 
 4;J1AhAc;J2KsKh;J3Jc8c;J49sJc;JdJsAcKh2h
-J1: Full house (AhAcAcJdJs)
-J2: Full house (KsKhKhJdJs)
+J1: Full House (AhAcAcJdJs)
+J2: Full House (KsKhKhJdJs)
 J3: Three of a kind (JcJdJsAcKh)
 J4: Three of a kind (JcJdJsAcKh)
 
@@ -41,14 +41,14 @@ J1: Two pair (AsAc3c3hKh)
 J3: Two pair (JcJdTcTsAc)
 
 4;J1As3c;J2ThAh;J3JcTc;J4JsJc;Jd5sAcKh5h
-J4: Full house (JsJcJd5s5h)
+J4: Full House (JsJcJd5s5h)
 J1: Two pair (AsAc5s5hKh)
 J2: Two pair (AhAc5s5hKh)
 J3: Two pair (JcJd5s5hAc)
 
 4;J1As3c;J2ThAh;J3JcTc;J4JsJc;Ad5sAcKh5h
-J1: Full house (AsAdAc5s5h)
-J2: Full house (AhAdAc5s5h)
+J1: Full House (AsAdAc5s5h)
+J2: Full House (AhAdAc5s5h)
 J4: Two pair (AdAcJsJcKh)
 J3: Two pair (AdAc5s5hKh)
 
