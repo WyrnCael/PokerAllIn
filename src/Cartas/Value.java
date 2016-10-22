@@ -14,25 +14,39 @@ public enum Value {
 	Four("4", 4),
 	Three("3", 3),
 	Two("2", 2);
-	
+
+	// Campos de la clase
 	private String name;
 	private int value;
-	
-	
-	private Value(String name, int valor){
+
+	/**
+	 * Constructor
+	 * 
+	 * @param name
+	 *            El parametro name es el string del valor
+	 * @param valor
+	 *            El parametro es el valor
+	 */
+	private Value(String name, int valor) {
 		this.name = name;
 		this.value = valor;
 	}
-	
-	public String getName(){
-		return this.name;
+
+	/**
+	 * Metodo que devuelve el string del valor
+	 * 
+	 * @return name es el string del valor
+	 */
+	public String getName() {
+		return name;
 	}
-	
-	public int getValue(){
-		return this.value;
-	}
-	
-	public String toString(){
-		return this.name();
+
+	/**
+	 * Metodo que devuelve el valor
+	 * 
+	 * @return value es el valor
+	 */
+	public int getValue() {
+		return value;
 	}
 }
