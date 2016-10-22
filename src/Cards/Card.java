@@ -1,4 +1,4 @@
-package Cartas;
+package Cards;
 
 public class Card implements Comparable<Object> {
 

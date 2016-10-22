@@ -1,11 +1,11 @@
-package Jugada;
+package Game;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import Cartas.Hand;
-import Jugador.player;
+import Cards.Hand;
+import Players.player;
 
 public class pokerGame {
 

@@ -1,4 +1,4 @@
-package Jugada;
+package Game;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import Cartas.Card;
-import Cartas.Hand;
-import Cartas.Ranking;
-import Cartas.Suit;
-import Cartas.Value;
+import Cards.Card;
+import Cards.Hand;
+import Cards.Ranking;
+import Cards.Suit;
+import Cards.Value;
 
 public class BestHand {
 

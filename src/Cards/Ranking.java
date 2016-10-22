@@ -1,4 +1,4 @@
-package Cartas;
+package Cards;
 
 public enum Ranking {
 	STRAIGHT_FLUSH("Straight Flush", 9),

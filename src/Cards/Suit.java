@@ -1,4 +1,4 @@
-package Cartas;
+package Cards;
 
 public enum Suit {
 	Hearts('h', 1),

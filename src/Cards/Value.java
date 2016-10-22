@@ -1,4 +1,4 @@
-package Cartas;
+package Cards;
 
 public enum Value {
 	Ace("A", 14),

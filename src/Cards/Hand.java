@@ -1,4 +1,4 @@
-package Cartas;
+package Cards;
 
 import java.util.*;
 

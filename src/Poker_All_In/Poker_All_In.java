@@ -1,12 +1,12 @@
-package main;
+package Poker_All_In;
 
-import Cartas.Hand;
-import Jugada.pokerGame;
-import Jugada.BestHand;
-import controlArchivo.InputFile;
-import controlArchivo.OutPutFile;
+import Cards.Hand;
+import FileIO.InputFile;
+import FileIO.OutPutFile;
+import Game.BestHand;
+import Game.pokerGame;
 
-public class Main {
+public class Poker_All_In {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

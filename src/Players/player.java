@@ -1,7 +1,7 @@
-package Jugador;
+package Players;
 
-import Cartas.Hand;
-import Jugada.BestHand;
+import Cards.Hand;
+import Game.BestHand;
 
 public class player implements Comparable<Object> {
 

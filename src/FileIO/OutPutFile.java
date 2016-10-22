@@ -1,4 +1,4 @@
-package controlArchivo;
+package FileIO;
 
 import java.io.BufferedWriter;
 import java.io.File;
