@@ -16,8 +16,8 @@ public class Poker_All_In {
 
 		long start = System.currentTimeMillis();
 
-		InputFile entrada = new InputFile(args[1]);
-		OutPutFile salida = new OutPutFile(args[2]);
+		//InputFile entrada = new InputFile(args[1]);
+		// OutPutFile salida = new OutPutFile(args[2]);
 
 		String line;
 		Game game = null;	
@@ -54,10 +54,10 @@ public class Poker_All_In {
 			game.clear();
 			line = entrada.readLine();
 		}
-		*/
+		
 		entrada.close();
 		salida.close();
-
+		*/
 
 		long end = System.currentTimeMillis();
 		long time = end - start;

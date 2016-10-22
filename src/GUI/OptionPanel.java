@@ -26,19 +26,9 @@ public class OptionPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				
 				/* PRUEBA!!!!! */
-				Hand hand = new Hand();
-				Card prueba = new Card("9", "c");
-				hand.add(prueba);
-				prueba = new Card("A", "h");
-				hand.add(prueba);
-				prueba = new Card("J", "h");
-				hand.add(prueba);
-				prueba = new Card("3", "d");
-				hand.add(prueba);
-				prueba = new Card("9", "s");
-				hand.add(prueba);
+				Hand hand = new Hand("9cAhJh3d9s");
 				
-				Board panel = new Board(hand);
+				BoardAp1Pr1 panel = new BoardAp1Pr1(hand);
 				Controller.getInstance().setMainPanel(panel);
 			}
 		});

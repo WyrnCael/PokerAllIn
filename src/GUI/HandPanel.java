@@ -6,11 +6,10 @@ import javax.swing.JPanel;
 
 import Cards.Hand;
 
-public class Board extends JPanel{
-
+public class HandPanel extends JPanel {
 	private Hand hand;
 	
-	public Board(Hand hand){
+	public HandPanel(Hand hand){
 		this.hand = hand;
 		create();
 	}
