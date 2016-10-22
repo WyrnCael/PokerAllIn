@@ -13,7 +13,7 @@ import Cards.Ranking;
 import Cards.Suit;
 import Cards.Value;
 
-public class BestHand {
+public class BestHand implements Comparable<Object> {
 
 	// Campos de clase
 	private Hand hand;
@@ -407,8 +407,7 @@ public class BestHand {
 		}
 		if (tmpStraight.size() == 0) {
 			tmpStraight.add(card);
-		} else if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue()
-				- card.getValue().getValue() == 1) {
+		} else if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue() - card.getValue().getValue() == 1) {
 			tmpStraight.add(card);
 			this.straightGutshot.get(0).add(card);
 			if (tmpStraight.size() == 4) {
@@ -422,10 +421,8 @@ public class BestHand {
 				}
 
 			}
-		} else if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue()
-				- card.getValue().getValue() > 1) {
-			if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue()
-					- card.getValue().getValue() > 2) {
+		} else if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue() - card.getValue().getValue() > 1) {
+			if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue() - card.getValue().getValue() > 2) {
 				if (!isStraightGutshot) {
 					this.straightGutshot.get(0).clear();
 					this.gutshot = 0;
@@ -586,10 +583,10 @@ public class BestHand {
 		for (int i = 0; i < this.bestHand.getCardsList().size() && i < 5; i++) {
 			str += this.bestHand.getCard(i);
 		}
-		str += ")\n";
+		str += ")" + System.getProperty("line.separator");
 		if (this.hand.getCardsList().size() < 7) {
 			for (int i = 0; i < draws.size(); i++) {
-				str += " - Draw: " + draws.get(i) + "\n";
+				str += " - Draw: " + draws.get(i) + System.getProperty("line.separator");
 			}
 		}
 		return str;
@@ -605,5 +602,81 @@ public class BestHand {
 		});
 		sortedEntries.addAll(map.entrySet());
 		return sortedEntries;
+	}
+
+	/**
+	 * El metodo que compara dos mejor mano
+	 */
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		BestHand hand2 = ((BestHand) o);
+		int cardValue1;
+		int cardValue2;
+		int pos = 0;
+		int k = 1;
+		// Si una jugada es mejor se devuelve la mejor
+		if (this.rank.getValue() > hand2.rank.getValue()) {
+			return -1;
+		} else if (this.rank.getValue() < hand2.rank.getValue()) {
+			return 1;
+		}
+		// Si son iguales se compara por jugada.
+		else {
+			switch (this.rank.getValue()) {
+			// Carta alta
+			case 1:
+				k = 1;
+				break;
+			// Pareja y trio.
+			case 2:
+			case 4:
+				// Comprobamos la mayor pareja o trio
+				cardValue1 = this.bestHand.getCard(0).getValue().getValue();
+				cardValue2 = hand2.bestHand.getCard(0).getValue().getValue();
+				if (cardValue1 > cardValue2) {
+					return -1;
+				} else if (cardValue1 < cardValue2) {
+					return 1;
+				}
+				pos = 2;
+				k = 1;
+				break;
+			// Doble pareja
+			case 3:
+
+				// Miramos la primera pareja
+				k = 1;
+				break;
+			// Escalera, color o escalera de color
+			case 5:
+			case 6:
+			case 9:
+				// Comprobamos la escalera o color mas alto
+				k = 5;
+				// Full house
+			case 7:
+				// Miramos el trio
+				k = 3;
+
+				// Poker
+			case 8:
+				// Miramos el poker
+				k = 4;
+			default:
+				break;
+			}
+		}
+		for (int i = pos; i < 5; i = i + k) {
+			cardValue1 = this.bestHand.getCard(i).getValue().getValue();
+			cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
+			if (cardValue1 > cardValue2) {
+				return -1;
+			} else if (cardValue1 < cardValue2) {
+				return 1;
+			}
+		}
+
+		return 0;
 	}
 }

@@ -5,18 +5,18 @@ import java.util.Collections;
 import java.util.List;
 
 import Cards.Hand;
-import Players.player;
+import Players.Player;
 
 public class pokerGame {
 
 	// Campos de la clase
-	private List<player> players;
+	private List<Player> players;
 
 	/**
 	 * Constructor
 	 */
 	public pokerGame(String game) {
-		this.players = new ArrayList<player>();
+		this.players = new ArrayList<Player>();
 		parseGame(game);
 		processGame();
 	}
@@ -52,7 +52,7 @@ public class pokerGame {
 	 *            El parametro hand define las cartas que tiene el jugador
 	 */
 	private void addPlayer(String name, Hand hand) {
-		players.add(new player(name, hand));
+		players.add(new Player(name, hand));
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class pokerGame {
 	public String toString() {
 		String str = "";
 		for (int i = 0; i < this.players.size(); i++) {
-			str += this.players.get(i).toString() + "\n";
+			str += this.players.get(i).toString() + System.getProperty("line.separator");
 		}
 		return str;
 	}
