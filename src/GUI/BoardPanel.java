@@ -49,7 +49,7 @@ public class BoardPanel extends backgroundPanel {
 		GridBagConstraints c = new GridBagConstraints();
 		this.add(this.bestHandPanel, c);		
 		this.revalidate();
-//		this.repaint();
+		this.repaint();
 //		this.repaint();
 	}
 	
@@ -72,6 +72,7 @@ public class BoardPanel extends backgroundPanel {
 				this.add(player, c);	
 			}
 			this.revalidate();
+			this.repaint();
 		}
 	}
 	

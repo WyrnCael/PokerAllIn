@@ -80,6 +80,7 @@ public class PokerGame extends Game{
 	@Override
 	public void clear() {
 		this.players.clear();
+		this.playersCards.clear();
 	}
 
 	@Override
