@@ -37,6 +37,7 @@ public class HandPanel extends JPanel{
 			this.add(imgLabel);
 		}
 		
+		this.setOpaque(false);
 		this.setPreferredSize(new Dimension(550,150));
 		this.setVisible(true);
 	}

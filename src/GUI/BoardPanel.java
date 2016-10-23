@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 
 import javax.swing.BoxLayout;
@@ -24,7 +26,7 @@ public class BoardPanel extends backgroundPanel {
 	}
 
 	private void initGUI() {
-		this.setLayout(new FlowLayout());
+		this.setLayout(new GridBagLayout());	
 		
 		this.setVisible(true);
 	}
@@ -39,7 +41,8 @@ public class BoardPanel extends backgroundPanel {
 //		this.add(bestHandLabel);
 		this.bestHandPanel = bestHandPanel;
 		this.bestHandPanel.setPreferredSize(new Dimension(550,150));
-		this.add(this.bestHandPanel);
+		GridBagConstraints c = new GridBagConstraints();
+		this.add(this.bestHandPanel, c);		
 		this.revalidate();
 //		this.repaint();
 //		this.repaint();
