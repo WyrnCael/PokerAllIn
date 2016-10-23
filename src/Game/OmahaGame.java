@@ -5,12 +5,15 @@ import java.util.Collections;
 import java.util.List;
 
 import Cards.Hand;
+import Players.Player;
 
 public class OmahaGame extends Game{
 
 	// Campos de la clase
 	private List<BestHand> bestHandList;
 	private String gameInfo;
+	private Hand sharedHand;
+	private Player player;
 
 	/**
 	 * Constructor
@@ -29,7 +32,9 @@ public class OmahaGame extends Game{
 	public void parseGame(String gameInfo) {
 		this.gameInfo = gameInfo;
 		String HoleCards = gameInfo.substring(0, 8);
+		this.player = new Player("", HoleCards);
 		String CommunityCards = gameInfo.substring(11, gameInfo.length());
+		this.sharedHand = new Hand(CommunityCards);
 
 		int holeCardsSize = HoleCards.length();
 		int CommunCardsSize = CommunityCards.length();
@@ -86,5 +91,17 @@ public class OmahaGame extends Game{
 	@Override
 	public BestHand getBestHand() {
 		return this.bestHandList.get(0);
+	}
+
+	@Override
+	public List<Player> getPlayers() {
+		// TODO Auto-generated method stub
+		return new ArrayList<Player>(){{ add(player); }};
+	}
+
+	@Override
+	public Hand getSharedHand() {
+		// TODO Auto-generated method stub
+		return this.sharedHand;
 	}
 }

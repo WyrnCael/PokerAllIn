@@ -8,6 +8,7 @@ public class Player implements Comparable<Object> {
 	// campos de la clase
 	String name;
 	BestHand besthand;
+	Hand hand;
 
 	/**
 	 * Constructor
@@ -20,10 +21,20 @@ public class Player implements Comparable<Object> {
 	public Player(String name, Hand cards) {
 		this.name = name;
 		this.besthand = new BestHand(cards);
+		this.hand = cards;
+	}
+	
+	public Player(String name, String cards) {
+		this.name = name;		
+		this.hand = new Hand(cards);
 	}
 	
 	public BestHand getBestHand(){
 		return this.besthand;
+	}
+	
+	public Hand getHand(){
+		return this.hand;
 	}
 
 	/**

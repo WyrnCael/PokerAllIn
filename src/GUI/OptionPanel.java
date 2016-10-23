@@ -95,8 +95,7 @@ public class OptionPanel extends JPanel {
 						game.processGame();
 						
 						textArea.append(game.toString() + System.getProperty("line.separator"));
-						HandPanel handPanel = new HandPanel(game.getBestHand().getBestHand());
-						bPanel.setBestHandPanel(handPanel);
+						bPanel.setPlayersAndCommunityCards(game.getSharedHand(), game.getPlayers());
 						
 						line = controller.readLine();
 						if(line != null){
@@ -109,6 +108,7 @@ public class OptionPanel extends JPanel {
 							controller.close();
 						}
 					} catch (Exception exception) {
+						System.out.println(exception.getMessage());
 						JOptionPane.showMessageDialog(null, "Este archivo de entrada no es para este modo de juego", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -125,8 +125,7 @@ public class OptionPanel extends JPanel {
 				game.processGame();
 				
 				textArea.append(game.toString() + System.getProperty("line.separator"));
-				HandPanel handPanel = new HandPanel(game.getBestHand().getBestHand());
-				bPanel.setBestHandPanel(handPanel);
+				bPanel.setPlayersAndCommunityCards(game.getSharedHand(), game.getPlayers());
 				
 				line = controller.readLine();
 				if(line == null){

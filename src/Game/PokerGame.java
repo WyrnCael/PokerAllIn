@@ -12,12 +12,15 @@ public class PokerGame extends Game{
 	// Campos de la clase
 	private List<Player> players;
 	private String gameInfo;
+	private Hand sharedHand;
+	private List<Player> playersCards;
 
 	/**
 	 * Constructor
 	 */
 	public PokerGame() {
 		this.players = new ArrayList<Player>();
+		this.playersCards = new ArrayList<Player>();
 	}
 
 	/**
@@ -33,12 +36,14 @@ public class PokerGame extends Game{
 
 		// Leemos las cartas comunes
 		String CommunityCards = gameInfo.substring(2 + (7 * numPlayers), gameInfo.length());
+		this.sharedHand = new Hand(CommunityCards);
 
 		// Leemos los jugadores
 		for (int i = 2; i < 2 + (7 * numPlayers); i = i + 7) {
 			String name = gameInfo.substring(i, i + 2);
 			String HoleCards = gameInfo.substring(i + 2, i + 6);
 			Hand hand = new Hand(HoleCards + CommunityCards);
+			this.playersCards.add(new Player(name, HoleCards));
 			addPlayer(name, hand);
 		}
 	}
@@ -80,5 +85,17 @@ public class PokerGame extends Game{
 	@Override
 	public BestHand getBestHand() {
 		return this.players.get(0).getBestHand();
+	}
+
+	@Override
+	public List<Player> getPlayers() {
+		// TODO Auto-generated method stub
+		return playersCards;
+	}
+
+	@Override
+	public Hand getSharedHand() {
+		// TODO Auto-generated method stub
+		return sharedHand;
 	}
 }

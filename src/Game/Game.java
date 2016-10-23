@@ -1,5 +1,10 @@
 package Game;
 
+import java.util.List;
+
+import Cards.Hand;
+import Players.Player;
+
 public abstract class Game {
 	/**
 	 * El metodo que parsea los datos de la partida
@@ -18,4 +23,8 @@ public abstract class Game {
 	public abstract void clear();
 	
 	public abstract BestHand getBestHand();
+	
+	public abstract List<Player> getPlayers();
+	
+	public abstract Hand getSharedHand();
 }

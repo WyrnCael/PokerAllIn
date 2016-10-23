@@ -1,6 +1,9 @@
 package Game;
 
+import java.util.List;
+
 import Cards.Hand;
+import Players.Player;
 
 public class BestHandWith5Card extends Game{
 	
@@ -41,5 +44,18 @@ public class BestHandWith5Card extends Game{
 	public BestHand getBestHand() {
 		// TODO Auto-generated method stub
 		return this.bestHand;
+	}
+
+
+	@Override
+	public Hand getSharedHand() {
+		return hand;
+	}
+
+
+	@Override
+	public List<Player> getPlayers() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

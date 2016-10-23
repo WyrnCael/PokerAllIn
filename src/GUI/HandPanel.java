@@ -26,7 +26,7 @@ public class HandPanel extends JPanel{
 	}
 	
 	private void initGUI(){
-		for(int i = 0; i < 5 ; i++) {
+		for(int i = 0; i < this.hand.getCardsList().size() ; i++) {
 			String imgPath = ".\\resources\\img\\PNGCards\\";
 			Card card = this.hand.getCard(i);
 			String imgName= card.getValue() + "_of_" + card.getSuit() + ".png";
