@@ -76,4 +76,9 @@ public class PokerGame extends Game{
 	public void clear() {
 		this.players.clear();
 	}
+
+	@Override
+	public BestHand getBestHand() {
+		return this.players.get(0).getBestHand();
+	}
 }

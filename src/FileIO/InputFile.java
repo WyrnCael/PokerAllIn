@@ -20,7 +20,7 @@ public class InputFile {
 	 *            guardar
 	 */
 	public InputFile(String fileName) {
-		this.path = "datos/" + fileName;
+		this.path = fileName;
 
 		try {
 			fr = new FileReader(this.path);

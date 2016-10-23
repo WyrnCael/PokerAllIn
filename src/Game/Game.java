@@ -16,4 +16,6 @@ public abstract class Game {
 	 * El metodo que clear la lista de la clase
 	 */
 	public abstract void clear();
+	
+	public abstract BestHand getBestHand();
 }

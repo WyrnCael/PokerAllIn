@@ -32,4 +32,9 @@ public class BestHandWith2Card extends Game{
 		
 	}
 
+	@Override
+	public BestHand getBestHand() {
+		return this.bestHand;
+	}
+
 }

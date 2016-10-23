@@ -82,4 +82,9 @@ public class OmahaGame extends Game{
 	public void clear() {
 		this.bestHandList.clear();
 	}
+
+	@Override
+	public BestHand getBestHand() {
+		return this.bestHandList.get(0);
+	}
 }

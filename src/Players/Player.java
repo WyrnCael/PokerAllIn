@@ -21,6 +21,10 @@ public class Player implements Comparable<Object> {
 		this.name = name;
 		this.besthand = new BestHand(cards);
 	}
+	
+	public BestHand getBestHand(){
+		return this.besthand;
+	}
 
 	/**
 	 * Metodo que compare dos jugadadores

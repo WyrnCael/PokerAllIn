@@ -35,4 +35,11 @@ public class BestHandWith5Card extends Game{
 	public void clear() {
 		
 	}
+
+
+	@Override
+	public BestHand getBestHand() {
+		// TODO Auto-generated method stub
+		return this.bestHand;
+	}
 }
