@@ -13,6 +13,7 @@ public class backgroundPanel extends JPanel{
 		backgroundImage = new ImageIcon(".\\resources\\img\\poker_board.png").getImage();
 	}
 	
+	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		

@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -23,7 +24,7 @@ public class BoardPanel extends backgroundPanel {
 	}
 
 	private void initGUI() {
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(new FlowLayout());
 		
 		this.setVisible(true);
 	}
