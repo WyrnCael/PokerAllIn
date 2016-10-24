@@ -10,7 +10,7 @@ import Cards.Card;
 import Cards.Hand;
 
 @SuppressWarnings("serial")
-public class HandPanel extends JPanel {
+public class CommunityCardsPanel extends JPanel {
 
 	// campos de la clase
 	private Hand hand;
@@ -21,7 +21,7 @@ public class HandPanel extends JPanel {
 	 * @param hand
 	 *            El parametro hand define el mano que quiere pintar
 	 */
-	public HandPanel(Hand hand) {
+	public CommunityCardsPanel(Hand hand) {
 		this.hand = hand;
 		initGUI();
 	}

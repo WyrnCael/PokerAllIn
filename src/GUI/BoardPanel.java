@@ -1,7 +1,9 @@
 package GUI;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.Vector;
 
 import Game.Game;
 
@@ -20,7 +22,7 @@ public class BoardPanel extends backgroundPanel {
 	 * El metodo que pinta el panel
 	 */
 	private void initGUI() {
-		this.setLayout(new GridBagLayout());
+		this.setLayout(null);
 
 		this.setVisible(true);
 	}
@@ -32,22 +34,27 @@ public class BoardPanel extends backgroundPanel {
 	 *            El parametro game define las informaciones de la partida
 	 */
 	public void updateBoardPanel(Game game) {
-		GridBagConstraints c = new GridBagConstraints();
 		this.removeAll();
-		if (game.getPlayers() == null) {
-			this.add(new HandPanel(game.getHand()), c);
-		} else {
-			c.gridx = 0;
-			c.gridy = 0;
-			c.gridwidth = game.getPlayers().size();
-			this.add(new HandPanel(game.getSharedHand()), c);
-
-			c.gridwidth = 1;
+		
+		CommunityCardsPanel communityPanel = new CommunityCardsPanel(game.getSharedHand());
+		this.add(communityPanel);
+		communityPanel.setSize(new Dimension(550,150));
+		int anchura = super.getWidth();
+		int altura = super.getHeight();
+		int mitadAnchura =  (int) (anchura / 2);
+		int mitadAltura =  (int) (altura / 2);
+		communityPanel.setLocation(mitadAnchura - 275, mitadAltura - 75);
+		
+		int[] xPos = new int[]{(anchura)/2 - 60, (anchura-300)/4 + 50, 50, (anchura-500)/4 + 100, ((anchura-500)/4)*2 + 100, ((anchura-500)/4)*3 + 100, ((anchura-500)/4)*4 + 100, (anchura-200), ((anchura-300)/4)*3 + 50 };
+		int[] yPos = new int[]{altura-175, altura-175, (altura/2) - 75, 25, 25, 25, 25, (altura/2) - 75, altura-175};
+		
+		
+		if (game.getPlayers() != null) {
 			for (int i = 0; i < game.getPlayers().size(); i++) {
-				c.gridx = i;
-				c.gridy = 1;
-				PlayerPanel player = new PlayerPanel(game.getPlayers().get(i).getHand());
-				this.add(player, c);
+				PlayerPanel player = new PlayerPanel(game.getPlayers().get(i));
+				this.add(player);
+				player.setSize(new Dimension(120,120));
+				player.setLocation(xPos[i],yPos[i]);
 			}
 		}
 		this.revalidate();

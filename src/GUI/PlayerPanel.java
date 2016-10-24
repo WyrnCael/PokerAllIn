@@ -1,6 +1,9 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,9 +12,11 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.OverlayLayout;
 
 import Cards.Card;
 import Cards.Hand;
+import Players.Player;
 
 @SuppressWarnings("serial")
 public class PlayerPanel extends JPanel{
@@ -19,13 +24,15 @@ public class PlayerPanel extends JPanel{
 	// campos de la clase
 	private Image backgroundImage;
 	private Hand hand;
+	private Player player;
 	
 	/**
 	 * Constructor
 	 * @param hand	El parametro hand define la mano de cartas que quiere poner
 	 */
-	public PlayerPanel(Hand hand){
-		this.hand = hand;
+	public PlayerPanel(Player player){
+		this.hand = player.getHand();
+		this.player = player;
 		backgroundImage = new ImageIcon(".\\resources\\img\\player_background.png").getImage();
 		initGUI();
 	}
@@ -34,29 +41,34 @@ public class PlayerPanel extends JPanel{
 	 * El metodo que pinta el panel
 	 */
 	private void initGUI(){
-		this.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		this.setLayout(new FlowLayout());
 		JPanel cardsPanel = new JPanel();
+		OverlayLayout overlay = new OverlayLayout(cardsPanel);
+		cardsPanel.setLayout(overlay);
 		for(int i = 0; i < this.hand.getCardsList().size() ; i++) {
 			String imgPath = ".\\resources\\img\\PNGCards\\";
 			Card card = this.hand.getCard(i);
 			String imgName= card.getValue() + "_of_" + card.getSuit() + ".png";
 			imgName = imgName.toLowerCase();
 			imgPath += imgName;
-			ImageIcon img = new ImageIcon (new ImageIcon(imgPath).getImage().getScaledInstance(50, 70, Image.SCALE_SMOOTH));
+			ImageIcon img = new ImageIcon (new ImageIcon(imgPath).getImage().getScaledInstance(70, 90, Image.SCALE_SMOOTH));
 			JLabel imgLabel = new JLabel(img);
+			imgLabel.setAlignmentX((float) i * 0.2f);
+			imgLabel.setAlignmentY((float) i * 0.05f);
 			cardsPanel.add(imgLabel);
 		}
-		cardsPanel.setOpaque(false);
+		cardsPanel.setOpaque(false);		
+		this.add(cardsPanel);		
 		
-		this.add(cardsPanel, c);
+		JLabel nombreLabel = new JLabel(player.getName());
+		nombreLabel.setFont(new Font("Courier New", Font.BOLD, 12));
+		nombreLabel.setForeground(Color.WHITE);
+
+		this.add(nombreLabel);
 		
 		this.setOpaque(false);
-		if(this.hand.getCardsList().size() == 4){
-			this.setPreferredSize(new Dimension(240 , 120));
-		} else{
-			this.setPreferredSize(new Dimension(120 , 120));
-		}
+		this.setPreferredSize(new Dimension(120 , 120));
+		
 		this.setVisible(true);
 	}
 	

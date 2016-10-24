@@ -43,7 +43,7 @@ public class BestHandWith5Card extends Game{
 
 	@Override
 	public Hand getSharedHand() {
-		return null;
+		return this.hand;
 	}
 	
 	@Override

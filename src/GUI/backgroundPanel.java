@@ -22,7 +22,7 @@ public class backgroundPanel extends JPanel{
 		super.paintComponent(g);
 		
 		if(backgroundImage != null){
-			g.drawImage(backgroundImage, 0, 0, getWidth(),getHeight(),this);
+			g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(),this);
 		}
 	}
 }

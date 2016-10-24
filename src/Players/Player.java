@@ -41,6 +41,10 @@ public class Player implements Comparable<Object> {
 	public BestHand getBestHand() {
 		return this.besthand;
 	}
+	
+	public String getName(){
+		return this.name;
+	}
 
 	/**
 	 * Metodo que compare dos jugadadores
