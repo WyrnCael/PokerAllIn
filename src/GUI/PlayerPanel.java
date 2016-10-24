@@ -16,15 +16,23 @@ import Cards.Hand;
 @SuppressWarnings("serial")
 public class PlayerPanel extends JPanel{
 	
+	// campos de la clase
 	private Image backgroundImage;
 	private Hand hand;
 	
+	/**
+	 * Constructor
+	 * @param hand	El parametro hand define la mano de cartas que quiere poner
+	 */
 	public PlayerPanel(Hand hand){
 		this.hand = hand;
 		backgroundImage = new ImageIcon(".\\resources\\img\\player_background.png").getImage();
 		initGUI();
 	}
 	
+	/**
+	 * El metodo que pintar el panel
+	 */
 	private void initGUI(){
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -44,7 +52,11 @@ public class PlayerPanel extends JPanel{
 		this.add(cardsPanel, c);
 		
 		this.setOpaque(false);
-		this.setPreferredSize(new Dimension(120 , 120));
+		if(this.hand.getCardsList().size() == 4){
+			this.setPreferredSize(new Dimension(240 , 120));
+		} else{
+			this.setPreferredSize(new Dimension(120 , 120));
+		}
 		this.setVisible(true);
 	}
 	
