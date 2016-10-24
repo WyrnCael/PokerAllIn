@@ -23,12 +23,22 @@ public class Player implements Comparable<Object> {
 		this.hand = holeCard;
 		this.besthand = new BestHand(allCards);
 	}
-	
-	public Hand getHand(){
+
+	/**
+	 * El metodo que devuelve la mano del jugador
+	 * 
+	 * @return this.hand es el objeto de la mano
+	 */
+	public Hand getHand() {
 		return this.hand;
 	}
-	
-	public BestHand getBestHand(){
+
+	/**
+	 * El metodo que devuelve el mejor mano del jugador
+	 * 
+	 * @return this.besthand es el objeto de mejor mano
+	 */
+	public BestHand getBestHand() {
 		return this.besthand;
 	}
 

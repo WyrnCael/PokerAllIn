@@ -8,17 +8,29 @@ import Game.Game;
 @SuppressWarnings("serial")
 public class BoardPanel extends backgroundPanel {
 
+	/**
+	 * Constructor
+	 */
 	public BoardPanel() {
 		super();
 		initGUI();
 	}
 
+	/**
+	 * El metodo que pinta el panel
+	 */
 	private void initGUI() {
-		this.setLayout(new GridBagLayout());	
-		
+		this.setLayout(new GridBagLayout());
+
 		this.setVisible(true);
 	}
-	
+
+	/**
+	 * El metodo que actualiza el panel
+	 * 
+	 * @param game
+	 *            El parametro game define las informaciones de la partida
+	 */
 	public void updateBoardPanel(Game game) {
 		GridBagConstraints c = new GridBagConstraints();
 		this.removeAll();

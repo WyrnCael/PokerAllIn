@@ -91,11 +91,6 @@ public class OmahaGame extends Game {
 	}
 
 	@Override
-	public BestHand getBestHand() {
-		return this.bestHandList.get(0);
-	}
-
-	@Override
 	public Hand getSharedHand() {
 		// TODO Auto-generated method stub
 		return this.sharedHand;

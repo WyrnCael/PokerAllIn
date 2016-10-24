@@ -9,11 +9,17 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame{
 	
+	/**
+	 * Constructor
+	 */
 	public MainGUI(){
 		super("Poker All In");
 		initGUI();
 	}
 	
+	/**
+	 * El metodo que pinta el panel
+	 */
 	private void initGUI(){
 		Container container = this.getContentPane();
 		container.setLayout(new BorderLayout());

@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 public class backgroundPanel extends JPanel{
 	private Image backgroundImage;
 	
+	/**
+	 * Constructor
+	 */
 	backgroundPanel(){
 		backgroundImage = new ImageIcon(".\\resources\\img\\poker_board.png").getImage();
 	}

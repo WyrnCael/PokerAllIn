@@ -31,7 +31,7 @@ public class PlayerPanel extends JPanel{
 	}
 	
 	/**
-	 * El metodo que pintar el panel
+	 * El metodo que pinta el panel
 	 */
 	private void initGUI(){
 		this.setLayout(new GridBagLayout());

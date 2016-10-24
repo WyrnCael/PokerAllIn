@@ -43,11 +43,6 @@ public class BestHandWith2Card extends Game{
 	}
 
 	@Override
-	public BestHand getBestHand() {
-		return this.player.getBestHand();
-	}
-
-	@Override
 	public Hand getSharedHand() {
 		// TODO Auto-generated method stub
 		return sharedHand;
