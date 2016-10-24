@@ -1,7 +1,5 @@
 package GUI;
 
-import java.io.IOException;
-
 import FileIO.InputFile;
 import FileIO.OutPutFile;
 
