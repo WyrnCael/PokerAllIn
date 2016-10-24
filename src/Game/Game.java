@@ -24,7 +24,9 @@ public abstract class Game {
 	
 	public abstract BestHand getBestHand();
 	
-	public abstract List<Player> getPlayers();
-	
 	public abstract Hand getSharedHand();
+	
+	public abstract Hand getHand();
+	
+	public abstract List<Player> getPlayers();
 }

@@ -95,7 +95,7 @@ public class OptionPanel extends JPanel {
 						game.processGame();
 						
 						textArea.append(game.toString() + System.getProperty("line.separator"));
-						bPanel.setPlayersAndCommunityCards(game.getSharedHand(), game.getPlayers());
+						bPanel.updateBoardPanel(game);
 						
 						line = controller.readLine();
 						if(line != null){
@@ -125,7 +125,7 @@ public class OptionPanel extends JPanel {
 				game.processGame();
 				
 				textArea.append(game.toString() + System.getProperty("line.separator"));
-				bPanel.setPlayersAndCommunityCards(game.getSharedHand(), game.getPlayers());
+				bPanel.updateBoardPanel(game);
 				
 				line = controller.readLine();
 				if(line == null){

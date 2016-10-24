@@ -8,8 +8,10 @@ import Players.Player;
 
 public class BestHandWith2Card extends Game{
 
+	private String gameInfo;
+	private String HoleCards;
+	private String CommunityCards;
 	private Hand hand;
-	private BestHand bestHand;
 	private Hand sharedHand;
 	private Player player;
 	
@@ -19,19 +21,20 @@ public class BestHandWith2Card extends Game{
 	
 	@Override
 	public void parseGame(String gameInfo) {
-		String HoleCards = gameInfo.substring(0, 4);
-		String CommunityCards = gameInfo.substring(7, gameInfo.length());
+		this.gameInfo = gameInfo;
+		HoleCards = gameInfo.substring(0, 4);
+		CommunityCards = gameInfo.substring(7, gameInfo.length());
 		this.hand = new Hand(HoleCards);
-		this.bestHand = new BestHand(new Hand(HoleCards + CommunityCards));
+		this.sharedHand = new Hand(CommunityCards);
 	}
 
 	@Override
 	public void processGame() {
-		this.bestHand = new BestHand(this.hand);
+		this.player = new Player("", this.hand, new Hand(HoleCards + CommunityCards));
 	}
 	
 	public String toString(){
-		return this.hand + System.getProperty("line.separator") + this.bestHand.toString();
+		return this.gameInfo + System.getProperty("line.separator") + this.player.getBestHand().toString();
 	}
 
 	@Override
@@ -41,7 +44,7 @@ public class BestHandWith2Card extends Game{
 
 	@Override
 	public BestHand getBestHand() {
-		return this.bestHand;
+		return this.player.getBestHand();
 	}
 
 	@Override
@@ -51,9 +54,14 @@ public class BestHandWith2Card extends Game{
 	}
 	
 	@Override
+	public Hand getHand() {
+		// TODO Auto-generated method stub
+		return hand;
+	}
+	
+	@Override
 	public List<Player> getPlayers() {
 		// TODO Auto-generated method stub
 		return new ArrayList<Player>(){{ add(player); }};
 	}
-
 }

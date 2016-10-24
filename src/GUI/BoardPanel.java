@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Cards.Hand;
+import Game.Game;
 import Players.Player;
 
 public class BoardPanel extends backgroundPanel {
@@ -36,44 +37,26 @@ public class BoardPanel extends backgroundPanel {
 		this.setVisible(true);
 	}
 	
-	public void setHandPanel(HandPanel handPanel){
-		this.handPanel = handPanel;
-	}
-	
-	public void setBestHandPanel(HandPanel bestHandPanel){
-		this.removeAll();
-//		JLabel bestHandLabel = new JLabel("Best hand");
-//		this.add(bestHandLabel);
-		this.bestHandPanel = bestHandPanel;
-		this.bestHandPanel.setPreferredSize(new Dimension(550,150));
+	public void updateBoardPanel(Game game) {
 		GridBagConstraints c = new GridBagConstraints();
-		this.add(this.bestHandPanel, c);		
+		this.removeAll();
+		if (game.getPlayers() == null) {
+			this.add(new HandPanel(game.getHand()), c);
+		} else {
+			c.gridx = 0;
+			c.gridy = 0;
+			c.gridwidth = game.getPlayers().size();
+			this.add(new HandPanel(game.getSharedHand()), c);
+
+			c.gridwidth = 1;
+			for (int i = 0; i < game.getPlayers().size(); i++) {
+				c.gridx = i;
+				c.gridy = 1;
+				PlayerPanel player = new PlayerPanel(game.getPlayers().get(i).getHand());
+				this.add(player, c);
+			}
+		}
 		this.revalidate();
 		this.repaint();
-//		this.repaint();
 	}
-	
-	public void setPlayersAndCommunityCards(Hand community, List<Player> players){
-		if(players == null){
-			setBestHandPanel(new HandPanel(community));
-		}
-		else{
-			this.removeAll();
-			this.bestHandPanel = new HandPanel(community);
-			this.bestHandPanel.setPreferredSize(new Dimension(550,150));
-			GridBagConstraints c = new GridBagConstraints();
-			c.gridx = 0; c.gridy = 0; c.gridwidth = players.size();
-			this.add(this.bestHandPanel, c);	
-			
-			c.gridwidth = 1;
-			for (int i = 0; i < players.size(); i++){
-				c.gridx = i; c.gridy = 1; 
-				PlayerPanel player = new PlayerPanel(players.get(i).getHand());
-				this.add(player, c);	
-			}
-			this.revalidate();
-			this.repaint();
-		}
-	}
-	
 }

@@ -8,6 +8,7 @@ import Players.Player;
 public class BestHandWith5Card extends Game{
 	
 	// Campos de la clase
+	private String gameInfo;
 	private Hand hand;
 	private BestHand bestHand;
 	
@@ -21,6 +22,7 @@ public class BestHandWith5Card extends Game{
 	
 	@Override
 	public void parseGame(String gameInfo) {
+		this.gameInfo = gameInfo;
 		this.hand = new Hand(gameInfo);
 	}
 
@@ -30,7 +32,7 @@ public class BestHandWith5Card extends Game{
 	}
 	
 	public String toString() {
-		return this.hand + System.getProperty("line.separator") + this.bestHand.toString();
+		return this.gameInfo + System.getProperty("line.separator") + this.bestHand.toString();
 	}
 
 
@@ -49,9 +51,14 @@ public class BestHandWith5Card extends Game{
 
 	@Override
 	public Hand getSharedHand() {
-		return hand;
+		return null;
 	}
-
+	
+	@Override
+	public Hand getHand() {
+		// TODO Auto-generated method stub
+		return this.hand;
+	}
 
 	@Override
 	public List<Player> getPlayers() {

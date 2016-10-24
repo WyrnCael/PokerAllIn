@@ -32,13 +32,12 @@ public class HandPanel extends JPanel{
 			String imgName= card.getValue() + "_of_" + card.getSuit() + ".png";
 			imgName = imgName.toLowerCase();
 			imgPath += imgName;
-			ImageIcon img = new ImageIcon (new ImageIcon(imgPath).getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH));
+			ImageIcon img = new ImageIcon (new ImageIcon(imgPath).getImage().getScaledInstance(100, 140, Image.SCALE_SMOOTH));
 			JLabel imgLabel = new JLabel(img);
 			this.add(imgLabel);
 		}
 		
 		this.setOpaque(false);
-		this.setPreferredSize(new Dimension(550,150));
 		this.setVisible(true);
 	}
 }

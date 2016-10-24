@@ -7,7 +7,7 @@ import java.util.List;
 import Cards.Hand;
 import Players.Player;
 
-public class PokerGame extends Game{
+public class PokerGame extends Game {
 
 	// Campos de la clase
 	private List<Player> players;
@@ -42,9 +42,10 @@ public class PokerGame extends Game{
 		for (int i = 2; i < 2 + (7 * numPlayers); i = i + 7) {
 			String name = gameInfo.substring(i, i + 2);
 			String HoleCards = gameInfo.substring(i + 2, i + 6);
-			Hand hand = new Hand(HoleCards + CommunityCards);
-			this.playersCards.add(new Player(name, HoleCards));
-			addPlayer(name, hand);
+			Hand hand = new Hand(HoleCards);
+			Hand allCards = new Hand(HoleCards + CommunityCards);
+			this.playersCards.add(new Player(name, hand, allCards));
+			addPlayer(name, hand, allCards);
 		}
 	}
 
@@ -55,9 +56,12 @@ public class PokerGame extends Game{
 	 *            El parametro name define el nombre(numero) del jugador
 	 * @param hand
 	 *            El parametro hand define las cartas que tiene el jugador
+	 * @param allCards
+	 *            El parametro allCards define todas las cartas que pueda tener
+	 *            el jugador
 	 */
-	private void addPlayer(String name, Hand hand) {
-		players.add(new Player(name, hand));
+	private void addPlayer(String name, Hand hand, Hand allCards) {
+		players.add(new Player(name, hand, allCards));
 	}
 
 	/**
@@ -87,16 +91,22 @@ public class PokerGame extends Game{
 	public BestHand getBestHand() {
 		return this.players.get(0).getBestHand();
 	}
+	
+	@Override
+	public Hand getSharedHand() {
+		// TODO Auto-generated method stub
+		return sharedHand;
+	}
+	
+	@Override
+	public Hand getHand() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public List<Player> getPlayers() {
 		// TODO Auto-generated method stub
 		return playersCards;
-	}
-
-	@Override
-	public Hand getSharedHand() {
-		// TODO Auto-generated method stub
-		return sharedHand;
 	}
 }
