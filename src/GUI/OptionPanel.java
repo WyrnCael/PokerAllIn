@@ -35,6 +35,7 @@ public class OptionPanel extends JPanel {
 
 	private BoardPanel bPanel;
 	private JTextArea textArea;
+	private String saveText;
 
 	private Game game;
 
@@ -105,12 +106,14 @@ public class OptionPanel extends JPanel {
 				} else {
 					try {
 						textArea.setText("");
+						saveText = "";
 						controller = new GUIController(pathField.getText());
 						line = controller.readLine();
 						game.parseGame(line);
 						game.processGame();
 
 						textArea.append(game.toString() + System.getProperty("line.separator"));
+						saveText += game.toString() + System.getProperty("line.separator");
 						bPanel.updateBoardPanel(game);
 
 						line = controller.readLine();
@@ -121,7 +124,7 @@ public class OptionPanel extends JPanel {
 							next.setVisible(true);
 							stop.setVisible(true);
 						} else {
-							controller.saveResult(textArea.getText());
+							controller.saveResult(saveText);
 							controller.close();
 						}
 					} catch (Exception exception) {
@@ -142,12 +145,13 @@ public class OptionPanel extends JPanel {
 				game.parseGame(line);
 				game.processGame();
 
-				textArea.append(game.toString() + System.getProperty("line.separator"));
+				textArea.setText(game.toString() + System.getProperty("line.separator"));
+				saveText += game.toString() + System.getProperty("line.separator");
 				bPanel.updateBoardPanel(game);
 
 				line = controller.readLine();
 				if (line == null) {
-					controller.saveResult(textArea.getText());
+					controller.saveResult(saveText);
 					controller.close();
 					game.clear();
 
@@ -166,7 +170,7 @@ public class OptionPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 
-				controller.saveResult(textArea.getText());
+				controller.saveResult(saveText);
 				controller.close();
 				game.clear();
 

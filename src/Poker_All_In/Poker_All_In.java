@@ -18,7 +18,7 @@ public class Poker_All_In {
 
 		String line;
 		Game game = null;
-		if(args.length == 4 && args[3].equals("window")){
+		if(args[0].equals("window")){
 			
 			new MainGUI();
 			
