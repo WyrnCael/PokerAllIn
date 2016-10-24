@@ -576,6 +576,10 @@ public class BestHand implements Comparable<Object> {
 	public Ranking getRank() {
 		return this.rank;
 	}
+	
+	public List<String> getDraws() {
+		return this.draws;
+	}
 
 	public String toString() {
 		String str = " - Best hand: " + this.rank.getName();

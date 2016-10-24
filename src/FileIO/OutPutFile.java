@@ -20,7 +20,7 @@ public class OutPutFile {
 	 *            guardar
 	 */
 	public OutPutFile(String fileName) {
-		this.path = "datos/" + fileName;
+		this.path = fileName;
 		try {
 			this.fw = new FileWriter(new File(this.path));
 			this.bw = new BufferedWriter(fw);
