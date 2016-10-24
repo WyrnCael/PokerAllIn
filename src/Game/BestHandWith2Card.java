@@ -59,6 +59,7 @@ public class BestHandWith2Card extends Game{
 		return hand;
 	}
 	
+	@SuppressWarnings("serial")
 	@Override
 	public List<Player> getPlayers() {
 		// TODO Auto-generated method stub

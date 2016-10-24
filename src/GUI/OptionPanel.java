@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import Game.*;
 
+@SuppressWarnings("serial")
 public class OptionPanel extends JPanel {
 	private JButton bFile;
 	private JTextField pathField;

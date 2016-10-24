@@ -5,24 +5,19 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Cards.Card;
 import Cards.Hand;
 
+@SuppressWarnings("serial")
 public class PlayerPanel extends JPanel{
 	
 	private Image backgroundImage;
 	private Hand hand;
-	
-	public PlayerPanel(){
-		backgroundImage = new ImageIcon(".\\resources\\img\\player_background.png").getImage();
-	}
 	
 	public PlayerPanel(Hand hand){
 		this.hand = hand;

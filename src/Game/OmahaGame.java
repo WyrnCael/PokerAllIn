@@ -94,19 +94,20 @@ public class OmahaGame extends Game {
 	public BestHand getBestHand() {
 		return this.bestHandList.get(0);
 	}
-	
+
 	@Override
 	public Hand getSharedHand() {
 		// TODO Auto-generated method stub
 		return this.sharedHand;
 	}
-	
+
 	@Override
 	public Hand getHand() {
 		// TODO Auto-generated method stub
 		return this.hand;
 	}
 
+	@SuppressWarnings("serial")
 	@Override
 	public List<Player> getPlayers() {
 		// TODO Auto-generated method stub

@@ -5,11 +5,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
-import Game.Game;
-
+@SuppressWarnings("serial")
 public class MainGUI extends JFrame{
 	
 	public MainGUI(){
