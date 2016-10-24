@@ -19,11 +19,10 @@ public class BestHandWith2Card extends Game{
 	
 	@Override
 	public void parseGame(String gameInfo) {
-		String str = gameInfo.substring(0, 4);
-		this.player = new Player("", gameInfo.substring(0, 4));
-		str += gameInfo.substring(7, gameInfo.length());
-		this.sharedHand = new Hand(gameInfo.substring(7, gameInfo.length()));
-		this.hand = new Hand(str);
+		String HoleCards = gameInfo.substring(0, 4);
+		String CommunityCards = gameInfo.substring(7, gameInfo.length());
+		this.hand = new Hand(HoleCards);
+		this.bestHand = new BestHand(new Hand(HoleCards + CommunityCards));
 	}
 
 	@Override

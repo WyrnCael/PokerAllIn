@@ -7,34 +7,29 @@ public class Player implements Comparable<Object> {
 
 	// campos de la clase
 	String name;
-	BestHand besthand;
 	Hand hand;
+	BestHand besthand;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param name
 	 *            El parametro name es el nombre(numero) del jugador
-	 * @param cards
+	 * @param holeCard
 	 *            El parametro cards es las carta que tiene ese jugador
 	 */
-	public Player(String name, Hand cards) {
+	public Player(String name, Hand holeCard, Hand allCards) {
 		this.name = name;
-		this.besthand = new BestHand(cards);
-		this.hand = cards;
-	}
-	
-	public Player(String name, String cards) {
-		this.name = name;		
-		this.hand = new Hand(cards);
-	}
-	
-	public BestHand getBestHand(){
-		return this.besthand;
+		this.hand = holeCard;
+		this.besthand = new BestHand(allCards);
 	}
 	
 	public Hand getHand(){
 		return this.hand;
+	}
+	
+	public BestHand getBestHand(){
+		return this.besthand;
 	}
 
 	/**
