@@ -35,15 +35,15 @@ public class PokerGame extends Game {
 		int numPlayers = Integer.valueOf(gameInfo.substring(0, 1));
 
 		// Leemos las cartas comunes
-		String CommunityCards = gameInfo.substring(2 + (7 * numPlayers), gameInfo.length());
-		this.sharedHand = new Hand(CommunityCards);
+		String CommonCards = gameInfo.substring(2 + (7 * numPlayers), gameInfo.length());
+		this.sharedHand = new Hand(CommonCards);
 
 		// Leemos los jugadores
 		for (int i = 2; i < 2 + (7 * numPlayers); i = i + 7) {
 			String name = gameInfo.substring(i, i + 2);
-			String HoleCards = gameInfo.substring(i + 2, i + 6);
-			Hand hand = new Hand(HoleCards);
-			Hand allCards = new Hand(HoleCards + CommunityCards);
+			String playerCards = gameInfo.substring(i + 2, i + 6);
+			Hand hand = new Hand(playerCards);
+			Hand allCards = new Hand(playerCards + CommonCards);
 			this.playersCards.add(new Player(name, hand, allCards));
 			addPlayer(name, hand, allCards);
 		}

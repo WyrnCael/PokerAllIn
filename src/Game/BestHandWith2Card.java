@@ -8,13 +8,17 @@ import Players.Player;
 
 public class BestHandWith2Card extends Game{
 
+	// campos de la clase
 	private String gameInfo;
-	private String HoleCards;
-	private String CommunityCards;
+	private String playerCards;
+	private String CommonCards;
 	private Hand hand;
 	private Hand sharedHand;
 	private Player player;
 	
+	/**
+	 * Constructor
+	 */
 	public BestHandWith2Card(){
 		
 	}
@@ -22,15 +26,15 @@ public class BestHandWith2Card extends Game{
 	@Override
 	public void parseGame(String gameInfo) {
 		this.gameInfo = gameInfo;
-		HoleCards = gameInfo.substring(0, 4);
-		CommunityCards = gameInfo.substring(7, gameInfo.length());
-		this.hand = new Hand(HoleCards);
-		this.sharedHand = new Hand(CommunityCards);
+		playerCards = gameInfo.substring(0, 4);
+		CommonCards = gameInfo.substring(7, gameInfo.length());
+		this.hand = new Hand(playerCards);
+		this.sharedHand = new Hand(CommonCards);
 	}
 
 	@Override
 	public void processGame() {
-		this.player = new Player("", this.hand, new Hand(HoleCards + CommunityCards));
+		this.player = new Player("", this.hand, new Hand(playerCards + CommonCards));
 	}
 	
 	public String toString(){

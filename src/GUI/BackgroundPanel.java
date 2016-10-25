@@ -7,13 +7,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class backgroundPanel extends JPanel{
+public class BackgroundPanel extends JPanel{
 	private Image backgroundImage;
 	
 	/**
 	 * Constructor
 	 */
-	backgroundPanel(){
+	BackgroundPanel(){
 		backgroundImage = new ImageIcon(".\\resources\\img\\poker_board.png").getImage();
 	}
 	

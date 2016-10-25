@@ -19,8 +19,8 @@ public class Hand {
 	/**
 	 * Constructor
 	 * 
-	 * @param datos
-	 *            El parametro datos definen las cartas que tienen en la mano
+	 * @param cards
+	 *            El parametro cards definen las cartas que tienen en la mano
 	 */
 	public Hand(String cards) {
 		cardsList = new ArrayList<Card>();

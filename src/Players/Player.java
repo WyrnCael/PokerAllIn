@@ -41,8 +41,13 @@ public class Player implements Comparable<Object> {
 	public BestHand getBestHand() {
 		return this.besthand;
 	}
-	
-	public String getName(){
+
+	/**
+	 * El metodo que devuelve el nombre del jugador
+	 * 
+	 * @return this.name es el nombre del jugador
+	 */
+	public String getName() {
 		return this.name;
 	}
 
@@ -57,6 +62,7 @@ public class Player implements Comparable<Object> {
 	}
 
 	public String toString() {
-		return this.name + ": " + this.besthand.getRank().getName() + " (" + this.besthand.getBestHand() + ")";
+		return this.name + ": " + this.besthand.getRank().getName() + " ("
+				+ this.besthand.getBestHand() + ")";
 	}
 }

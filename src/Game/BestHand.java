@@ -90,7 +90,7 @@ public class BestHand implements Comparable<Object> {
 	}
 
 	/**
-	 * El metodo para buscar el mejor mano insertando a las listas del jugada
+	 * El metodo para buscar la mejor mano insertando en las listas de la jugada
 	 * Iterar todas las cartas de la mano, coger mapValue para encontrar las
 	 * parejas, trios, y poker Tambien pasar las cartas al metodo addToStraight
 	 * y addToFlush para comprobar si existe escalera o color
@@ -98,7 +98,8 @@ public class BestHand implements Comparable<Object> {
 	private void insertCardsToList() {
 		List<Card> cards;
 		int j;
-		Card tmpCard = entriesSortedByValues(this.hand.getCardsSuitMap()).first().getKey();
+		Card tmpCard = entriesSortedByValues(this.hand.getCardsSuitMap())
+				.first().getKey();
 		this.suit = tmpCard.getSuit();
 		for (int i = 0; i < this.hand.getCardsList().size(); i++) {
 
@@ -252,13 +253,15 @@ public class BestHand implements Comparable<Object> {
 		}
 		// si el tamano de la lista del trios mayor que 3 y el de parejas es
 		// mayor que 2, hay full
-		else if (threeKind.size() >= 3 && (pair.size() >= 2 || threeKind.size() >= 6)) {
+		else if (threeKind.size() >= 3
+				&& (pair.size() >= 2 || threeKind.size() >= 6)) {
 
 			// dos trios
 			if (threeKind.size() == 6) {
 				// el valor del segundo trio es mayor que el de pareja,
 				// completamos la mano con dos cartas del segundo trio
-				if (threeKind.get(3).getValue().getValue() > pair.get(0).getValue().getValue()) {
+				if (threeKind.get(3).getValue().getValue() > pair.get(0)
+						.getValue().getValue()) {
 					bestHand.addAll(threeKind);
 				}
 				// completamos la mano con pareja
@@ -322,9 +325,11 @@ public class BestHand implements Comparable<Object> {
 			// completamos la mano con carta alta
 			for (int i = 0; i < highCards.size() && pair.size() != 5; i++) {
 				if (this.highCards.get(i).getValue() != pair.get(0).getValue()
-						&& highCards.get(i).getValue() != pair.get(2).getValue()) {
+						&& highCards.get(i).getValue() != pair.get(2)
+								.getValue()) {
 					if (pair.size() >= 6
-							&& highCards.get(i).getValue().getValue() < pair.get(4).getValue().getValue()) {
+							&& highCards.get(i).getValue().getValue() < pair
+									.get(4).getValue().getValue()) {
 						bestHand.add(pair.get(4));
 					} else {
 						bestHand.add(highCards.get(i));
@@ -372,7 +377,8 @@ public class BestHand implements Comparable<Object> {
 				draws.add(Ranking.STRAIGHT_FLUSH.getName() + " Gutshot");
 			}
 
-			if (this.rank.getValue() < Ranking.FLUSH.getValue() && flush.size() == 4) {
+			if (this.rank.getValue() < Ranking.FLUSH.getValue()
+					&& flush.size() == 4) {
 
 				draws.add(Ranking.FLUSH.getName());
 			}
@@ -407,7 +413,9 @@ public class BestHand implements Comparable<Object> {
 		}
 		if (tmpStraight.size() == 0) {
 			tmpStraight.add(card);
-		} else if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue() - card.getValue().getValue() == 1) {
+		} else if (tmpStraight.get(tmpStraight.size() - 1).getValue()
+				.getValue()
+				- card.getValue().getValue() == 1) {
 			tmpStraight.add(card);
 			this.straightGutshot.get(0).add(card);
 			if (tmpStraight.size() == 4) {
@@ -421,8 +429,11 @@ public class BestHand implements Comparable<Object> {
 				}
 
 			}
-		} else if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue() - card.getValue().getValue() > 1) {
-			if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue() - card.getValue().getValue() > 2) {
+		} else if (tmpStraight.get(tmpStraight.size() - 1).getValue()
+				.getValue()
+				- card.getValue().getValue() > 1) {
+			if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue()
+					- card.getValue().getValue() > 2) {
 				if (!isStraightGutshot) {
 					this.straightGutshot.get(0).clear();
 					this.gutshot = 0;
@@ -459,7 +470,8 @@ public class BestHand implements Comparable<Object> {
 		}
 		// Caso especial, que sea 2, por lo que un As del mismo color puede
 		// valer:
-		else if (tmpStraightFlush.get(tmpStraightFlush.size() - 1).getValue().getValue()
+		else if (tmpStraightFlush.get(tmpStraightFlush.size() - 1).getValue()
+				.getValue()
 				- card.getValue().getValue() == 1) {
 			tmpStraightFlush.add(card);
 			this.straightGutshot.get(numSuit).add(card);
@@ -473,9 +485,11 @@ public class BestHand implements Comparable<Object> {
 					this.straightGutshot.get(numSuit).add(as);
 				}
 			}
-		} else if (tmpStraightFlush.get(tmpStraightFlush.size() - 1).getValue().getValue()
+		} else if (tmpStraightFlush.get(tmpStraightFlush.size() - 1).getValue()
+				.getValue()
 				- card.getValue().getValue() > 1) {
-			if (tmpStraightFlush.get(tmpStraightFlush.size() - 1).getValue().getValue()
+			if (tmpStraightFlush.get(tmpStraightFlush.size() - 1).getValue()
+					.getValue()
 					- card.getValue().getValue() > 2) {
 				if (!isStraightFlushGutshot) {
 					this.straightGutshot.get(numSuit).clear();
@@ -512,8 +526,9 @@ public class BestHand implements Comparable<Object> {
 				if (straight.get(i).size() >= 5) {
 					// Si no habia escalera de color o la actual es superior a
 					// la guardada
-					if (straightFlush.size() < 5 || straightFlush.get(0).getValue().getValue() < straight.get(i).get(0)
-							.getValue().getValue()) {
+					if (straightFlush.size() < 5
+							|| straightFlush.get(0).getValue().getValue() < straight
+									.get(i).get(0).getValue().getValue()) {
 						ArrayList<Card> escaleraColorAux = new ArrayList<Card>();
 						for (int j = 0; j < 5; j++) {
 							escaleraColorAux.add(straight.get(i).get(j));
@@ -524,8 +539,10 @@ public class BestHand implements Comparable<Object> {
 			}
 			// Asignamos a la escalera final si es superior a la que habia y es
 			// escalera
-			if (straight.get(0).size() >= 5 && (finalStraight.size() < 5
-					|| finalStraight.get(0).getValue().getValue() < straight.get(0).get(0).getValue().getValue())) {
+			if (straight.get(0).size() >= 5
+					&& (finalStraight.size() < 5 || finalStraight.get(0)
+							.getValue().getValue() < straight.get(0).get(0)
+							.getValue().getValue())) {
 				finalStraight = straight.get(0);
 			}
 		}
@@ -553,7 +570,8 @@ public class BestHand implements Comparable<Object> {
 	private Card checkAceSuit(Suit suit) {
 		int i = 0;
 		for (i = 0; i < this.hand.getCardsList().size() && i < 4; i++) {
-			if (this.hand.getCard(i).getValue() == Value.Ace && suit == this.hand.getCard(i).getSuit())
+			if (this.hand.getCard(i).getValue() == Value.Ace
+					&& suit == this.hand.getCard(i).getSuit())
 				return this.hand.getCard(i);
 		}
 		return null;
@@ -576,7 +594,12 @@ public class BestHand implements Comparable<Object> {
 	public Ranking getRank() {
 		return this.rank;
 	}
-	
+
+	/**
+	 * El metodo que devuelve la lista de draws
+	 * 
+	 * @return this.draws es el objeto de la lista de draws
+	 */
 	public List<String> getDraws() {
 		return this.draws;
 	}
@@ -590,20 +613,23 @@ public class BestHand implements Comparable<Object> {
 		str += ")" + System.getProperty("line.separator");
 		if (this.hand.getCardsList().size() < 7) {
 			for (int i = 0; i < draws.size(); i++) {
-				str += " - Draw: " + draws.get(i) + System.getProperty("line.separator");
+				str += " - Draw: " + draws.get(i)
+						+ System.getProperty("line.separator");
 			}
 		}
 		return str;
 	}
 
-	static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map) {
-		SortedSet<Map.Entry<K, V>> sortedEntries = new TreeSet<Map.Entry<K, V>>(new Comparator<Map.Entry<K, V>>() {
-			@Override
-			public int compare(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
-				int res = e2.getValue().compareTo(e1.getValue());
-				return res != 0 ? res : 1;
-			}
-		});
+	static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(
+			Map<K, V> map) {
+		SortedSet<Map.Entry<K, V>> sortedEntries = new TreeSet<Map.Entry<K, V>>(
+				new Comparator<Map.Entry<K, V>>() {
+					@Override
+					public int compare(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
+						int res = e2.getValue().compareTo(e1.getValue());
+						return res != 0 ? res : 1;
+					}
+				});
 		sortedEntries.addAll(map.entrySet());
 		return sortedEntries;
 	}
@@ -617,8 +643,6 @@ public class BestHand implements Comparable<Object> {
 		BestHand hand2 = ((BestHand) o);
 		int cardValue1;
 		int cardValue2;
-		int pos = 0;
-		int k = 1;
 		// Si una jugada es mejor se devuelve la mejor
 		if (this.rank.getValue() > hand2.rank.getValue()) {
 			return -1;
@@ -627,57 +651,14 @@ public class BestHand implements Comparable<Object> {
 		}
 		// Si son iguales se compara por jugada.
 		else {
-			switch (this.rank.getValue()) {
-			// Carta alta
-			case 1:
-				k = 1;
-				break;
-			// Pareja y trio.
-			case 2:
-			case 4:
-				// Comprobamos la mayor pareja o trio
-				cardValue1 = this.bestHand.getCard(0).getValue().getValue();
-				cardValue2 = hand2.bestHand.getCard(0).getValue().getValue();
+			for (int i = 0; i < 5; i++) {
+				cardValue1 = this.bestHand.getCard(i).getValue().getValue();
+				cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
 				if (cardValue1 > cardValue2) {
 					return -1;
 				} else if (cardValue1 < cardValue2) {
 					return 1;
 				}
-				pos = 2;
-				k = 1;
-				break;
-			// Doble pareja
-			case 3:
-
-				// Miramos la primera pareja
-				k = 1;
-				break;
-			// Escalera, color o escalera de color
-			case 5:
-			case 6:
-			case 9:
-				// Comprobamos la escalera o color mas alto
-				k = 5;
-				// Full house
-			case 7:
-				// Miramos el trio
-				k = 3;
-
-				// Poker
-			case 8:
-				// Miramos el poker
-				k = 4;
-			default:
-				break;
-			}
-		}
-		for (int i = pos; i < 5; i = i + k) {
-			cardValue1 = this.bestHand.getCard(i).getValue().getValue();
-			cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
-			if (cardValue1 > cardValue2) {
-				return -1;
-			} else if (cardValue1 < cardValue2) {
-				return 1;
 			}
 		}
 
