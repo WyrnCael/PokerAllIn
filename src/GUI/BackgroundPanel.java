@@ -2,7 +2,12 @@ package GUI;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -13,8 +18,15 @@ public class BackgroundPanel extends JPanel{
 	/**
 	 * Constructor
 	 */
-	BackgroundPanel(){
-		backgroundImage = new ImageIcon("src/resources/img/poker_board.png").getImage();
+	BackgroundPanel(){		
+		try {
+			URL url = this.getClass().getClassLoader().getResource("img" + File.separator + "poker_board.png");
+			BufferedImage image = ImageIO.read(url);
+			backgroundImage = new ImageIcon(image).getImage();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
