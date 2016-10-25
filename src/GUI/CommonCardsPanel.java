@@ -31,7 +31,7 @@ public class CommonCardsPanel extends JPanel {
 	 */
 	private void initGUI() {
 		for (int i = 0; i < this.hand.getCardsList().size(); i++) {
-			String imgPath = ".\\resources\\img\\PNGCards\\";
+			String imgPath = "src/resources/img/PNGCards/";
 			Card card = this.hand.getCard(i);
 			String imgName = card.getValue() + "_of_" + card.getSuit() + ".png";
 			imgName = imgName.toLowerCase();

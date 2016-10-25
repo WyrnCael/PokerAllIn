@@ -14,7 +14,7 @@ public class BackgroundPanel extends JPanel{
 	 * Constructor
 	 */
 	BackgroundPanel(){
-		backgroundImage = new ImageIcon(".\\resources\\img\\poker_board.png").getImage();
+		backgroundImage = new ImageIcon("src/resources/img/poker_board.png").getImage();
 	}
 	
 	@Override

@@ -1,7 +1,0 @@
-AhAc2s3h;5;QhJhTh5d4s
- - Best hand: Flush (AhQhJhTh3h)
- - Draw: Straight Flush Gutshot
- - Draw: Straight Gutshot
- - Draw: Straight OpenEnded
-
-

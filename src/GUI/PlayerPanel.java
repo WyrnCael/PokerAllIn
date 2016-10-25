@@ -34,7 +34,7 @@ public class PlayerPanel extends JPanel {
 		this.hand = player.getHand();
 		this.player = player;
 		backgroundImage = new ImageIcon(
-				".\\resources\\img\\player_background.png").getImage();
+				"src/resources/img/player_background.png").getImage();
 		initGUI();
 	}
 
@@ -47,7 +47,7 @@ public class PlayerPanel extends JPanel {
 		OverlayLayout overlay = new OverlayLayout(cardsPanel);
 		cardsPanel.setLayout(overlay);
 		for (int i = 0; i < this.hand.getCardsList().size(); i++) {
-			String imgPath = ".\\resources\\img\\PNGCards\\";
+			String imgPath = "src/resources/img/PNGCards/";
 			Card card = this.hand.getCard(i);
 			String imgName = card.getValue() + "_of_" + card.getSuit() + ".png";
 			imgName = imgName.toLowerCase();
