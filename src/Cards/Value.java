@@ -1,19 +1,19 @@
 package Cards;
 
 public enum Value {
-	Ace("A", 14),
-	King("K", 13),
-	Queen("Q", 12),
-	Jack("J", 11),
-	Ten("T", 10),
-	Nine("9", 9),
-	Eight("8", 8),
+	Ace("A", 0),
+	King("K", 1),
+	Queen("Q", 2),
+	Jack("J", 3),
+	Ten("T", 4),
+	Nine("9", 5),
+	Eight("8", 6),
 	Seven("7", 7),
-	Six("6", 6),
-	Five("5", 5),
-	Four("4", 4),
-	Three("3", 3),
-	Two("2", 2);
+	Six("6", 8),
+	Five("5", 9),
+	Four("4", 10),
+	Three("3", 11),
+	Two("2", 12);
 
 	// Campos de la clase
 	private String name;
@@ -30,6 +30,10 @@ public enum Value {
 	private Value(String name, int valor) {
 		this.name = name;
 		this.value = valor;
+	}
+	
+	private Value(String name) {
+		this.name = name;
 	}
 
 	/**

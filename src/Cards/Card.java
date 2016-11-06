@@ -97,7 +97,7 @@ public class Card implements Comparable<Object> {
 		case "s":
 			return Suit.Spades;
 		default:
-			System.out.println("Erro en parsear el palo");
+			System.out.println("Error en parsear el palo");
 			break;
 		}
 		return null;
