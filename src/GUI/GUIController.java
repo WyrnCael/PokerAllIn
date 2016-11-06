@@ -1,5 +1,7 @@
 package GUI;
 
+import java.io.File;
+
 import FileIO.InputFile;
 import FileIO.OutPutFile;
 
@@ -15,7 +17,7 @@ public class GUIController {
 	 */
 	public GUIController(String path){
 		this.inputFile = new InputFile(path);
-		this.outputFile = new OutPutFile("datos/SalidaGUI.txt");
+		this.outputFile = new OutPutFile("datos" + File.separator + "SalidaGUI.txt");
 	}
 	
 	/**

@@ -1,5 +1,7 @@
 package Poker_All_In;
 
+import java.io.File;
+
 import FileIO.InputFile;
 import FileIO.OutPutFile;
 import GUI.MainGUI;
@@ -23,8 +25,8 @@ public class Poker_All_In {
 		} else {
 			long start = System.currentTimeMillis();
 			
-			InputFile entrada = new InputFile("datos/" + args[1]);
-			OutPutFile salida = new OutPutFile("datos/" + args[2]);
+			InputFile entrada = new InputFile("datos" + File.separator + args[1]);
+			OutPutFile salida = new OutPutFile("datos"  + File.separator +  args[2]);
 			
 			// args[0] es el opcion de la jugada
 			switch (args[0]) {
