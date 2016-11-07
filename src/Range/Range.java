@@ -1,92 +1,77 @@
 package Range;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
+
+import GUI.TableGUI;
 
 public class Range {
-	private int [][] table;     // 1: SameCards, 2: Suited, 3: offSuited 4: Selected
-	
-	public Range(){
-		this.table = new int[13][13];
-		
-		for(int i = 0; i < 13; i++){
-			for(int j = 0; j < 13; j++){
-				if(i == j) table [i][j] = 1;
-				else if(i < j) table [i][j] = 2;
-				else table [i][j] = 3;
+
+	// campos de clase
+	private TableGUI table;
+	private Scanner in;
+
+	/**
+	 * Metodo constructor
+	 * 
+	 * @param table
+	 *            El parametro table es el objeto grafico de la tabla
+	 * @param in
+	 *            El parametro in es el objeto de lectura de la consola
+	 */
+	public Range(TableGUI table, Scanner in) {
+		this.table = table;
+		this.in = in;
+		process();
+	}
+
+	/**
+	 * El metodo process llama la tabla pasando el boton que marca y la
+	 * direction.
+	 */
+	private void process() {
+		String str = "";
+		while ((str = this.in.nextLine()) != null) {
+			// limpiar tabla
+			table.clearTable();
+			
+			// separar entrada por coma
+			String[] ranges = str.split(",");
+			
+			for (int i = 0; i < ranges.length; i++) {
+				switch (ranges[i].length()) {
+				case 2:
+					// AA, K2, A2 ...
+					this.table.updateButton(ranges[i], ranges[i]);
+					break;
+				case 3:
+					if (ranges[i].charAt(2) == '+') {
+						// AA+, JJ+, 22+ ...
+						this.table.updateButton(ranges[i], "Diagonal", 1);
+					} else if (ranges[i].charAt(2) == '-') {
+						// AA-, KK-, 33- ...
+						this.table.updateButton(ranges[i], "Diagonal", -1);
+					} else {
+						// T2o, K9s ...
+						this.table.updateButton(ranges[i], ranges[i]);
+					}
+					break;
+				case 4:
+					if (ranges[i].charAt(3) == '+') {
+						// T2s+, KTo+ ...
+						this.table.updateButton(ranges[i], "VertHor", 1);
+					} else {
+						// T2s-, KTo- ...
+						this.table.updateButton(ranges[i], "VertHor", -1);
+					}
+					break;
+				case 7:
+					// ATs-A8s ...
+					this.table.updateButton(ranges[i].substring(0, 3), ranges[i].substring(4, 7));
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
-	
-	public void parseRange(String in){
-		List<Character> aux = new ArrayList<Character>();
-		
-		for(int i = 0; i <= in.length(); i++){
-			if(i < in.length() && in.charAt(i) != ','){ // Leemos la entrada
-				aux.add(in.charAt(i));
-			}
-			else{  
-				RangeSet set = new RangeSet(aux);
-				
-				int highValue = Math.max(set.getPrimerValor(), set.getSegundoValor());
-				int lowValue = Math.min(set.getPrimerValor(), set.getSegundoValor());
-				int x = 0, y = 0;
-				if(set.isSuited()){
-					x = lowValue;
-					y = highValue;					
-				}
-				else{
-					x = highValue;
-					y = lowValue;
-				}
-				
-				table[x][y] = 4;
-				
-				if(set.isMore()){
-					if(x == y){
-						for(int h = x ; h >= 0; h--){
-							table[h][h] = 4;
-						}
-					}
-					else if (x > y){
-						for(int h = x ; h > y; h--){
-							table[h][y] = 4;
-						}
-					}
-					else{
-						for(int h = y ; h > x; h--){
-							table[x][h] = 4;
-						}
-					}
-				}
-				else if(set.isLess()){
-					int highValue2 = Math.max(set.getTercerValor(), set.getCuartoValor());
-					int lowValue2 = Math.min(set.getTercerValor(), set.getCuartoValor());
-					int x2 = 0, y2 = 0;
-					if(set.isSuitedSecondSet()){
-						x2 = lowValue2;
-						y2 = highValue2;					
-					}
-					else{
-						x2 = highValue2;
-						y2 = lowValue2;
-					}
-					
-					for(int h = Math.max(x, x2) ; h >= Math.min(x, x2); h--){
-						for(int g = Math.max(y, y2); g >= Math.min(y, y2); g--){
-							table[h][g] = 4;
-						}						
-					}
-				}
-				
-				aux = new ArrayList<Character>();
-			}
-		}
-	}
-	
-	public int getValue(int x, int y){
-		return table[x][y];
-	}
-	
-	
 }
