@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -197,21 +198,37 @@ public class TableGUI extends JFrame implements ActionListener {
 	 *            El parametro buttonName es el boton de inicio
 	 * @param finalButton
 	 *            El parametro finalButton es el boton de final
+	 * @throws IOException 
 	 */
-	public void updateButton(String buttonName, String finalButton) {
+	public void updateButton(String buttonName, String finalButton) throws IOException {
 		String tmp = buttonName;
-		JButton button = this.mapButtons.get(tmp);
-		button.setBackground(Color.yellow);
-
-		boolean finish = tmp.equals(finalButton);
-		while (!finish) {
-			tmp = tmp.replace(tmp.substring(1, 2), parseNum(parseChar(tmp.charAt(1)) + -1));
-			button = this.mapButtons.get(tmp);
-			button.setBackground(Color.yellow);
-			if (tmp.equals(finalButton)) {
-				finish = true;
+		
+			JButton button = this.mapButtons.get(tmp);
+			//La mano introducida no es correcta
+			if (button == null){
+				throw new IOException(tmp);
 			}
-		}
+			button.setBackground(Color.yellow);	
+			boolean finish = tmp.equals(finalButton);
+			while (!finish) {
+				if (tmp.charAt(1) != '2'){
+					tmp = tmp.replace(tmp.substring(1, 2), parseNum(parseChar(tmp.charAt(1)) + -1));					
+				}
+				//Posible si hay que restar el palo para llegar hasta el final del rango
+				//Habria que guardar tmp.charAt(1) antes de empezar a restar para luego restablecer
+				else {
+					finish = true;
+				}
+				button = this.mapButtons.get(tmp);
+				if (button == null){
+					throw new IOException(tmp);
+				}
+				button.setBackground(Color.yellow);
+				if (tmp.equals(finalButton)) {
+					finish = true;
+				}
+			}
+		
 	}
 
 	/**
@@ -225,10 +242,14 @@ public class TableGUI extends JFrame implements ActionListener {
 	 * @param increDecre
 	 *            El parametro increDecre decide el recorrido va incrementar(1)
 	 *            o decrementar(-1)
+	 * @throws IOException 
 	 */
-	public void updateButton(String buttonName, String mode, int increDecre) {
+	public void updateButton(String buttonName, String mode, int increDecre) throws IOException {
 		String tmp = buttonName.substring(0, buttonName.length() - 1);
 		JButton button = this.mapButtons.get(tmp);
+		if (button == null){
+			throw new IOException(tmp);
+		}
 		boolean finish = false;
 		
 		// mientra que el boton no sea null
