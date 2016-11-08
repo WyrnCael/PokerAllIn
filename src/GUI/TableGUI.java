@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -24,6 +26,8 @@ public class TableGUI extends JFrame implements ActionListener {
 	// campos de la clase
 	private JButton[][] matrixButtons;
 	private Map<String, JButton> mapButtons;
+	private List<JButton> selectedList;
+	//private JButton calculateRange;
 
 	/**
 	 * Metodo constructor
@@ -31,6 +35,7 @@ public class TableGUI extends JFrame implements ActionListener {
 	public TableGUI() {
 		matrixButtons = new JButton[13][13];
 		mapButtons = new TreeMap<String, JButton>();
+		selectedList = new ArrayList<JButton>();
 		this.setLayout(new GridLayout(13, 13, 3, 3));
 
 		initGUI();
@@ -58,6 +63,20 @@ public class TableGUI extends JFrame implements ActionListener {
 				this.add(matrixButtons[i][j]);
 			}
 		}
+		JButton calculateRange = new JButton("Calculate Range");
+		calculateRange.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ordenarLista();
+			}
+
+			private void ordenarLista() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		this.add(calculateRange);
 		paintTable();
 	}
 
@@ -211,14 +230,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			button.setBackground(Color.yellow);	
 			boolean finish = tmp.equals(finalButton);
 			while (!finish) {
-				if (tmp.charAt(1) != '2'){
-					tmp = tmp.replace(tmp.substring(1, 2), parseNum(parseChar(tmp.charAt(1)) + -1));					
-				}
-				//Posible si hay que restar el palo para llegar hasta el final del rango
-				//Habria que guardar tmp.charAt(1) antes de empezar a restar para luego restablecer
-				else {
-					finish = true;
-				}
+				tmp = tmp.replace(tmp.substring(1, 2), parseNum(parseChar(tmp.charAt(1)) + -1));					
 				button = this.mapButtons.get(tmp);
 				if (button == null){
 					throw new IOException(tmp);
@@ -288,7 +300,9 @@ public class TableGUI extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		System.out.println(((JButton) e.getSource()).getText());
+		selectedList.add((JButton) e.getSource());
+		this.mapButtons.get(((JButton) e.getSource()).getText()).setBackground(Color.yellow);
+		
 	}
 }
