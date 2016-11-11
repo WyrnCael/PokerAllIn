@@ -84,7 +84,7 @@ public class TableGUI extends JFrame implements ActionListener {
 				//Si no hay ningun boton seleccionado no hace nada
 				if (!selectedList.isEmpty()){
 					ordenarLista();
-					calcularRango();					
+					calcularRango1();					
 				}
 			}
 
