@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.TreeMap;
 
 import javax.swing.BoxLayout;
@@ -388,6 +389,7 @@ public class TableGUI extends JFrame implements ActionListener {
 	 * Nunca se llama con la lista vacia, la funcion que llama a esta lo controla
 	 */
 	private void calcularRango() {
+		Stack<String> stack = new Stack<String>();
 		String nombreManoActual, nombreManoAnterior, nombreInicioRango = "";
 		nombreManoAnterior = selectedList.get(0).getText();
 		for (int i = 1; i < selectedList.size(); i++){
@@ -407,15 +409,18 @@ public class TableGUI extends JFrame implements ActionListener {
 					}
 					else {
 						if (nombreInicioRango.equals("")){
-							System.out.print(nombreManoAnterior);						
+							System.out.print(nombreManoAnterior);
+							stack.push(nombreManoAnterior);
 						}
 						//Rango entero (+) Si el segundo caracter mas 1 es el mismo que el del primero, es que formarian pareja
 						else if (parseChar(nombreManoAnterior.charAt(1)) + 1  == parseChar(nombreManoAnterior.charAt(0))){
 							System.out.print(nombreInicioRango + "+");	
+							stack.push(nombreInicioRango + "+");
 						}
 						//Rango Acotado (-)
 						else {
 							System.out.print(nombreManoAnterior + "-" + nombreInicioRango);
+							stack.push(nombreManoAnterior + "-" + nombreInicioRango);
 						}
 						nombreInicioRango = "";
 						System.out.print(",");
@@ -433,15 +438,18 @@ public class TableGUI extends JFrame implements ActionListener {
 				}
 				else {
 					if (nombreInicioRango.equals("")){
-						System.out.print(nombreManoAnterior);						
+						System.out.print(nombreManoAnterior);	
+						stack.push(nombreManoAnterior);
 					}
 					//Rango entero (+) Si el segundo caracter mas 1 es el mismo que el del primero, es que formarian pareja
 					else if (parseChar(nombreManoAnterior.charAt(1)) + 1  == parseChar(nombreManoAnterior.charAt(0))){
 						System.out.print(nombreInicioRango + "+");	
+						stack.push(nombreInicioRango + "+");
 					}
 					//Rango Acotado (-)
 					else {
 						System.out.print(nombreManoAnterior + "-" + nombreInicioRango);
+						stack.push(nombreManoAnterior + "-" + nombreInicioRango);
 					}
 					nombreInicioRango = "";
 					System.out.print(",");
@@ -450,15 +458,18 @@ public class TableGUI extends JFrame implements ActionListener {
 			
 			else {
 				if (nombreInicioRango.equals("")){
-					System.out.print(nombreManoAnterior);						
+					System.out.print(nombreManoAnterior);	
+					stack.push(nombreManoAnterior);
 				}
 				//Rango entero (+) Si el segundo caracter mas 1 es el mismo que el del primero, es que formarian pareja
 				else if (parseChar(nombreManoAnterior.charAt(1)) + 1  == parseChar(nombreManoAnterior.charAt(0))){
-					System.out.print(nombreInicioRango + "+");	
+					System.out.print(nombreInicioRango + "+");
+					stack.push(nombreInicioRango + "+");
 				}
 				//Rango Acotado (-)
 				else {
 					System.out.print(nombreManoAnterior + "-" + nombreInicioRango);
+					stack.push(nombreManoAnterior + "-" + nombreInicioRango);
 				}
 				nombreInicioRango = "";
 				System.out.print(",");
@@ -471,28 +482,43 @@ public class TableGUI extends JFrame implements ActionListener {
 		nombreManoActual = nombreManoAnterior;
 		if (nombreManoActual.length() == 3){
 			if (nombreInicioRango == ""){
-				System.out.println(nombreManoActual);						
+				System.out.println(nombreManoActual);	
+				stack.push(nombreManoActual);
 			}
 			//Rango entero (+) Si el segundo caracter mas 1 es el mismo que el del primero, es que formarian pareja
 			else if (parseChar(nombreManoActual.charAt(1)) + 1  == parseChar(nombreManoActual.charAt(0))){
-				System.out.println(nombreInicioRango + "+");	
+				System.out.println(nombreInicioRango + "+");
+				stack.push(nombreInicioRango + "+");
 			}
 			//Rango Acotado (-)
 			else {
 				System.out.println(nombreManoActual + "-" + nombreInicioRango);
+				stack.push(nombreManoActual + "-" + nombreInicioRango);
 			}
 		}
 		else {
 			if (nombreInicioRango.equals("")){
-				System.out.println(nombreManoActual);						
+				System.out.println(nombreManoActual);	
+				stack.push(nombreManoActual);
 			}
 			////Rango entero (+) Caso Particular, en las parejas solo es entero si el final es AA
 			else if (nombreManoActual.equals("AA")){
-				System.out.println(nombreInicioRango + "+");	
+				System.out.println(nombreInicioRango + "+");
+				stack.push(nombreInicioRango + "+");
 			}
 			//Rango Acotado (-)
 			else {
 				System.out.println(nombreManoActual + "-" + nombreInicioRango);
+				stack.push(nombreManoActual + "-" + nombreInicioRango);
+			}
+		}
+		while(!stack.isEmpty()){
+			String str = stack.pop();
+			System.out.print(str);
+			if(!stack.isEmpty()){
+				System.out.print(",");
+			} else {
+				System.out.println();
 			}
 		}
 	}
