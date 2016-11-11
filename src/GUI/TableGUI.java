@@ -8,22 +8,17 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import java.util.TreeMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
-
-import Range.Percentage;
 
 public class TableGUI extends JFrame implements ActionListener {
 
@@ -36,8 +31,7 @@ public class TableGUI extends JFrame implements ActionListener {
 	private JButton[][] matrixButtons;
 	private Map<String, JButton> mapButtons;
 	private List<JButton> selectedList;
-	private JLabel percentaje;
-	
+
 	//private JButton calculateRange;
 
 	/**
@@ -100,9 +94,6 @@ public class TableGUI extends JFrame implements ActionListener {
 			}
 		});
 		panel2.add(clear);
-		percentaje = new JLabel();
-		refreshPercentaje();
-		panel2.add(percentaje);
 		this.add(panel, BorderLayout.CENTER);
 		this.add(panel2, BorderLayout.LINE_END);
 		paintTable();
@@ -355,7 +346,6 @@ public class TableGUI extends JFrame implements ActionListener {
 			}
 			this.mapButtons.get(texto).setBackground(Color.yellow);			
 		}
-		refreshPercentaje();
 	}
 	
 	/**
@@ -610,24 +600,4 @@ public class TableGUI extends JFrame implements ActionListener {
 		}
 	}
 	*/
-	
-	private void refreshPercentaje(){
-		int nPairs = 0, nSuited = 0, nOffSuited = 0;
-		for (int i = 0; i < selectedList.size(); i++){
-			String nombreManoActual = selectedList.get(i).getText();
-			if(nombreManoActual.length() == 2){
-				nPairs++;
-			}
-			else if(nombreManoActual.charAt(2) == 's'){
-				nSuited++;
-			}
-			else if(nombreManoActual.charAt(2) == 'o'){
-				nOffSuited++;
-			}
-		}
-		DecimalFormat df = new DecimalFormat("0.00");
-		double per = Percentage.getPercent(nSuited, nPairs, nOffSuited);
-		this.percentaje.setText("Porcentaje: " + df.format(per) + "%");
-		
-	}
 }
