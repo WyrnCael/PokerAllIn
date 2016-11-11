@@ -1,15 +1,16 @@
 package Range;
 
-public class Percentage {
-	private final int numCombinaciones = 1326;
-	private double percent;
+public final class Percentage {
+	private static int numCombinaciones = 1326;
 	
 	public Percentage(int Nsuited, int Npar, int Noffsuited){
-		int total = 0;
-		total = Nsuited*4 + Npar*6+ Noffsuited*12;
-		percent = total / numCombinaciones;
+		
 	}
-	public double getPercent(){
-		return this.percent;
+	
+	public static double getPercent(int Nsuited, int Npar, int Noffsuited){
+		double total = 0;
+		total = Nsuited*4 + Npar*6+ Noffsuited*12;
+		double percent = total / numCombinaciones;
+		return percent;
 	}
 }
