@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import java.util.TreeMap;
 
 import javax.swing.BoxLayout;
@@ -79,7 +78,7 @@ public class TableGUI extends JFrame implements ActionListener {
 				//Si no hay ningun boton seleccionado no hace nada
 				if (!selectedList.isEmpty()){
 					ordenarLista();
-					calcularRango();					
+					calcularRango1();					
 				}
 			}
 
@@ -357,7 +356,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			@Override
 			public int compare(JButton o1, JButton o2) {
 				//Como no hay duplicados solo hay que devolver si el boton 1 es mayor que el boton 2
-				return getButtonValue(o1.getText()) > getButtonValue(o2.getText())? 1 : -1;
+				return getButtonValue(o1.getText()) < getButtonValue(o2.getText())? 1 : -1;
 				
 			}
 		});
@@ -383,11 +382,89 @@ public class TableGUI extends JFrame implements ActionListener {
 		return value;
 	}
 	
+	private void calcularRango1(){
+		int pos = -1;
+		if(selectedList.get(0).getText().length() == 2){
+			pos = rangePair(0);
+			pos = rangeSuitedOffSuited(pos);
+			rangeSuitedOffSuited(pos);
+		} else if(selectedList.get(0).getText().length() == 3){
+			pos = rangeSuitedOffSuited(0);
+			rangeSuitedOffSuited(pos);
+		}
+	}
 	
+	private int rangePair(int initPos){
+		int endPos = initPos + 1;
+		String current = selectedList.get(initPos).getText();
+		String next, range = current;
+		boolean pair = current.charAt(0) == 'A';
+		while(endPos != selectedList.size() && selectedList.get(endPos).getText().length() != 3){
+			next = selectedList.get(endPos).getText();
+			
+			if(pair && (parseChar(current.charAt(0)) - parseChar(next.charAt(0))) == 1){
+				current = next;
+				range = current + "+";
+			} else {
+				pair = false;
+				current = next;
+				System.out.print(range + ",");
+				range = current;
+			}
+			endPos++;
+		}
+		if(endPos != selectedList.size() && selectedList.get(endPos).getText().length() == 3){
+			System.out.print(range + ",");
+		} else {
+			System.out.println(range);
+		}
+		return endPos;
+	}
+	
+	private int rangeSuitedOffSuited(int initPos){
+		if(initPos == selectedList.size()){
+			return initPos;
+		}
+		int endPos = initPos + 1;
+		String current = selectedList.get(initPos).getText();
+		String next, range = current, initRange = current + "-";
+		boolean bo = (parseChar(current.charAt(0)) - parseChar(current.charAt(1)) == 1);
+		char suit = current.charAt(2);
+		while(endPos != selectedList.size() && selectedList.get(endPos).getText().charAt(2) == suit){
+			next = selectedList.get(endPos).getText();
+			if(current.charAt(0) != next.charAt(0)){
+				bo = (parseChar(next.charAt(0)) - parseChar(next.charAt(1)) == 1);
+				System.out.print(range + ",");
+				range = next;
+				initRange = range + "-";
+			} else {
+				if(bo && (parseChar(current.charAt(1)) - parseChar(next.charAt(1))) == 1){
+					range = next + "+";
+				} else if((parseChar(current.charAt(1)) - parseChar(next.charAt(1))) == 1) {
+					range = initRange + next;
+				} else {
+					bo = false;
+					System.out.print(range + ",");
+					range = next;
+					initRange = range + "-";
+				}
+			}
+			current = next;
+			endPos++;
+		}
+		if(endPos != selectedList.size() && selectedList.get(endPos).getText().charAt(2) != suit){
+			System.out.print(range + ",");
+		} else {
+			System.out.println(range);
+		}
+		
+		return endPos;
+	}
 	/**
 	 * Calcula y muestra el rango de todas las manos seleccionadas por consola
 	 * Nunca se llama con la lista vacia, la funcion que llama a esta lo controla
 	 */
+	/*
 	private void calcularRango() {
 		Stack<String> stack = new Stack<String>();
 		String nombreManoActual, nombreManoAnterior, nombreInicioRango = "";
@@ -522,4 +599,5 @@ public class TableGUI extends JFrame implements ActionListener {
 			}
 		}
 	}
+	*/
 }
