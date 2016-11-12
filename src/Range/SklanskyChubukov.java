@@ -1,23 +1,191 @@
 package Range;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class SklanskyChubukov {
-	private static double[][] table = new double[][]{
-		  { 0, 277, 137, 91.6, 69.5, 52, 44.9, 39.5, 35.3, 36.1, 33.3, 31.1, 29 },
-		  { 166, 477, 43.3, 36.3, 31.4, 23.9, 19.9, 18.6, 17.4, 16.1, 15, 14.1, 13.3 },
-		  { 96, 29.3, 239, 24.7, 21.9, 16.2, 13.3, 11.3, 10.9, 10.1, 9.4, 8.8, 8.3 },
-		  { 68.1, 25.4, 16.4, 159, 18, 12.8, 10.3, 8.5, 7.3, 7, 6.4, 6, 5.5 },
-		  { 53.1, 22.4, 14.8, 11.5, 120, 11.2, 8.7, 7, 5.9, 4.9, 4.6, 4.2, 3.7 },
-		  { 40.8, 17.8, 11.7, 8.8, 7.4, 95.7, 7.6, 6.1, 5, 4.1, 3.2, 3, 2.6 },
-		  { 35.4, 15.2, 9.9, 7.4, 6, 5.1, 79.6, 5.5, 4.5, 3.6, 2.8, 2.2, 2 },
-		  { 31.3, 14.2, 8.5, 6.3, 5.1, 4.2, 3.7, 67.4, 4.1, 3.2, 2.5, 2, 1.6 },
-		  { 28, 13.3, 8.1, 5.3, 4.2, 3.5, 3, 2.7, 57.6, 3.1, 2.3, 1.8, 1.5 },
-		  { 28.2, 12.3, 7.5, 5, 3.4, 2.8, 2.4, 2.1, 1.9, 49.3, 2.4, 1.9, 1.5 },
-		  { 25.9, 11.4, 6.8, 4.4, 3.1, 2.1, 1.8, 1.6, 1.5, 1.6, 40.9, 1.7, 1.4 },
-		  { 24.2, 10.6, 6.2, 3.9, 2.7, 2, 1.5, 1.3, 1.3, 1.3, 1.1, 32.7, 1.2 },
-		  { 22.5, 10, 5.6, 3.44, 2.4, 1.8, 1.4, 1.1, 1, 1, 0.9, 0.9, 24 }
-		};
+	private static List<String> ranking;
+	
+	static {
+		ranking = new ArrayList<String>();
+		ranking.add("AA");
+		ranking.add("KK");
+		ranking.add("AKs");
+		ranking.add("QQ");
+		ranking.add("AKo");
+		ranking.add("JJ");
+		ranking.add("AQs");
+		ranking.add("TT");
+		ranking.add("AQo");
+		ranking.add("99");
+		ranking.add("AJs");
+		ranking.add("88");
+		ranking.add("ATs");
+		ranking.add("AJo");
+		ranking.add("77");
+		ranking.add("66");
+		ranking.add("ATo");
+		ranking.add("A9s");
+		ranking.add("55");
+		ranking.add("A8s");
+		ranking.add("KQs");
+		ranking.add("44");
+		ranking.add("A9o");
+		ranking.add("A7s");
+		ranking.add("KJs");
+		ranking.add("A5s");
+		ranking.add("A8o");
+		ranking.add("A6s");
+		ranking.add("A4s");
+		ranking.add("33");
+		ranking.add("KTs");
+		ranking.add("A7o");
+		ranking.add("A3s");
+		ranking.add("KQo");
+		ranking.add("A2s");
+		ranking.add("A5o");
+		ranking.add("A6o");
+		ranking.add("A4o");
+		ranking.add("KJo");
+		ranking.add("QJs");
+		ranking.add("A3o");
+		ranking.add("22");
+		ranking.add("K9s");
+		ranking.add("A2o");
+		ranking.add("KTo");
+		ranking.add("QTs");
+		ranking.add("K8s");
+		ranking.add("K7s");
+		ranking.add("JTs");
+		ranking.add("K9o");
+		ranking.add("K6s");
+		ranking.add("QJo");
+		ranking.add("Q9s");
+		ranking.add("K5s");
+		ranking.add("K8o");
+		ranking.add("K4s");
+		ranking.add("QTo");
+		ranking.add("K7o");
+		ranking.add("K3s");
+		ranking.add("K2s");
+		ranking.add("Q8s");
+		ranking.add("K6o");
+		ranking.add("J9s");
+		ranking.add("K5o");
+		ranking.add("Q9o");
+		ranking.add("JTo");
+		ranking.add("K4o");
+		ranking.add("Q7s");
+		ranking.add("T9s");
+		ranking.add("Q6s");
+		ranking.add("K3o");
+		ranking.add("J8s");
+		ranking.add("Q5s");
+		ranking.add("K2o");
+		ranking.add("Q8o");
+		ranking.add("Q4s");
+		ranking.add("J9o");
+		ranking.add("Q3s");
+		ranking.add("T8s");
+		ranking.add("J7s");
+		ranking.add("Q7o");
+		ranking.add("Q2s");
+		ranking.add("Q6o");
+		ranking.add("98s");
+		ranking.add("Q5o");
+		ranking.add("J8o");
+		ranking.add("T9o");
+		ranking.add("J6s");
+		ranking.add("T7s");
+		ranking.add("J5s");
+		ranking.add("Q4o");
+		ranking.add("J4s");
+		ranking.add("J7o");
+		ranking.add("Q3o");
+		ranking.add("97s");
+		ranking.add("T8o");
+		ranking.add("J3s");
+		ranking.add("T6s");
+		ranking.add("Q2o");
+		ranking.add("J2s");
+		ranking.add("87s");
+		ranking.add("J6o");
+		ranking.add("98o");
+		ranking.add("T7o");
+		ranking.add("96s");
+		ranking.add("J5o");
+		ranking.add("T5s");
+		ranking.add("T4s");
+		ranking.add("86s");
+		ranking.add("J4o");
+		ranking.add("T6o");
+		ranking.add("97o");
+		ranking.add("T3s");
+		ranking.add("76s");
+		ranking.add("95s");
+		ranking.add("J3o");
+		ranking.add("T2s");
+		ranking.add("87o");
+		ranking.add("85s");
+		ranking.add("96o");
+		ranking.add("T5o");
+		ranking.add("J2o");
+		ranking.add("75s");
+		ranking.add("94s");
+		ranking.add("T4o");
+		ranking.add("65s");
+		ranking.add("86o");
+		ranking.add("93s");
+		ranking.add("84s");
+		ranking.add("95o");
+		ranking.add("T3o");
+		ranking.add("76o");
+		ranking.add("92s");
+		ranking.add("74s");
+		ranking.add("54s");
+		ranking.add("T2o");
+		ranking.add("85o");
+		ranking.add("64s");
+		ranking.add("83s");
+		ranking.add("94o");
+		ranking.add("75o");
+		ranking.add("82s");
+		ranking.add("73s");
+		ranking.add("93o");
+		ranking.add("65o");
+		ranking.add("53s");
+		ranking.add("63s");
+		ranking.add("84o");
+		ranking.add("92o");
+		ranking.add("43s");
+		ranking.add("74o");
+		ranking.add("72s");
+		ranking.add("54o");
+		ranking.add("64o");
+		ranking.add("52s");
+		ranking.add("62s");
+		ranking.add("83o");
+		ranking.add("42s");
+		ranking.add("82o");
+		ranking.add("73o");
+		ranking.add("53o");
+		ranking.add("63o");
+		ranking.add("32s");
+		ranking.add("43o");
+		ranking.add("72o");
+		ranking.add("52o");
+		ranking.add("62o");
+		ranking.add("42o");
+		ranking.add("32o");		
+	}
 		
-	public static double getValue(int x, int y){
-		return table[x][y];
+	public static List<String> getList(double percentaje){
+		List<String> aux = new ArrayList<String>();
+		int numCombos = (int) (percentaje * 169 / 100);
+		for(int i = 0; i < numCombos; i++){
+			aux.add(ranking.get(i));
+		}
+		
+		return aux;
 	}
 }

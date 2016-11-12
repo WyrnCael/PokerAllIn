@@ -25,6 +25,7 @@ import javax.swing.border.BevelBorder;
 
 import Range.Percentage;
 import Range.Range;
+import Range.SklanskyChubukov;
 
 public class TableGUI extends JFrame implements ActionListener {
 
@@ -39,7 +40,8 @@ public class TableGUI extends JFrame implements ActionListener {
 	private List<JButton> selectedList;
 	private JLabel percentaje;
 	private JTextArea handRangeArea;
-
+	private JTextArea customPercentArea;
+	
 	//private JButton calculateRange;
 
 	/**
@@ -107,9 +109,11 @@ public class TableGUI extends JFrame implements ActionListener {
 		refreshPercentaje();
 		panel2.add(percentaje);
 		
+		// Rango manual
 		JLabel handRangeLabel = new JLabel("Draw custom range:");
 		panel2.add(handRangeLabel);
 		handRangeArea = new JTextArea();
+		handRangeLabel.setSize(new Dimension(200, 200));
 		panel2.add(handRangeArea);
 		JButton drawHandRange = new JButton("Draw");
 		drawHandRange.addActionListener(new ActionListener() {
@@ -120,6 +124,22 @@ public class TableGUI extends JFrame implements ActionListener {
 			}
 		});
 		panel2.add(drawHandRange);
+		
+		// Porcentaje manual
+		JLabel customPercentLabel = new JLabel("Custom percent:");
+		panel2.add(customPercentLabel);
+		customPercentArea = new JTextArea();
+		panel2.add(customPercentArea);
+		JLabel customPercentSimLabel = new JLabel("%:");
+		panel2.add(customPercentSimLabel);
+		JButton customPercentButton = new JButton("Draw");
+		customPercentButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				drawCustomPercent();
+			}
+		});
+		panel2.add(customPercentButton);
 		
 		this.add(panel, BorderLayout.CENTER);
 		this.add(panel2, BorderLayout.LINE_END);
@@ -656,5 +676,23 @@ public class TableGUI extends JFrame implements ActionListener {
 		double per = Percentage.getPercent(nSuited, nPairs, nOffSuited) * 100;
 		this.percentaje.setText("Porcentaje: " + df.format(per) + "%");
 		
+	}
+	
+	private void drawCustomPercent(){
+		this.handRangeArea.setText("");
+		clearTable();
+		
+		double percent = Double.valueOf(this.customPercentArea.getText());
+		List<String> ranking = SklanskyChubukov.getList(percent);
+		
+		for(String combo : ranking){
+			JButton button = this.mapButtons.get(combo);
+			if (!selectedList.contains(button)){
+				selectedList.add(button);
+			}
+			button.setBackground(Color.PINK);	
+		}
+		this.customPercentArea.setText("");
+		this.percentaje.setText("Porcentaje: " + String.valueOf(percent) + "%");
 	}
 }

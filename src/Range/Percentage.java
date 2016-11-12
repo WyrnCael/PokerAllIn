@@ -13,4 +13,9 @@ public final class Percentage {
 		double percent = total / numCombinaciones;
 		return percent;
 	}
+	
+	public static int getNumberCards(double percent){
+		int r = (int) (percent * numCombinaciones / 100);
+		return r;
+	}
 }
