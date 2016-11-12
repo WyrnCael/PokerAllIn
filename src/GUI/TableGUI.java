@@ -20,9 +20,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.border.BevelBorder;
 
 import Range.Percentage;
+import Range.Range;
 
 public class TableGUI extends JFrame implements ActionListener {
 
@@ -36,6 +38,7 @@ public class TableGUI extends JFrame implements ActionListener {
 	private Map<String, JButton> mapButtons;
 	private List<JButton> selectedList;
 	private JLabel percentaje;
+	private JTextArea handRangeArea;
 
 	//private JButton calculateRange;
 
@@ -95,6 +98,7 @@ public class TableGUI extends JFrame implements ActionListener {
 		clear.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				handRangeArea.setText("");
 				clearTable();
 			}
 		});
@@ -102,6 +106,21 @@ public class TableGUI extends JFrame implements ActionListener {
 		percentaje = new JLabel();
 		refreshPercentaje();
 		panel2.add(percentaje);
+		
+		JLabel handRangeLabel = new JLabel("Draw custom range:");
+		panel2.add(handRangeLabel);
+		handRangeArea = new JTextArea();
+		panel2.add(handRangeArea);
+		JButton drawHandRange = new JButton("Draw");
+		drawHandRange.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Range range = new Range(TableGUI.this, handRangeArea.getText());
+				refreshPercentaje();
+			}
+		});
+		panel2.add(drawHandRange);
+		
 		this.add(panel, BorderLayout.CENTER);
 		this.add(panel2, BorderLayout.LINE_END);
 		paintTable();
@@ -254,6 +273,9 @@ public class TableGUI extends JFrame implements ActionListener {
 		if (button == null){
 			throw new IOException(tmp);
 		}
+		if (!selectedList.contains(button)){
+			selectedList.add(button);
+		}
 		button.setBackground(Color.yellow);	
 		boolean finish = tmp.equals(finalButton);
 		while (!finish) {
@@ -261,6 +283,9 @@ public class TableGUI extends JFrame implements ActionListener {
 			button = this.mapButtons.get(tmp);
 			if (button == null){
 				throw new IOException(tmp);
+			}
+			if (!selectedList.contains(button)){
+				selectedList.add(button);
 			}
 			button.setBackground(Color.yellow);
 			if (tmp.equals(finalButton)) {
@@ -292,6 +317,9 @@ public class TableGUI extends JFrame implements ActionListener {
 		
 		// mientra que el boton no sea null
 		while (!finish) {
+			if (!selectedList.contains(button)){
+				selectedList.add(button);
+			}
 			button.setBackground(Color.yellow);
 			switch (mode) {
 			case "Diagonal":
