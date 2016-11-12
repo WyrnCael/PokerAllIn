@@ -181,9 +181,16 @@ public final class SklanskyChubukov {
 		
 	public static List<String> getList(double percentaje){
 		List<String> aux = new ArrayList<String>();
-		int numCombos = (int) (percentaje * 169 / 100);
-		for(int i = 0; i < numCombos; i++){
-			aux.add(ranking.get(i));
+		int nPair = 0, nOff = 0, nSuit = 0, nComb = 0, i = 0;
+		boolean reached = false;
+		while(!reached && i < 169){
+			String act = ranking.get(i);
+			if(act.length() == 2) nPair++;
+			else if(act.charAt(2) == 's') nSuit++;
+			else if(act.charAt(2) == 'o') nOff++;
+			if (Percentage.getPercent(nSuit, nPair, nOff) <= percentaje) aux.add(ranking.get(i));
+			else reached = true;
+			i++;
 		}
 		
 		return aux;

@@ -11,10 +11,10 @@ public final class Percentage {
 		double total = 0;
 		total = Nsuited*4 + Npar*6+ Noffsuited*12;
 		double percent = total / numCombinaciones;
-		return percent;
+		return percent * 100;
 	}
 	
-	public static int getNumberCards(double percent){
+	public static int getNumCombos(double percent){
 		int r = (int) (percent * numCombinaciones / 100);
 		return r;
 	}

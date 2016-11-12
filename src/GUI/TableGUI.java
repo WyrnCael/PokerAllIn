@@ -673,7 +673,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			}
 		}
 		DecimalFormat df = new DecimalFormat("0.0");
-		double per = Percentage.getPercent(nSuited, nPairs, nOffSuited) * 100;
+		double per = Percentage.getPercent(nSuited, nPairs, nOffSuited);
 		this.percentaje.setText("Porcentaje: " + df.format(per) + "%");
 		
 	}
