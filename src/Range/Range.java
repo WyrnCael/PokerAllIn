@@ -1,7 +1,6 @@
 package Range;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 import GUI.TableGUI;
 

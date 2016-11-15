@@ -6,6 +6,7 @@ import java.util.List;
 public final class SklanskyChubukov {
 	private static List<String> ranking;
 	
+
 	static {
 		ranking = new ArrayList<String>();
 		ranking.add("AA");
@@ -181,7 +182,7 @@ public final class SklanskyChubukov {
 		
 	public static List<String> getList(double percentaje){
 		List<String> aux = new ArrayList<String>();
-		int nPair = 0, nOff = 0, nSuit = 0, nComb = 0, i = 0;
+		int nPair = 0, nOff = 0, nSuit = 0, i = 0;
 		boolean reached = false;
 		while(!reached && i < 169){
 			String act = ranking.get(i);

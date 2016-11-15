@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.BevelBorder;
 
@@ -41,6 +42,7 @@ public class TableGUI extends JFrame implements ActionListener {
 	private JLabel percentaje;
 	private JTextArea handRangeArea;
 	private JTextArea customPercentArea;
+	private String finalRange = "";
 	
 	//private JButton calculateRange;
 
@@ -52,7 +54,6 @@ public class TableGUI extends JFrame implements ActionListener {
 		mapButtons = new TreeMap<String, JButton>();
 		selectedList = new ArrayList<JButton>();
 
-		//this.setLayout(new GridLayout(14, 13, 3, 3));
 		this.setLayout(new BorderLayout(5,5));
 		initGUI();
 
@@ -80,7 +81,7 @@ public class TableGUI extends JFrame implements ActionListener {
 				panel.add(matrixButtons[i][j]);
 			}
 		}
-		JButton calculateRange = new JButton("Calculate Range");
+		JButton calculateRange = new JButton("Calculate Range from board");
 		calculateRange.addActionListener(new ActionListener() {
 			
 			@Override
@@ -88,14 +89,16 @@ public class TableGUI extends JFrame implements ActionListener {
 				//Si no hay ningun boton seleccionado no hace nada
 				if (!selectedList.isEmpty()){
 					ordenarLista();
-					calcularRango1();					
+					calcularRango();					
 				}
 			}
 
 		});
-		JPanel panel2 = new JPanel();
-		panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
-		panel2.add(calculateRange);
+		
+		JPanel panelControl = new JPanel();
+		panelControl.setPreferredSize(new Dimension(200,50));
+		panelControl.setLayout(new BoxLayout(panelControl, BoxLayout.Y_AXIS));
+		panelControl.add(calculateRange);
 		JButton clear = new JButton("Clear");
 		clear.addActionListener(new ActionListener() {
 			@Override
@@ -104,45 +107,58 @@ public class TableGUI extends JFrame implements ActionListener {
 				clearTable();
 			}
 		});
-		panel2.add(clear);
+		panelControl.add(clear);
 		percentaje = new JLabel();
 		refreshPercentaje();
-		panel2.add(percentaje);
+		panelControl.add(percentaje);
 		
 		// Rango manual
-		JLabel handRangeLabel = new JLabel("Draw custom range:");
-		panel2.add(handRangeLabel);
+		
+		
+		//JLabel handRangeLabel = new JLabel("Draw custom range:");
+		
+		
 		handRangeArea = new JTextArea();
-		handRangeLabel.setSize(new Dimension(200, 200));
-		panel2.add(handRangeArea);
-		JButton drawHandRange = new JButton("Draw");
+		//handRangeArea.setPreferredSize(new Dimension(30, 50));
+		JScrollPane scroll = new JScrollPane(handRangeArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		//scroll.setPreferredSize(new Dimension(20, 200));
+		panelControl.add(new JLabel("Input:"));
+		panelControl.add(scroll);
+		JButton drawHandRange = new JButton("Show Range in the board");
 		drawHandRange.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Range range = new Range(TableGUI.this, handRangeArea.getText());
+				new Range(TableGUI.this, handRangeArea.getText());
 				refreshPercentaje();
 			}
 		});
-		panel2.add(drawHandRange);
+		panelControl.add(drawHandRange);
 		
 		// Porcentaje manual
-		JLabel customPercentLabel = new JLabel("Custom percent:");
-		panel2.add(customPercentLabel);
+		
+		
+		
+		//JLabel customPercentLabel = new JLabel("Custom percent:");
+		
+		
+		
 		customPercentArea = new JTextArea();
-		panel2.add(customPercentArea);
-		JLabel customPercentSimLabel = new JLabel("%:");
-		panel2.add(customPercentSimLabel);
-		JButton customPercentButton = new JButton("Draw");
+		customPercentArea.setEditable(false);
+		JScrollPane scroll2 = new JScrollPane(customPercentArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		panelControl.add(new JLabel("Selected"));
+		panelControl.add(scroll2);
+		
+		JButton customPercentButton = new JButton("Show Percent in the board");
 		customPercentButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				drawCustomPercent();
 			}
 		});
-		panel2.add(customPercentButton);
+		panelControl.add(customPercentButton);
 		
 		this.add(panel, BorderLayout.CENTER);
-		this.add(panel2, BorderLayout.LINE_END);
+		this.add(panelControl, BorderLayout.LINE_END);
 		paintTable();
 	}
 
@@ -439,7 +455,10 @@ public class TableGUI extends JFrame implements ActionListener {
 		return value;
 	}
 	
-	private void calcularRango1(){
+	/**
+	 * Separa entre longitud 2 y 3
+	 */
+	private void calcularRango(){
 		int pos = -1;
 		if(selectedList.get(0).getText().length() == 2){
 			pos = rangePair(0);
@@ -449,6 +468,8 @@ public class TableGUI extends JFrame implements ActionListener {
 			pos = rangeSuitedOffSuited(0);
 			rangeSuitedOffSuited(pos);
 		}
+		this.customPercentArea.setText(finalRange);
+		
 	}
 	
 	private int rangePair(int initPos){
@@ -466,15 +487,20 @@ public class TableGUI extends JFrame implements ActionListener {
 				pair = false;
 				current = next;
 				System.out.print(range + ",");
+				finalRange += range + ",";
 				range = current;
 			}
 			endPos++;
 		}
 		if(endPos != selectedList.size() && selectedList.get(endPos).getText().length() == 3){
+			finalRange += range + ",";
 			System.out.print(range + ",");
 		} else {
 			System.out.println(range);
+			finalRange += range;
+			
 		}
+		customPercentArea.setText(finalRange);
 		return endPos;
 	}
 	
@@ -492,6 +518,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			if(current.charAt(0) != next.charAt(0)){
 				bo = (parseChar(next.charAt(0)) - parseChar(next.charAt(1)) == 1);
 				System.out.print(range + ",");
+				finalRange += range + ",";
 				range = next;
 				initRange = range + "-";
 			} else {
@@ -502,6 +529,7 @@ public class TableGUI extends JFrame implements ActionListener {
 				} else {
 					bo = false;
 					System.out.print(range + ",");
+					finalRange += range + ",";
 					range = next;
 					initRange = range + "-";
 				}
@@ -511,152 +539,14 @@ public class TableGUI extends JFrame implements ActionListener {
 		}
 		if(endPos != selectedList.size() && selectedList.get(endPos).getText().charAt(2) != suit){
 			System.out.print(range + ",");
+			finalRange += range + ",";
 		} else {
 			System.out.println(range);
+			finalRange += range;
 		}
 		
 		return endPos;
 	}
-	/**
-	 * Calcula y muestra el rango de todas las manos seleccionadas por consola
-	 * Nunca se llama con la lista vacia, la funcion que llama a esta lo controla
-	 */
-	/*
-	private void calcularRango() {
-		Stack<String> stack = new Stack<String>();
-		String nombreManoActual, nombreManoAnterior, nombreInicioRango = "";
-		nombreManoAnterior = selectedList.get(0).getText();
-		for (int i = 1; i < selectedList.size(); i++){
-			
-			nombreManoActual = selectedList.get(i).getText();
-			
-			if (nombreManoActual.length() == nombreManoAnterior.length()){
-				//No parejas, sean suited o offsuited
-				if (nombreManoAnterior.length() == 3){
-					//Tienen el mismo caracter de empieze y hay solo 1 de diferencia entre el el segundo caracter, son un rango agrupado
-					if (nombreManoActual.charAt(0) == nombreManoAnterior.charAt(0) && 
-							parseChar(nombreManoActual.charAt(1)) - parseChar(nombreManoAnterior.charAt(1)) == 1){
-						//Solo lo guardo la primera vez, cuando esta vacio
-						if (nombreInicioRango.equals("")){
-							nombreInicioRango = nombreManoAnterior;						
-						}
-					}
-					else {
-						if (nombreInicioRango.equals("")){
-							System.out.print(nombreManoAnterior);
-							stack.push(nombreManoAnterior);
-						}
-						//Rango entero (+) Si el segundo caracter mas 1 es el mismo que el del primero, es que formarian pareja
-						else if (parseChar(nombreManoAnterior.charAt(1)) + 1  == parseChar(nombreManoAnterior.charAt(0))){
-							System.out.print(nombreInicioRango + "+");	
-							stack.push(nombreInicioRango + "+");
-						}
-						//Rango Acotado (-)
-						else {
-							System.out.print(nombreManoAnterior + "-" + nombreInicioRango);
-							stack.push(nombreManoAnterior + "-" + nombreInicioRango);
-						}
-						nombreInicioRango = "";
-						System.out.print(",");
-					}
-					
-				}
-				//Parejas
-				else if (parseChar(nombreManoActual.charAt(0)) - parseChar(nombreManoAnterior.charAt(0)) == 1 && 
-						parseChar(nombreManoActual.charAt(1)) - parseChar(nombreManoAnterior.charAt(1)) == 1){
-					//Solo lo guardo la primera vez, cuando esta vacio
-					if (nombreInicioRango == ""){
-						nombreInicioRango = nombreManoAnterior;						
-					}
-					
-				}
-				else {
-					if (nombreInicioRango.equals("")){
-						System.out.print(nombreManoAnterior);	
-						stack.push(nombreManoAnterior);
-					}
-					//Rango entero (+) Si el segundo caracter mas 1 es el mismo que el del primero, es que formarian pareja
-					else if (parseChar(nombreManoAnterior.charAt(1)) + 1  == parseChar(nombreManoAnterior.charAt(0))){
-						System.out.print(nombreInicioRango + "+");	
-						stack.push(nombreInicioRango + "+");
-					}
-					//Rango Acotado (-)
-					else {
-						System.out.print(nombreManoAnterior + "-" + nombreInicioRango);
-						stack.push(nombreManoAnterior + "-" + nombreInicioRango);
-					}
-					nombreInicioRango = "";
-					System.out.print(",");
-				}
-			}
-			
-			else {
-				if (nombreInicioRango.equals("")){
-					System.out.print(nombreManoAnterior);	
-					stack.push(nombreManoAnterior);
-				}
-				//Rango entero (+) Si el segundo caracter mas 1 es el mismo que el del primero, es que formarian pareja
-				else if (parseChar(nombreManoAnterior.charAt(1)) + 1  == parseChar(nombreManoAnterior.charAt(0))){
-					System.out.print(nombreInicioRango + "+");
-					stack.push(nombreInicioRango + "+");
-				}
-				//Rango Acotado (-)
-				else {
-					System.out.print(nombreManoAnterior + "-" + nombreInicioRango);
-					stack.push(nombreManoAnterior + "-" + nombreInicioRango);
-				}
-				nombreInicioRango = "";
-				System.out.print(",");
-			}
-			nombreManoAnterior = nombreManoActual;
-		}
-		
-		
-		//Por si acaso solo hay una carta en la lista
-		nombreManoActual = nombreManoAnterior;
-		if (nombreManoActual.length() == 3){
-			if (nombreInicioRango == ""){
-				System.out.println(nombreManoActual);	
-				stack.push(nombreManoActual);
-			}
-			//Rango entero (+) Si el segundo caracter mas 1 es el mismo que el del primero, es que formarian pareja
-			else if (parseChar(nombreManoActual.charAt(1)) + 1  == parseChar(nombreManoActual.charAt(0))){
-				System.out.println(nombreInicioRango + "+");
-				stack.push(nombreInicioRango + "+");
-			}
-			//Rango Acotado (-)
-			else {
-				System.out.println(nombreManoActual + "-" + nombreInicioRango);
-				stack.push(nombreManoActual + "-" + nombreInicioRango);
-			}
-		}
-		else {
-			if (nombreInicioRango.equals("")){
-				System.out.println(nombreManoActual);	
-				stack.push(nombreManoActual);
-			}
-			////Rango entero (+) Caso Particular, en las parejas solo es entero si el final es AA
-			else if (nombreManoActual.equals("AA")){
-				System.out.println(nombreInicioRango + "+");
-				stack.push(nombreInicioRango + "+");
-			}
-			//Rango Acotado (-)
-			else {
-				System.out.println(nombreManoActual + "-" + nombreInicioRango);
-				stack.push(nombreManoActual + "-" + nombreInicioRango);
-			}
-		}
-		while(!stack.isEmpty()){
-			String str = stack.pop();
-			System.out.print(str);
-			if(!stack.isEmpty()){
-				System.out.print(",");
-			} else {
-				System.out.println();
-			}
-		}
-	}
-	*/
 	
 	private void refreshPercentaje(){
 		int nPairs = 0, nSuited = 0, nOffSuited = 0;
@@ -679,10 +569,17 @@ public class TableGUI extends JFrame implements ActionListener {
 	}
 	
 	private void drawCustomPercent(){
-		this.handRangeArea.setText("");
+		this.customPercentArea.setText("");
 		clearTable();
-		
-		double percent = Double.valueOf(this.customPercentArea.getText());
+		double percent;
+		try{
+			String input = this.handRangeArea.getText().replace("," , ".");
+			percent = Double.valueOf(input);
+		}
+		catch (NumberFormatException e){
+			System.out.println("Error, no es un valor numerico: " + e.getMessage());
+			percent = 0;
+		}
 		List<String> ranking = SklanskyChubukov.getList(percent);
 		
 		for(String combo : ranking){
@@ -692,7 +589,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			}
 			button.setBackground(Color.PINK);	
 		}
-		this.customPercentArea.setText("");
-		this.percentaje.setText("Porcentaje: " + String.valueOf(percent) + "%");
+		this.handRangeArea.setText("");
+		refreshPercentaje();
 	}
 }
