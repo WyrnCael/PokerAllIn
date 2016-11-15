@@ -21,12 +21,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import Range.Percentage;
 import Range.Range;
 import Range.SklanskyChubukov;
+import javafx.scene.control.Slider;
 
 public class TableGUI extends JFrame implements ActionListener {
 
@@ -43,6 +47,7 @@ public class TableGUI extends JFrame implements ActionListener {
 	private JTextArea handRangeArea;
 	private JTextArea customPercentArea;
 	private String finalRange = "";
+	private JSlider slider;
 	
 	//private JButton calculateRange;
 
@@ -112,6 +117,17 @@ public class TableGUI extends JFrame implements ActionListener {
 		refreshPercentaje();
 		panelControl.add(percentaje);
 		
+		slider = new JSlider();
+		slider.setValue(0);
+		slider.addChangeListener(new ChangeListener() {
+	        @Override
+	        public void stateChanged(ChangeEvent ce) {
+	            percentaje.setText("Porcentaje: " + slider.getValue() + "%");
+	            drawCustomPercent();
+	        }
+	    });
+		panelControl.add(slider);
+		
 		// Rango manual
 		
 		
@@ -136,8 +152,7 @@ public class TableGUI extends JFrame implements ActionListener {
 		
 		// Porcentaje manual
 		
-		
-		
+				
 		//JLabel customPercentLabel = new JLabel("Custom percent:");
 		
 		
@@ -571,15 +586,15 @@ public class TableGUI extends JFrame implements ActionListener {
 	private void drawCustomPercent(){
 		this.customPercentArea.setText("");
 		clearTable();
-		double percent;
-		try{
+		double percent = slider.getValue();
+		/*try{
 			String input = this.handRangeArea.getText().replace("," , ".");
 			percent = Double.valueOf(input);
 		}
 		catch (NumberFormatException e){
 			System.out.println("Error, no es un valor numerico: " + e.getMessage());
 			percent = 0;
-		}
+		}*/
 		List<String> ranking = SklanskyChubukov.getList(percent);
 		
 		for(String combo : ranking){
