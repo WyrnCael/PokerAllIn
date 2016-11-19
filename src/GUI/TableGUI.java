@@ -3,6 +3,7 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -23,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -30,7 +33,7 @@ import javax.swing.event.ChangeListener;
 import Range.Percentage;
 import Range.Range;
 import Range.SklanskyChubukov;
-import javafx.scene.control.Slider;
+
 
 public class TableGUI extends JFrame implements ActionListener {
 
@@ -44,8 +47,8 @@ public class TableGUI extends JFrame implements ActionListener {
 	private Map<String, JButton> mapButtons;
 	private List<JButton> selectedList;
 	private JLabel percentaje;
-	private JTextArea handRangeArea;
-	private JTextArea customPercentArea;
+	private JTextArea inputArea;
+	private JTextArea outputArea;
 	private String finalRange = "";
 	private JSlider slider;
 	
@@ -86,94 +89,94 @@ public class TableGUI extends JFrame implements ActionListener {
 				panel.add(matrixButtons[i][j]);
 			}
 		}
-		JButton calculateRange = new JButton("Calculate Range from board");
-		calculateRange.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Si no hay ningun boton seleccionado no hace nada
-				if (!selectedList.isEmpty()){
-					ordenarLista();
-					calcularRango();					
-				}
-			}
-
-		});
 		
 		JPanel panelControl = new JPanel();
 		panelControl.setPreferredSize(new Dimension(200,50));
 		panelControl.setLayout(new BoxLayout(panelControl, BoxLayout.Y_AXIS));
-		panelControl.add(calculateRange);
-		JButton clear = new JButton("Clear");
-		clear.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				handRangeArea.setText("");
-				clearTable();
-			}
-		});
-		panelControl.add(clear);
+		
+		
+		JPanel panelPorcentaje = new JPanel();
 		percentaje = new JLabel();
 		refreshPercentaje();
-		panelControl.add(percentaje);
-		
 		slider = new JSlider();
 		slider.setValue(0);
 		slider.addChangeListener(new ChangeListener() {
 	        @Override
 	        public void stateChanged(ChangeEvent ce) {
+	        	
 	            percentaje.setText("Porcentaje: " + slider.getValue() + "%");
 	            drawCustomPercent();
 	        }
 	    });
-		panelControl.add(slider);
+		slider.setPreferredSize(new Dimension(700, 20));
+		panelPorcentaje.add(slider);
+		panelPorcentaje.add(percentaje);
 		
-		// Rango manual
+		JLabel input = new JLabel("Input:");
+		input.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		panelControl.add(input);
 		
-		
-		//JLabel handRangeLabel = new JLabel("Draw custom range:");
-		
-		
-		handRangeArea = new JTextArea();
-		//handRangeArea.setPreferredSize(new Dimension(30, 50));
-		JScrollPane scroll = new JScrollPane(handRangeArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		//scroll.setPreferredSize(new Dimension(20, 200));
-		panelControl.add(new JLabel("Input:"));
-		panelControl.add(scroll);
+		inputArea = new JTextArea();
+		//Para hacer el salto de linea
+		inputArea.setLineWrap(true);
+		inputArea.setWrapStyleWord(true);
+		inputArea.setToolTipText("Introduce aqui el rango a calcular");
+		panelControl.add(inputArea);
 		JButton drawHandRange = new JButton("Show Range in the board");
+		drawHandRange.setAlignmentX(JButton.CENTER_ALIGNMENT);
 		drawHandRange.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Range(TableGUI.this, handRangeArea.getText());
+				new Range(TableGUI.this, inputArea.getText());
 				refreshPercentaje();
 			}
 		});
 		panelControl.add(drawHandRange);
 		
-		// Porcentaje manual
 		
-				
-		//JLabel customPercentLabel = new JLabel("Custom percent:");
+		outputArea = new JTextArea();
+		outputArea.setLineWrap(true);
+		outputArea.setWrapStyleWord(true);
+		outputArea.setEditable(false);
+		outputArea.setToolTipText("Salida del rango resaltado en el panel");
+		JLabel selected = new JLabel("Selected:");
+		selected.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		panelControl.add(selected);
+		panelControl.add(outputArea);
 		
+		JButton calculateRange = new JButton("Calculate Range from Board");
+		calculateRange.setAlignmentX(JButton.CENTER_ALIGNMENT);
 		
-		
-		customPercentArea = new JTextArea();
-		customPercentArea.setEditable(false);
-		JScrollPane scroll2 = new JScrollPane(customPercentArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		panelControl.add(new JLabel("Selected"));
-		panelControl.add(scroll2);
-		
-		JButton customPercentButton = new JButton("Show Percent in the board");
-		customPercentButton.addActionListener(new ActionListener() {
+		calculateRange.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				drawCustomPercent();
+				//Si no hay ningun boton seleccionado no hace nada
+				if (!selectedList.isEmpty()){
+					//Limpio el string para que no se concatene con lo anterior en cada llamada
+					finalRange = "";
+					ordenarLista();
+					calcularRango();	
+				}
 			}
 		});
-		panelControl.add(customPercentButton);
+		panelControl.add(calculateRange);
+		
+		
+		JButton clear = new JButton("Clear");
+		clear.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		clear.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				inputArea.setText("");
+				outputArea.setText("");
+				clearTable();
+			}
+		});
+		panelControl.add(clear);
 		
 		this.add(panel, BorderLayout.CENTER);
 		this.add(panelControl, BorderLayout.LINE_END);
+		this.add(panelPorcentaje, BorderLayout.PAGE_END);
 		paintTable();
 	}
 
@@ -440,6 +443,7 @@ public class TableGUI extends JFrame implements ActionListener {
 	 * Ordena la lista de carta de menor valor (32o) a mayor valor (AA)
 	 */
 	private void ordenarLista() {
+		
 		this.selectedList.sort(new Comparator<JButton>() {
 			@Override
 			public int compare(JButton o1, JButton o2) {
@@ -483,8 +487,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			pos = rangeSuitedOffSuited(0);
 			rangeSuitedOffSuited(pos);
 		}
-		this.customPercentArea.setText(finalRange);
-		
+		this.outputArea.setText(finalRange);
 	}
 	
 	private int rangePair(int initPos){
@@ -515,7 +518,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			finalRange += range;
 			
 		}
-		customPercentArea.setText(finalRange);
+		outputArea.setText(finalRange);
 		return endPos;
 	}
 	
@@ -584,8 +587,9 @@ public class TableGUI extends JFrame implements ActionListener {
 	}
 	
 	private void drawCustomPercent(){
-		this.customPercentArea.setText("");
+		this.outputArea.setText("");
 		clearTable();
+		selectedList.clear();
 		double percent = slider.getValue();
 		/*try{
 			String input = this.handRangeArea.getText().replace("," , ".");
@@ -599,12 +603,13 @@ public class TableGUI extends JFrame implements ActionListener {
 		
 		for(String combo : ranking){
 			JButton button = this.mapButtons.get(combo);
-			if (!selectedList.contains(button)){
+			//if (!selectedList.contains(button)){
 				selectedList.add(button);
-			}
-			button.setBackground(Color.PINK);	
+			//}
+			//button.setBackground(Color.PINK);	
+				button.setBackground(Color.yellow);	
 		}
-		this.handRangeArea.setText("");
+		this.inputArea.setText("");
 		refreshPercentaje();
 	}
 }
