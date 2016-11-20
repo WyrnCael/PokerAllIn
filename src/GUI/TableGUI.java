@@ -8,6 +8,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -22,6 +26,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -33,6 +38,13 @@ import javax.swing.event.ChangeListener;
 import Range.Percentage;
 import Range.Range;
 import Range.SklanskyChubukov;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 
 
 public class TableGUI extends JFrame implements ActionListener {
@@ -47,10 +59,11 @@ public class TableGUI extends JFrame implements ActionListener {
 	private Map<String, JButton> mapButtons;
 	private List<JButton> selectedList;
 	private JLabel percentaje;
-	private JTextArea inputArea;
-	private JTextArea outputArea;
+	private JTextField inputArea;
+	private JTextField outputArea;
 	private String finalRange = "";
 	private JSlider slider;
+	private JTextField percentText;
 	
 	//private JButton calculateRange;
 
@@ -61,12 +74,10 @@ public class TableGUI extends JFrame implements ActionListener {
 		matrixButtons = new JButton[13][13];
 		mapButtons = new TreeMap<String, JButton>();
 		selectedList = new ArrayList<JButton>();
-
-		this.setLayout(new BorderLayout(5,5));
 		initGUI();
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
@@ -76,6 +87,9 @@ public class TableGUI extends JFrame implements ActionListener {
 	 */
 	private void initGUI() {
 		JPanel panel = new JPanel(new GridLayout(13, 13, 3, 3));
+		percentaje = new JLabel();
+		percentText = new JTextField();
+		slider = new JSlider();
 		for (int i = 12; i >= 0; i--) {
 			for (int j = 12; j >= 0; j--) {
 				String buttonName = parseButtonName(i, j);
@@ -89,40 +103,93 @@ public class TableGUI extends JFrame implements ActionListener {
 				panel.add(matrixButtons[i][j]);
 			}
 		}
+		refreshPercentaje();
 		
-		JPanel panelControl = new JPanel();
-		panelControl.setPreferredSize(new Dimension(200,50));
-		panelControl.setLayout(new BoxLayout(panelControl, BoxLayout.Y_AXIS));
 		
 		
 		JPanel panelPorcentaje = new JPanel();
-		percentaje = new JLabel();
-		refreshPercentaje();
-		slider = new JSlider();
+		panelPorcentaje.setLayout(new BoxLayout(panelPorcentaje, BoxLayout.X_AXIS));
+		
+		panelPorcentaje.add(slider);
 		slider.setValue(0);
 		slider.addChangeListener(new ChangeListener() {
 	        @Override
 	        public void stateChanged(ChangeEvent ce) {
-	        	
-	            percentaje.setText("Porcentaje: " + slider.getValue() + "%");
-	            drawCustomPercent();
+	        	if(slider.isFocusOwner()){
+		           drawCustomPercent();
+	        	}
 	        }
 	    });
 		slider.setPreferredSize(new Dimension(700, 20));
-		panelPorcentaje.add(slider);
+		
 		panelPorcentaje.add(percentaje);
 		
-		JLabel input = new JLabel("Input:");
-		input.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-		panelControl.add(input);
+		panelPorcentaje.add(percentText);
+		percentText.setHorizontalAlignment(SwingConstants.RIGHT);
+		percentText.setMaximumSize(new Dimension(42, percentText.getMinimumSize().height));
+		percentText.setPreferredSize(new Dimension(42, percentText.getMinimumSize().height));
+		percentText.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				drawCustomPercentFromText();
+			}
+		});
+		percentText.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				drawCustomPercentFromText();
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				percentText.setText("");
+			}
+		});
+		JLabel percSimbol = new JLabel("%");
+		panelPorcentaje.add(percSimbol);
 		
-		inputArea = new JTextArea();
-		//Para hacer el salto de linea
-		inputArea.setLineWrap(true);
-		inputArea.setWrapStyleWord(true);
+		JPanel panelControl = new JPanel();
+		panelControl.setPreferredSize(new Dimension(200,50));
+		panelControl.setMaximumSize(new Dimension(200,50));
+		
+		JLabel input = new JLabel("Enter range to print on the board:");
+		input.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		
+		inputArea = new JTextField();
+		inputArea.setMaximumSize(new Dimension(Integer.MAX_VALUE, inputArea.getMinimumSize().height));
+		inputArea.setPreferredSize(new Dimension(150,  20));
 		inputArea.setToolTipText("Introduce aqui el rango a calcular");
-		panelControl.add(inputArea);
-		JButton drawHandRange = new JButton("Show Range in the board");
+		
+		JButton drawHandRange = new JButton("Show Range on the board");
+		inputArea.addKeyListener(new KeyListener() {			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+					// Para quitar el salto de linea
+					drawHandRange.grabFocus();
+					drawHandRange.doClick();
+				}
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		drawHandRange.setAlignmentX(JButton.CENTER_ALIGNMENT);
 		drawHandRange.addActionListener(new ActionListener() {
 			@Override
@@ -131,18 +198,13 @@ public class TableGUI extends JFrame implements ActionListener {
 				refreshPercentaje();
 			}
 		});
-		panelControl.add(drawHandRange);
 		
-		
-		outputArea = new JTextArea();
-		outputArea.setLineWrap(true);
-		outputArea.setWrapStyleWord(true);
+		outputArea = new JTextField();
+		outputArea.setMaximumSize(new Dimension(Integer.MAX_VALUE, outputArea.getMinimumSize().height));
 		outputArea.setEditable(false);
 		outputArea.setToolTipText("Salida del rango resaltado en el panel");
-		JLabel selected = new JLabel("Selected:");
+		JLabel selected = new JLabel("Range selected frome the board:");
 		selected.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-		panelControl.add(selected);
-		panelControl.add(outputArea);
 		
 		JButton calculateRange = new JButton("Calculate Range from Board");
 		calculateRange.setAlignmentX(JButton.CENTER_ALIGNMENT);
@@ -159,7 +221,6 @@ public class TableGUI extends JFrame implements ActionListener {
 				}
 			}
 		});
-		panelControl.add(calculateRange);
 		
 		
 		JButton clear = new JButton("Clear");
@@ -169,14 +230,87 @@ public class TableGUI extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				inputArea.setText("");
 				outputArea.setText("");
+				slider.setValue(0);
+				percentText.setText("0,0");
 				clearTable();
 			}
 		});
-		panelControl.add(clear);
-		
-		this.add(panel, BorderLayout.CENTER);
-		this.add(panelControl, BorderLayout.LINE_END);
-		this.add(panelPorcentaje, BorderLayout.PAGE_END);
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 924, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 689, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panelControl, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(151)
+							.addComponent(panelControl, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(14, Short.MAX_VALUE))
+		);
+		GroupLayout gl_panelControl = new GroupLayout(panelControl);
+		gl_panelControl.setHorizontalGroup(
+			gl_panelControl.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panelControl.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_panelControl.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panelControl.createSequentialGroup()
+							.addComponent(outputArea, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addGroup(gl_panelControl.createSequentialGroup()
+							.addComponent(inputArea, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addGroup(gl_panelControl.createSequentialGroup()
+							.addComponent(input)
+							.addGap(38))
+						.addGroup(gl_panelControl.createSequentialGroup()
+							.addGroup(gl_panelControl.createParallelGroup(Alignment.LEADING)
+								.addComponent(selected)
+								.addComponent(drawHandRange))
+							.addGap(42))
+						.addGroup(gl_panelControl.createSequentialGroup()
+							.addComponent(calculateRange)
+							.addGap(39))))
+				.addGroup(Alignment.LEADING, gl_panelControl.createSequentialGroup()
+					.addGap(90)
+					.addComponent(clear)
+					.addContainerGap(104, Short.MAX_VALUE))
+		);
+		gl_panelControl.setVerticalGroup(
+			gl_panelControl.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelControl.createSequentialGroup()
+					.addGap(28)
+					.addComponent(input)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(inputArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(drawHandRange)
+					.addGap(72)
+					.addComponent(selected)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(outputArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(calculateRange)
+					.addGap(69)
+					.addComponent(clear)
+					.addGap(21))
+		);
+		panelControl.setLayout(gl_panelControl);
+		getContentPane().setLayout(groupLayout);
 		paintTable();
 	}
 
@@ -405,7 +539,6 @@ public class TableGUI extends JFrame implements ActionListener {
 	public void clearTable() {
 		this.selectedList.clear();
 		paintTable();
-		
 	}
 
 	@Override
@@ -437,6 +570,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			this.mapButtons.get(texto).setBackground(Color.yellow);			
 		}
 		refreshPercentaje();
+		this.slider.setValue((int) Double.parseDouble(percentText.getText().replace(',', '.'))); 
 	}
 	
 	/**
@@ -582,7 +716,8 @@ public class TableGUI extends JFrame implements ActionListener {
 		}
 		DecimalFormat df = new DecimalFormat("0.0");
 		double per = Percentage.getPercent(nSuited, nPairs, nOffSuited);
-		this.percentaje.setText("Porcentaje: " + df.format(per) + "%");
+		this.percentaje.setText("Porcentaje: ");
+		this.percentText.setText(df.format(per));		
 		
 	}
 	
@@ -591,14 +726,7 @@ public class TableGUI extends JFrame implements ActionListener {
 		clearTable();
 		selectedList.clear();
 		double percent = slider.getValue();
-		/*try{
-			String input = this.handRangeArea.getText().replace("," , ".");
-			percent = Double.valueOf(input);
-		}
-		catch (NumberFormatException e){
-			System.out.println("Error, no es un valor numerico: " + e.getMessage());
-			percent = 0;
-		}*/
+		
 		List<String> ranking = SklanskyChubukov.getList(percent);
 		
 		for(String combo : ranking){
@@ -611,5 +739,32 @@ public class TableGUI extends JFrame implements ActionListener {
 		}
 		this.inputArea.setText("");
 		refreshPercentaje();
+	}
+	
+	private void drawCustomPercentFromText(){
+		this.outputArea.setText("");
+		clearTable();
+		selectedList.clear();
+		double percent;
+		try{
+			String input = this.percentText.getText().replace("," , ".");
+			percent = Double.valueOf(input);
+		}
+		catch (NumberFormatException e){
+			System.out.println("Error, no es un valor numerico: " + e.getMessage());
+			percent = 0;
+		}
+		List<String> ranking = SklanskyChubukov.getList(percent);
+		
+		for(String combo : ranking){
+			JButton button = this.mapButtons.get(combo);
+			//if (!selectedList.contains(button)){
+				selectedList.add(button);
+			//}
+			//button.setBackground(Color.PINK);	
+				button.setBackground(Color.yellow);	
+		}
+		this.inputArea.setText("");
+		this.slider.setValue((int) percent); 
 	}
 }
