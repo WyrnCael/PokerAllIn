@@ -196,6 +196,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				new Range(TableGUI.this, inputArea.getText());
 				refreshPercentaje();
+				slider.setValue((int) Double.parseDouble(percentText.getText().replace(',', '.')));
 			}
 		});
 		
