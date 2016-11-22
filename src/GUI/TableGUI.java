@@ -1,9 +1,7 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -25,12 +23,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JSlider;
-import javax.swing.JTextArea;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -38,9 +33,7 @@ import javax.swing.event.ChangeListener;
 import Range.Percentage;
 import Range.Range;
 import Range.SklanskyChubukov;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -56,6 +49,7 @@ public class TableGUI extends JFrame implements ActionListener {
 
 	// campos de la clase
 	private JButton[][] matrixButtons;
+	private JButton[][] matrixBoard;
 	private Map<String, JButton> mapButtons;
 	private List<JButton> selectedList;
 	private JLabel percentaje;
@@ -154,7 +148,10 @@ public class TableGUI extends JFrame implements ActionListener {
 		JLabel percSimbol = new JLabel("%");
 		panelPorcentaje.add(percSimbol);
 		
+		JTabbedPane tp = new JTabbedPane();
+		
 		JPanel panelControl = new JPanel();
+		
 		panelControl.setPreferredSize(new Dimension(200,50));
 		panelControl.setMaximumSize(new Dimension(200,50));
 		
@@ -247,7 +244,7 @@ public class TableGUI extends JFrame implements ActionListener {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 689, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panelControl, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)))
+							.addComponent(tp, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -258,8 +255,8 @@ public class TableGUI extends JFrame implements ActionListener {
 							.addContainerGap()
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(151)
-							.addComponent(panelControl, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)))
+							.addGap(10)
+							.addComponent(tp, GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(14, Short.MAX_VALUE))
@@ -301,17 +298,39 @@ public class TableGUI extends JFrame implements ActionListener {
 					.addComponent(inputArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(drawHandRange)
-					.addGap(72)
+					.addGap(50)
 					.addComponent(selected)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(outputArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(calculateRange)
-					.addGap(69)
+					.addGap(50)
 					.addComponent(clear)
 					.addGap(21))
 		);
 		panelControl.setLayout(gl_panelControl);
+		tp.addTab("parte1", panelControl);
+		
+		JPanel panelBoard = new JPanel(new GridLayout(13, 4, 3, 3));
+		percentaje = new JLabel();
+		percentText = new JTextField();
+		slider = new JSlider();
+		for (int i = 12; i >= 0; i--) {
+			for (int j = 3; j >= 0; j--) {
+				String buttonName = parseButtonName(i, j);
+				matrixBoard[i][j] = new JButton("");
+				matrixBoard[i][j].setPreferredSize(new Dimension(20, 20));
+				matrixBoard[i][j].setBorder(new BevelBorder(BevelBorder.RAISED));
+				matrixBoard[i][j].setFont(new Font("Arial", Font.BOLD, 16));
+				matrixBoard[i][j].addActionListener(this);
+
+				//this.mapButtons.put(buttonName, matrixButtons[i][j]);
+				panelBoard.add(matrixButtons[i][j]);
+			}
+		}
+		paintBoard();
+		
+		tp.addTab("parte2", panelBoard);
 		getContentPane().setLayout(groupLayout);
 		paintTable();
 	}
@@ -328,6 +347,20 @@ public class TableGUI extends JFrame implements ActionListener {
 					matrixButtons[i][j].setBackground(new Color(214, 214, 194));
 				} else { // i > j suited(rojo)
 					matrixButtons[i][j].setBackground(new Color(255, 71, 26));
+				}
+			}
+		}
+	}
+	
+	private void paintBoard() {
+		for (int i = 12; i >= 0; i--) {
+			for (int j = 3; j >= 0; j--) {
+				if (i == j) { // mismo color(verde)
+					matrixBoard[i][j].setBackground(new Color(71, 209, 71));
+				} else if (i < j) { // offsuited(gris)
+					matrixBoard[i][j].setBackground(new Color(214, 214, 194));
+				} else { // i > j suited(rojo)
+					matrixBoard[i][j].setBackground(new Color(255, 71, 26));
 				}
 			}
 		}
