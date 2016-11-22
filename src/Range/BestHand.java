@@ -34,7 +34,10 @@ public class BestHand implements Comparable<Object> {
 	private List<List<Card>> straight; // En el 0 estara la escalera original
 										// y luego por colores segun el valor
 										// asociado.
-
+	
+	
+	
+	
 	private List<List<Card>> straightGutshot;
 
 	private int gutshot;
