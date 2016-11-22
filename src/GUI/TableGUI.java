@@ -75,7 +75,8 @@ public class TableGUI extends JFrame implements ActionListener {
 		mapButtons = new TreeMap<String, JButton>();
 		selectedList = new ArrayList<JButton>();
 		initGUI();
-
+		
+		this.setResizable(false);
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
