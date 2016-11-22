@@ -85,6 +85,7 @@ public class TableGUI extends JFrame implements ActionListener {
 		percentaje = new JLabel();
 		percentText = new JTextField();
 		slider = new JSlider();
+		matrixBoard = new JButton[13][4];
 		for (int i = 12; i >= 0; i--) {
 			for (int j = 12; j >= 0; j--) {
 				String buttonName = parseButtonName(i, j);
@@ -312,13 +313,9 @@ public class TableGUI extends JFrame implements ActionListener {
 		tp.addTab("Apartados 1 y 2", panelControl);
 		
 		JPanel panelBoard = new JPanel(new GridLayout(13, 4, 3, 3));
-		percentaje = new JLabel();
-		percentText = new JTextField();
-		slider = new JSlider();
-		matrixBoard = new JButton[13][4];
 		for (int i = 12; i >= 0; i--) {
 			for (int j = 3; j >= 0; j--) {
-				String buttonName = parseButtonName(i, j);
+				//String buttonName = parseButtonName(i, j);
 				matrixBoard[i][j] = new JButton("");
 				matrixBoard[i][j].setPreferredSize(new Dimension(20, 20));
 				matrixBoard[i][j].setBorder(new BevelBorder(BevelBorder.RAISED));
@@ -326,7 +323,7 @@ public class TableGUI extends JFrame implements ActionListener {
 				matrixBoard[i][j].addActionListener(this);
 
 				//this.mapButtons.put(buttonName, matrixButtons[i][j]);
-				panelBoard.add(matrixButtons[i][j]);
+				panelBoard.add(matrixBoard[i][j]);
 			}
 		}
 		paintBoard();
