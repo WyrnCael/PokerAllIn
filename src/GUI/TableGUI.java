@@ -315,14 +315,14 @@ public class TableGUI extends JFrame implements ActionListener {
 		JPanel panelBoard = new JPanel(new GridLayout(13, 4, 3, 3));
 		for (int i = 12; i >= 0; i--) {
 			for (int j = 3; j >= 0; j--) {
-				//String buttonName = parseButtonName(i, j);
-				matrixBoard[i][j] = new JButton("");
+				String buttonName = parseBoardButtonName(i, j);
+				matrixBoard[i][j] = new JButton(buttonName);
 				matrixBoard[i][j].setPreferredSize(new Dimension(20, 20));
 				matrixBoard[i][j].setBorder(new BevelBorder(BevelBorder.RAISED));
 				matrixBoard[i][j].setFont(new Font("Arial", Font.BOLD, 16));
 				matrixBoard[i][j].addActionListener(this);
 
-				//this.mapButtons.put(buttonName, matrixButtons[i][j]);
+				//this.mapButtons.put(buttonName, matrixBoard[i][j]);
 				panelBoard.add(matrixBoard[i][j]);
 			}
 		}
@@ -353,13 +353,7 @@ public class TableGUI extends JFrame implements ActionListener {
 	private void paintBoard() {
 		for (int i = 12; i >= 0; i--) {
 			for (int j = 3; j >= 0; j--) {
-				if (i == j) { // mismo color(verde)
-					matrixBoard[i][j].setBackground(new Color(71, 209, 71));
-				} else if (i < j) { // offsuited(gris)
-					matrixBoard[i][j].setBackground(new Color(214, 214, 194));
-				} else { // i > j suited(rojo)
-					matrixBoard[i][j].setBackground(new Color(255, 71, 26));
-				}
+				matrixBoard[i][j].setBackground(new Color(214, 214, 194));
 			}
 		}
 	}
@@ -385,6 +379,23 @@ public class TableGUI extends JFrame implements ActionListener {
 			buttonName += "o";
 		} else if (i > j) {
 			buttonName += "s";
+		}
+
+		return buttonName;
+	}
+	
+	private String parseBoardButtonName(int i, int j) {
+		String buttonName = parseNum(i);
+
+		switch (j){
+		case 3: buttonName += 'h';
+				break;
+		case 2: buttonName += 'd';
+				break;
+		case 1: buttonName += 'c';
+				break;
+		case 0: buttonName += 's';
+				break;
 		}
 
 		return buttonName;
