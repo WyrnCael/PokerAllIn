@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -52,6 +53,7 @@ public class TableGUI extends JFrame implements ActionListener {
 	private JButton[][] matrixBoard;
 	private Map<String, JButton> mapButtons;
 	private List<JButton> selectedList;
+	private List<JButton> selectedBoard;
 	private JLabel percentaje;
 	private JTextField inputArea;
 	private JTextField outputArea;
@@ -68,6 +70,7 @@ public class TableGUI extends JFrame implements ActionListener {
 		matrixButtons = new JButton[13][13];
 		mapButtons = new TreeMap<String, JButton>();
 		selectedList = new ArrayList<JButton>();
+		selectedBoard = new ArrayList<JButton>();
 		initGUI();
 		
 		this.setResizable(false);
@@ -312,20 +315,25 @@ public class TableGUI extends JFrame implements ActionListener {
 		panelControl.setLayout(gl_panelControl);
 		tp.addTab("Apartados 1 y 2", panelControl);
 		
-		JPanel panelBoard = new JPanel(new GridLayout(13, 4, 3, 3));
+		JPanel panelBoard = new JPanel(new GridLayout(14, 4, 3, 3));
 		for (int i = 12; i >= 0; i--) {
 			for (int j = 3; j >= 0; j--) {
 				String buttonName = parseBoardButtonName(i, j);
 				matrixBoard[i][j] = new JButton(buttonName);
 				matrixBoard[i][j].setPreferredSize(new Dimension(20, 20));
-				matrixBoard[i][j].setBorder(new BevelBorder(BevelBorder.RAISED));
 				matrixBoard[i][j].setFont(new Font("Arial", Font.BOLD, 16));
 				matrixBoard[i][j].addActionListener(this);
 
-				//this.mapButtons.put(buttonName, matrixBoard[i][j]);
 				panelBoard.add(matrixBoard[i][j]);
 			}
 		}
+
+		JButton d = new JButton("co");
+		d.setPreferredSize(new Dimension(20, 20));
+		d.setFont(new Font("Arial", Font.BOLD, 16));		
+		d.addActionListener(this);
+		panelBoard.add(d);
+		
 		paintBoard();
 		
 		tp.addTab("Apartado 3", panelBoard);
@@ -351,9 +359,30 @@ public class TableGUI extends JFrame implements ActionListener {
 	}
 	
 	private void paintBoard() {
+		Color color = null;
 		for (int i = 12; i >= 0; i--) {
 			for (int j = 3; j >= 0; j--) {
-				matrixBoard[i][j].setBackground(new Color(214, 214, 194));
+				switch(j) {
+				case 0:
+					// gris
+					color = new Color(214, 214, 194);
+					break;
+				case 1:
+					// verde
+					color = new Color(153, 230, 153);
+					break;
+				case 2:
+					// azul
+					color = new Color(102, 194, 255);
+					break;
+				case 3:
+					// rojo
+					color = new Color(255, 179, 179);
+					break;
+				default:
+					break;
+				}
+				matrixBoard[i][j].setBackground(color);
 			}
 		}
 	}
@@ -390,9 +419,9 @@ public class TableGUI extends JFrame implements ActionListener {
 		switch (j){
 		case 3: buttonName += 'h';
 				break;
-		case 2: buttonName += 'd';
+		case 2: buttonName += 'c';
 				break;
-		case 1: buttonName += 'c';
+		case 1: buttonName += 'd';
 				break;
 		case 0: buttonName += 's';
 				break;
@@ -590,33 +619,113 @@ public class TableGUI extends JFrame implements ActionListener {
 		JButton boton = (JButton) e.getSource();
 		String texto = (boton).getText();
 		System.out.println(texto);
+		if(texto.equals("co")){
+			
+			calcularCombo();
+			
+			
+			
+			
+		} else {
 		//El boton ya esta pulsado, se vuelve al color original y se eliminar de la lista
-		if (boton.getBackground().equals(Color.yellow)){
-			selectedList.remove(boton);
-			//Suited (Rojo)
-			if (boton.getText().length() == 3 && boton.getText().charAt(2) == 's'){
-				this.mapButtons.get(texto).setBackground(new Color(255, 71, 26));
+		if(this.mapButtons.get(texto) != null){
+			if (boton.getBackground().equals(Color.yellow)){
+				selectedList.remove(boton);
+				//Suited (Rojo)
+				if (boton.getText().length() == 3 && boton.getText().charAt(2) == 's'){
+					this.mapButtons.get(texto).setBackground(new Color(255, 71, 26));
+				}
+				//Off suited (Gris)
+				else if (boton.getText().length() == 3){
+					this.mapButtons.get(texto).setBackground(new Color(214, 214, 194));
+				}
+				//Pair (Verde)
+				else {
+					this.mapButtons.get(texto).setBackground(new Color(71, 209, 71));
+				}
 			}
-			//Off suited (Gris)
-			else if (boton.getText().length() == 3){
-				this.mapButtons.get(texto).setBackground(new Color(214, 214, 194));
-			}
-			//Pair (Verde)
 			else {
-				this.mapButtons.get(texto).setBackground(new Color(71, 209, 71));
+				//Evitamos meter el mismo boton en la lista si ya esta en ella
+				if (!selectedList.contains(boton)){
+					selectedList.add(boton);
+				}
+				this.mapButtons.get(texto).setBackground(Color.yellow);			
+			}
+			refreshPercentaje();
+			this.slider.setValue((int) Double.parseDouble(percentText.getText().replace(',', '.'))); 
+		} else {
+			if (!selectedBoard.contains(boton)){
+				selectedBoard.add(boton);
+				switch(texto.charAt(1)){
+				case 's':
+					// gris
+					boton.setBackground(new Color(163, 163, 117));
+					break;
+				case 'c':
+					// azul
+					boton.setBackground(new Color(0, 153, 255));
+					break;
+				case 'd':
+					// verde
+					boton.setBackground(new Color(51, 204, 51));
+					break;
+				case 'h':
+					// rojo
+					boton.setBackground(new Color(255, 77, 77));
+					default:
+						break;
+				}
+				boton.setBorder(new BevelBorder(BevelBorder.RAISED));
+			} else {
+				selectedBoard.remove(boton);
+				switch(texto.charAt(1)){
+				case 's':
+					// gris
+					boton.setBackground(new Color(214, 214, 194));
+					break;
+				case 'c':
+					// azul
+					boton.setBackground(new Color(102, 194, 255));
+					break;
+				case 'd':
+					// verde
+					boton.setBackground(new Color(153, 230, 153));
+					break;
+				case 'h':
+					// rojo
+					boton.setBackground(new Color(255, 179, 179));
+					default:
+						break;
+				}
+				boton.setBorder(BorderFactory.createLineBorder(getForeground()));
 			}
 		}
-		else {
-			//Evitamos meter el mismo boton en la lista si ya esta en ella
-			if (!selectedList.contains(boton)){
-				selectedList.add(boton);
-			}
-			this.mapButtons.get(texto).setBackground(Color.yellow);			
 		}
-		refreshPercentaje();
-		this.slider.setValue((int) Double.parseDouble(percentText.getText().replace(',', '.'))); 
 	}
 	
+	private void calcularCombo() {
+		// TODO Auto-generated method stub
+		String str = "";
+		int nTotalCombos = 0;
+		for(int i = 0; i < selectedList.size(); i++){
+			str = selectedList.get(i).getText();
+			if(str.charAt(0) == str.charAt(1)){
+				// par
+				nTotalCombos += 6;
+			} else if(str.charAt(2) == 's'){
+				// suited
+				nTotalCombos += 4;
+			} else {
+				// offsuited
+				nTotalCombos += 12;
+			}
+		}
+		System.out.println("numero total de combos antes de poner board: " + nTotalCombos);
+		for(int j = 0; j < selectedBoard.size(); j++){
+			str = selectedBoard.get(j).getText();
+		}
+	}
+
 	/**
 	 * Ordena la lista de carta de menor valor (32o) a mayor valor (AA)
 	 */
