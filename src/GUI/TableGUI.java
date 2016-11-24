@@ -31,6 +31,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Cards.CombosCalculator;
 import Range.Percentage;
 import Range.Range;
 import Range.SklanskyChubukov;
@@ -621,7 +622,9 @@ public class TableGUI extends JFrame implements ActionListener {
 		System.out.println(texto);
 		if(texto.equals("co")){
 			
-			calcularCombo();
+			ordenarLista();
+			CombosCalculator combosCal = new CombosCalculator(selectedList, selectedBoard);
+
 			
 			
 			
@@ -703,35 +706,21 @@ public class TableGUI extends JFrame implements ActionListener {
 		}
 	}
 	
-	private void calcularCombo() {
-		// TODO Auto-generated method stub
-		String str = "";
-		int nTotalCombos = 0;
-		for(int i = 0; i < selectedList.size(); i++){
-			str = selectedList.get(i).getText();
-			if(str.charAt(0) == str.charAt(1)){
-				// par
-				nTotalCombos += 6;
-			} else if(str.charAt(2) == 's'){
-				// suited
-				nTotalCombos += 4;
-			} else {
-				// offsuited
-				nTotalCombos += 12;
-			}
-		}
-		System.out.println("numero total de combos antes de poner board: " + nTotalCombos);
-		for(int j = 0; j < selectedBoard.size(); j++){
-			str = selectedBoard.get(j).getText();
-		}
-	}
-
 	/**
 	 * Ordena la lista de carta de menor valor (32o) a mayor valor (AA)
 	 */
 	private void ordenarLista() {
 		
 		this.selectedList.sort(new Comparator<JButton>() {
+			@Override
+			public int compare(JButton o1, JButton o2) {
+				//Como no hay duplicados solo hay que devolver si el boton 1 es mayor que el boton 2
+				return getButtonValue(o1.getText()) < getButtonValue(o2.getText())? 1 : -1;
+				
+			}
+		});
+		
+		this.selectedBoard.sort(new Comparator<JButton>() {
 			@Override
 			public int compare(JButton o1, JButton o2) {
 				//Como no hay duplicados solo hay que devolver si el boton 1 es mayor que el boton 2

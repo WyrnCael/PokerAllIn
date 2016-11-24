@@ -22,7 +22,6 @@ public class BestHand implements Comparable<Object> {
 	private Suit suit;
 	private Hand bestHand;
 	private Ranking rank;
-	private List<String> draws;
 
 	private List<Card> highCards;
 	private List<Card> pair;
@@ -38,14 +37,6 @@ public class BestHand implements Comparable<Object> {
 	
 	
 	
-	private List<List<Card>> straightGutshot;
-
-	private int gutshot;
-	private int flushGutshot;
-	private boolean isStraightGutshot;
-	private boolean isStraightOpenEnded;
-	private boolean isStraightFlushGutshot;
-	private boolean isStraightFlushOpenEnded;
 
 	/**
 	 * Constructor
@@ -56,7 +47,6 @@ public class BestHand implements Comparable<Object> {
 	public BestHand(Hand hand) {
 		this.hand = hand;
 		mapValue = hand.getCardsValueMap();
-		draws = new ArrayList<String>();
 
 		bestHand = new Hand();
 
@@ -75,22 +65,8 @@ public class BestHand implements Comparable<Object> {
 		straight.add(new ArrayList<Card>());
 		straight.add(new ArrayList<Card>());
 
-		straightGutshot = new ArrayList<List<Card>>();
-		straightGutshot.add(new ArrayList<Card>());
-		straightGutshot.add(new ArrayList<Card>());
-		straightGutshot.add(new ArrayList<Card>());
-		straightGutshot.add(new ArrayList<Card>());
-		straightGutshot.add(new ArrayList<Card>());
-		gutshot = 0;
-		flushGutshot = 0;
-		isStraightGutshot = false;
-		isStraightOpenEnded = false;
-		isStraightFlushGutshot = false;
-		isStraightFlushOpenEnded = false;
-
 		insertCardsToList();
 		bestHand();
-		Draws();
 	}
 
 	/**
@@ -369,38 +345,6 @@ public class BestHand implements Comparable<Object> {
 	}
 
 	/**
-	 * El metodo que calcula los draws que pueda formar
-	 */
-	private void Draws() {
-		if (this.rank != Ranking.STRAIGHT_FLUSH) {
-
-			if (this.isStraightFlushOpenEnded) {
-				draws.add(Ranking.STRAIGHT_FLUSH.getName() + " OpenEnded");
-			}
-			if (this.isStraightFlushGutshot && flushGutshot == 1) {
-				draws.add(Ranking.STRAIGHT_FLUSH.getName() + " Gutshot");
-			}
-
-			if (this.rank.getValue() < Ranking.FLUSH.getValue()
-					&& flush.size() == 4) {
-
-				draws.add(Ranking.FLUSH.getName());
-			}
-
-			if (!this.isStraightFlushOpenEnded && !this.isStraightFlushGutshot
-					&& this.rank.getValue() < Ranking.STRAIGHT.getValue()) {
-				if (this.isStraightOpenEnded) {
-					draws.add(Ranking.STRAIGHT.getName() + " OpenEnded");
-				}
-				if (this.isStraightGutshot && gutshot == 1) {
-					draws.add(Ranking.STRAIGHT.getName() + " Gutshot");
-				}
-			}
-
-		}
-	}
-
-	/**
 	 * El metodo que anade la carta a la lista de escaleras
 	 * 
 	 * @param card
@@ -412,62 +356,30 @@ public class BestHand implements Comparable<Object> {
 		// Si no existia
 		List<Card> tmpStraight = straight.get(0);
 
-		if (this.straightGutshot.get(0).size() == 0) {
-			this.straightGutshot.get(0).add(card);
-		}
 		if (tmpStraight.size() == 0) {
 			tmpStraight.add(card);
 		} else if (tmpStraight.get(tmpStraight.size() - 1).getValue()
 				.getValue()
 				- card.getValue().getValue() == 1) {
 			tmpStraight.add(card);
-			this.straightGutshot.get(0).add(card);
-			if (tmpStraight.size() == 4) {
-				this.isStraightOpenEnded = true;
-			}
 			if (card.getValue().getValue() == 2) {
 				Card as = checkAce();
 				if (as != null) {
 					tmpStraight.add(as);
-					this.straightGutshot.get(0).add(as);
 				}
 
 			}
 		} else if (tmpStraight.get(tmpStraight.size() - 1).getValue()
 				.getValue()
 				- card.getValue().getValue() > 1) {
-			if (tmpStraight.get(tmpStraight.size() - 1).getValue().getValue()
-					- card.getValue().getValue() > 2) {
-				if (!isStraightGutshot) {
-					this.straightGutshot.get(0).clear();
-					this.gutshot = 0;
-				}
-
-			} else {
-				if (gutshot == 0) { // no habia gutshot antes
-					gutshot++;
-					this.straightGutshot.get(0).add(card);
-				} else {
-					straightGutshot.get(0).clear();
-					gutshot = 0;
-				}
-			}
 			straight.get(0).clear();
 			straight.get(0).add(card);
-		}
-
-		if (straightGutshot.get(0).size() == 4) {
-			this.isStraightGutshot = true;
 		}
 
 		// La insertamos en su color si es la siguiente a la ultima, sino
 		// empezamos de 0 esa escalera
 		int numSuit = card.getSuit().getNum();
 		List<Card> tmpStraightFlush = straight.get(numSuit);
-
-		if (this.straightGutshot.get(numSuit).size() == 0) {
-			this.straightGutshot.get(numSuit).add(card);
-		}
 
 		if (tmpStraightFlush.size() == 0) {
 			tmpStraightFlush.add(card);
@@ -478,43 +390,17 @@ public class BestHand implements Comparable<Object> {
 				.getValue()
 				- card.getValue().getValue() == 1) {
 			tmpStraightFlush.add(card);
-			this.straightGutshot.get(numSuit).add(card);
-			if (tmpStraightFlush.size() == 4) {
-				this.isStraightFlushOpenEnded = true;
-			}
 			if (card.getValue().getValue() == 2) {
 				Card as = checkAceSuit(card.getSuit());
 				if (as != null) {
 					tmpStraightFlush.add(as);
-					this.straightGutshot.get(numSuit).add(as);
 				}
 			}
 		} else if (tmpStraightFlush.get(tmpStraightFlush.size() - 1).getValue()
 				.getValue()
 				- card.getValue().getValue() > 1) {
-			if (tmpStraightFlush.get(tmpStraightFlush.size() - 1).getValue()
-					.getValue()
-					- card.getValue().getValue() > 2) {
-				if (!isStraightFlushGutshot) {
-					this.straightGutshot.get(numSuit).clear();
-					this.flushGutshot = 0;
-				}
-
-			} else {
-				if (flushGutshot == 0) { // no habia gutshot antes
-					flushGutshot++;
-					this.straightGutshot.get(numSuit).add(card);
-				} else {
-					straightGutshot.get(numSuit).clear();
-					flushGutshot = 0;
-				}
-			}
 			tmpStraightFlush.clear();
 			tmpStraightFlush.add(card);
-		}
-
-		if (straightGutshot.get(numSuit).size() == 4) {
-			this.isStraightFlushGutshot = true;
 		}
 
 		checkStraight();
@@ -599,15 +485,6 @@ public class BestHand implements Comparable<Object> {
 		return this.rank;
 	}
 
-	/**
-	 * El metodo que devuelve la lista de draws
-	 * 
-	 * @return this.draws es el objeto de la lista de draws
-	 */
-	public List<String> getDraws() {
-		return this.draws;
-	}
-
 	public String toString() {
 		String str = " - Best hand: " + this.rank.getName();
 		str += " (";
@@ -615,12 +492,6 @@ public class BestHand implements Comparable<Object> {
 			str += this.bestHand.getCard(i);
 		}
 		str += ")" + System.getProperty("line.separator");
-		if (this.hand.getCardsList().size() < 7) {
-			for (int i = 0; i < draws.size(); i++) {
-				str += " - Draw: " + draws.get(i)
-						+ System.getProperty("line.separator");
-			}
-		}
 		return str;
 	}
 
