@@ -219,45 +219,17 @@ public class BestHand implements Comparable<Object> {
 		// si el tamano de la lista del poker es 4, hay poker
 		else if (poker.size() >= 4) {
 
-			// completar mano insertando una carta mas alta y distinta al valor
-			// del poker
-			for (int i = 0; i < highCards.size() && poker.size() != 5; i++) {
-				if (this.highCards.get(i).getValue() != poker.get(0).getValue()) {
-					poker.add(highCards.get(i));
-				}
-			}
-
 			bestHand.addAll(poker);
 			rank = Ranking.FOUR_OF_A_KIND;
 
 		}
 		// si el tamano de la lista del trios mayor que 3 y el de parejas es
 		// mayor que 2, hay full
-		else if (threeKind.size() >= 3
-				&& (pair.size() >= 2 || threeKind.size() >= 6)) {
+		else if (threeKind.size() >= 3 && pair.size() >= 2) {
 
-			// dos trios
-			if (threeKind.size() == 6) {
-				// el valor del segundo trio es mayor que el de pareja,
-				// completamos la mano con dos cartas del segundo trio
-				if (threeKind.get(3).getValue().getValue() > pair.get(0)
-						.getValue().getValue()) {
-					bestHand.addAll(threeKind);
-				}
-				// completamos la mano con pareja
-				else {
-					bestHand.add(pair.get(0));
-					bestHand.add(pair.get(1));
-				}
-			}
-			// un trio
-			else {
-				bestHand.addAll(threeKind);
-				if (pair.size() >= 2) {
-					bestHand.add(pair.get(0));
-					bestHand.add(pair.get(1));
-				}
-			}
+			bestHand.addAll(threeKind);
+			bestHand.add(pair.get(0));
+			bestHand.add(pair.get(1));
 
 			rank = Ranking.FULL_HOUSE;
 
@@ -280,14 +252,6 @@ public class BestHand implements Comparable<Object> {
 		// si el tamano de la lista del trios es mayor o igual que 3, hay trios
 		else if (threeKind.size() >= 3) {
 
-			// Completamos la mano con dos cartas mas altas y distintas al del
-			// trio
-			for (int i = 0; i < highCards.size() && threeKind.size() != 5; i++) {
-				if (highCards.get(i).getValue() != threeKind.get(0).getValue()) {
-					threeKind.add(highCards.get(i));
-				}
-			}
-
 			bestHand.addAll(threeKind);
 			rank = Ranking.THREE_OF_A_KIND;
 
@@ -301,34 +265,11 @@ public class BestHand implements Comparable<Object> {
 				bestHand.add(pair.get(i));
 			}
 
-			// si el valor de la carta alta es mayor que la de tercer pareja,
-			// completamos la mano con carta alta
-			for (int i = 0; i < highCards.size() && pair.size() != 5; i++) {
-				if (this.highCards.get(i).getValue() != pair.get(0).getValue()
-						&& highCards.get(i).getValue() != pair.get(2)
-								.getValue()) {
-					if (pair.size() >= 6
-							&& highCards.get(i).getValue().getValue() < pair
-									.get(4).getValue().getValue()) {
-						bestHand.add(pair.get(4));
-					} else {
-						bestHand.add(highCards.get(i));
-					}
-				}
-			}
-
 			this.rank = Ranking.TWO_PAIR;
 
 		}
 		// si el tamano de la lista de parejas es igual a dos, hay pareja
 		else if (pair.size() >= 2) {
-
-			// Completamos la mano con cartas altas y distintas al de pareja
-			for (int i = 0; i < highCards.size() && pair.size() != 5; i++) {
-				if (highCards.get(i).getValue() != pair.get(0).getValue()) {
-					pair.add(highCards.get(i));
-				}
-			}
 
 			bestHand.addAll(pair);
 			this.rank = Ranking.PAIR;
@@ -336,10 +277,7 @@ public class BestHand implements Comparable<Object> {
 		}
 		// tenemos carta alta
 		else {
-			// Completamos la mano cogiendo los cinco primeros
-			for (int i = 0; i < 5; i++) {
-				bestHand.add(highCards.get(i));
-			}
+			bestHand.add(highCards.get(0));
 			rank = Ranking.HIGH_CARD;
 		}
 	}
@@ -484,14 +422,16 @@ public class BestHand implements Comparable<Object> {
 	public Ranking getRank() {
 		return this.rank;
 	}
+	
+	public Card getHighCard(){
+		return highCards.get(0);
+	}
 
 	public String toString() {
-		String str = " - Best hand: " + this.rank.getName();
-		str += " (";
+		String str = "";
 		for (int i = 0; i < this.bestHand.getCardsList().size() && i < 5; i++) {
 			str += this.bestHand.getCard(i);
 		}
-		str += ")" + System.getProperty("line.separator");
 		return str;
 	}
 
