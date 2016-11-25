@@ -316,25 +316,79 @@ public class TableGUI extends JFrame implements ActionListener {
 		panelControl.setLayout(gl_panelControl);
 		tp.addTab("Apartados 1 y 2", panelControl);
 		
-		JPanel panelBoard = new JPanel(new GridLayout(14, 4, 3, 3));
+		JPanel panelBoard = new JPanel(new GridLayout(13, 4, 3, 3));
 		for (int i = 12; i >= 0; i--) {
 			for (int j = 3; j >= 0; j--) {
 				String buttonName = parseBoardButtonName(i, j);
 				matrixBoard[i][j] = new JButton(buttonName);
 				matrixBoard[i][j].setPreferredSize(new Dimension(20, 20));
 				matrixBoard[i][j].setFont(new Font("Arial", Font.BOLD, 16));
-				matrixBoard[i][j].addActionListener(this);
+				matrixBoard[i][j].addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						JButton boton = (JButton) e.getSource();
+						String texto = boton.getText();
+						if (!selectedBoard.contains(boton) && selectedBoard.size() < 5){
+							selectedBoard.add(boton);
+							switch(texto.charAt(1)){
+							case 's':
+								// gris
+								boton.setBackground(new Color(163, 163, 117));
+								break;
+							case 'c':
+								// azul
+								boton.setBackground(new Color(0, 153, 255));
+								break;
+							case 'd':
+								// verde
+								boton.setBackground(new Color(51, 204, 51));
+								break;
+							case 'h':
+								// rojo
+								boton.setBackground(new Color(255, 77, 77));
+								default:
+									break;
+							}
+							boton.setBorder(new BevelBorder(BevelBorder.RAISED));
+							if(selectedBoard.size() >= 3){
+								ordenarLista();
+								new CombosCalculator(selectedList, selectedBoard);
+							}
+						} else if(selectedBoard.contains(boton)) {
+							selectedBoard.remove(boton);
+							switch(texto.charAt(1)){
+							case 's':
+								// gris
+								boton.setBackground(new Color(214, 214, 194));
+								break;
+							case 'c':
+								// azul
+								boton.setBackground(new Color(102, 194, 255));
+								break;
+							case 'd':
+								// verde
+								boton.setBackground(new Color(153, 230, 153));
+								break;
+							case 'h':
+								// rojo
+								boton.setBackground(new Color(255, 179, 179));
+								default:
+									break;
+							}
+							boton.setBorder(BorderFactory.createLineBorder(getForeground()));
+							
+						} else {
+							System.out.println("Maxima carta es 5");
+						}
+					}
+				});
 
 				panelBoard.add(matrixBoard[i][j]);
 			}
 		}
 
-		JButton d = new JButton("co");
-		d.setPreferredSize(new Dimension(20, 20));
-		d.setFont(new Font("Arial", Font.BOLD, 16));		
-		d.addActionListener(this);
-		panelBoard.add(d);
-		
 		paintBoard();
 		
 		tp.addTab("Apartado 3", panelBoard);
@@ -619,91 +673,31 @@ public class TableGUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton boton = (JButton) e.getSource();
 		String texto = (boton).getText();
-		System.out.println(texto);
-		if(texto.equals("co")){
-			
-			ordenarLista();
-			CombosCalculator combosCal = new CombosCalculator(selectedList, selectedBoard);
-
-			
-			
-			
-			
-		} else {
 		//El boton ya esta pulsado, se vuelve al color original y se eliminar de la lista
-		if(this.mapButtons.get(texto) != null){
-			if (boton.getBackground().equals(Color.yellow)){
-				selectedList.remove(boton);
-				//Suited (Rojo)
-				if (boton.getText().length() == 3 && boton.getText().charAt(2) == 's'){
-					this.mapButtons.get(texto).setBackground(new Color(255, 71, 26));
-				}
-				//Off suited (Gris)
-				else if (boton.getText().length() == 3){
-					this.mapButtons.get(texto).setBackground(new Color(214, 214, 194));
-				}
-				//Pair (Verde)
-				else {
-					this.mapButtons.get(texto).setBackground(new Color(71, 209, 71));
-				}
+		if (boton.getBackground().equals(Color.yellow)){
+			selectedList.remove(boton);
+			//Suited (Rojo)
+			if (boton.getText().length() == 3 && boton.getText().charAt(2) == 's'){
+				this.mapButtons.get(texto).setBackground(new Color(255, 71, 26));
 			}
+			//Off suited (Gris)
+			else if (boton.getText().length() == 3){
+				this.mapButtons.get(texto).setBackground(new Color(214, 214, 194));
+			}
+			//Pair (Verde)
 			else {
-				//Evitamos meter el mismo boton en la lista si ya esta en ella
-				if (!selectedList.contains(boton)){
-					selectedList.add(boton);
-				}
-				this.mapButtons.get(texto).setBackground(Color.yellow);			
-			}
-			refreshPercentaje();
-			this.slider.setValue((int) Double.parseDouble(percentText.getText().replace(',', '.'))); 
-		} else {
-			if (!selectedBoard.contains(boton)){
-				selectedBoard.add(boton);
-				switch(texto.charAt(1)){
-				case 's':
-					// gris
-					boton.setBackground(new Color(163, 163, 117));
-					break;
-				case 'c':
-					// azul
-					boton.setBackground(new Color(0, 153, 255));
-					break;
-				case 'd':
-					// verde
-					boton.setBackground(new Color(51, 204, 51));
-					break;
-				case 'h':
-					// rojo
-					boton.setBackground(new Color(255, 77, 77));
-					default:
-						break;
-				}
-				boton.setBorder(new BevelBorder(BevelBorder.RAISED));
-			} else {
-				selectedBoard.remove(boton);
-				switch(texto.charAt(1)){
-				case 's':
-					// gris
-					boton.setBackground(new Color(214, 214, 194));
-					break;
-				case 'c':
-					// azul
-					boton.setBackground(new Color(102, 194, 255));
-					break;
-				case 'd':
-					// verde
-					boton.setBackground(new Color(153, 230, 153));
-					break;
-				case 'h':
-					// rojo
-					boton.setBackground(new Color(255, 179, 179));
-					default:
-						break;
-				}
-				boton.setBorder(BorderFactory.createLineBorder(getForeground()));
+				this.mapButtons.get(texto).setBackground(new Color(71, 209, 71));
 			}
 		}
+		else {
+			//Evitamos meter el mismo boton en la lista si ya esta en ella
+			if (!selectedList.contains(boton)){
+				selectedList.add(boton);
+			}
+			this.mapButtons.get(texto).setBackground(Color.yellow);			
 		}
+		refreshPercentaje();
+		this.slider.setValue((int) Double.parseDouble(percentText.getText().replace(',', '.'))); 
 	}
 	
 	/**
