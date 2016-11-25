@@ -144,15 +144,6 @@ public class CombosCalculator {
 				rank = "PAIR";
 			}
 			
-		} else if (bestHand.getRank() == Ranking.PAIR) {
-			String aux = bestHand.toString();
-			if (doble == aux.charAt(0)) {
-				if (bestHand.getHighCard().getValue().getName().equals("A") && selectedBoard.get(0).charAt(0) != 'A') {
-					rank = "ace high";
-				} else {
-					rank = "no made hand";
-				}
-			}
 		} else if(bestHand.getRank() == Ranking.HIGH_CARD) {
 			if (bestHand.getHighCard().getValue().getName().equals("A") && selectedBoard.get(0).charAt(0) != 'A') {
 				rank = "ace high";
@@ -180,7 +171,16 @@ public class CombosCalculator {
 		} else if(bestHand.toString().charAt(0) == segAlta && bestHand.toString().charAt(0) != doble){
 			rank = "MIDDLE_PAIR";
 		} else {
-			rank = "WEAK_PAIR";
+			String aux = bestHand.toString();
+			if(bestHand.getRank() == Ranking.TWO_PAIR){
+				rank = "WEAK_PAIR";
+			} else if (doble == aux.charAt(0)) {
+				if (bestHand.getHighCard().getValue().getName().equals("A") && selectedBoard.get(0).charAt(0) != 'A') {
+					rank = "ace high";
+				} else {
+					rank = "no made hand";
+				}
+			}
 		}
 		
 		return rank;
