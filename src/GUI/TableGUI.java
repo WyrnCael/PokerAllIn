@@ -62,6 +62,12 @@ public class TableGUI extends JFrame implements ActionListener {
 	private JSlider slider;
 	private JTextField percentText;
 	
+	private TableGUI panelPrincipal;
+	private PanelEstadistica panelEd;
+	private JPanel panelPorcentaje;
+	private JPanel panel;
+	private JTabbedPane tp;
+	
 	//private JButton calculateRange;
 
 	/**
@@ -72,6 +78,7 @@ public class TableGUI extends JFrame implements ActionListener {
 		mapButtons = new TreeMap<String, JButton>();
 		selectedList = new ArrayList<JButton>();
 		selectedBoard = new ArrayList<JButton>();
+		panelPrincipal = this;
 		initGUI();
 		
 		this.setResizable(false);
@@ -85,7 +92,7 @@ public class TableGUI extends JFrame implements ActionListener {
 	 * El metodo que construye los botones
 	 */
 	private void initGUI() {
-		JPanel panel = new JPanel(new GridLayout(13, 13, 3, 3));
+		panel = new JPanel(new GridLayout(13, 13, 3, 3));
 		percentaje = new JLabel();
 		percentText = new JTextField();
 		slider = new JSlider();
@@ -107,7 +114,7 @@ public class TableGUI extends JFrame implements ActionListener {
 		
 		
 		
-		JPanel panelPorcentaje = new JPanel();
+		panelPorcentaje = new JPanel();
 		panelPorcentaje.setLayout(new BoxLayout(panelPorcentaje, BoxLayout.X_AXIS));
 		
 		panelPorcentaje.add(slider);
@@ -153,12 +160,9 @@ public class TableGUI extends JFrame implements ActionListener {
 		JLabel percSimbol = new JLabel("%");
 		panelPorcentaje.add(percSimbol);
 		
-		JTabbedPane tp = new JTabbedPane();
+		tp = new JTabbedPane();
 		
 		JPanel panelControl = new JPanel();
-		
-		panelControl.setPreferredSize(new Dimension(200,50));
-		panelControl.setMaximumSize(new Dimension(200,50));
 		
 		JLabel input = new JLabel("Enter range to print on the board:");
 		input.setAlignmentX(JLabel.CENTER_ALIGNMENT);
@@ -239,17 +243,22 @@ public class TableGUI extends JFrame implements ActionListener {
 				clearTable();
 			}
 		});
+		
+		panelEd = new PanelEstadistica();
+		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 924, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 920, 1320)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 689, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(tp, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)))
+							.addComponent(tp, 260, 260, 260)))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panelEd, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -260,8 +269,12 @@ public class TableGUI extends JFrame implements ActionListener {
 							.addContainerGap()
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
+								.addGap(10)
+								.addComponent(panelEd, GroupLayout.PREFERRED_SIZE, 460, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(10)
 							.addComponent(tp, GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)))
+						
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(14, Short.MAX_VALUE))
@@ -354,7 +367,7 @@ public class TableGUI extends JFrame implements ActionListener {
 							boton.setBorder(new BevelBorder(BevelBorder.RAISED));
 							if(selectedBoard.size() >= 3){
 								ordenarLista();
-								new CombosCalculator(selectedList, selectedBoard);
+								new CombosCalculator(selectedList, selectedBoard, panelPrincipal);
 							}
 						} else if(selectedBoard.contains(boton)) {
 							selectedBoard.remove(boton);
@@ -378,7 +391,10 @@ public class TableGUI extends JFrame implements ActionListener {
 									break;
 							}
 							boton.setBorder(BorderFactory.createLineBorder(getForeground()));
-							
+							if(selectedBoard.size() >= 3){
+								ordenarLista();
+								new CombosCalculator(selectedList, selectedBoard, panelPrincipal);
+							}
 						} else {
 							System.out.println("Maxima carta es 5");
 						}
@@ -667,6 +683,48 @@ public class TableGUI extends JFrame implements ActionListener {
 	public void clearTable() {
 		this.selectedList.clear();
 		paintTable();
+	}
+	
+	public void actualizar(List<Integer> listValue){
+		this.remove(panelEd);
+		this.panelEd = new PanelEstadistica(listValue);
+		
+		GroupLayout groupLayout = (GroupLayout) this.getContentPane().getLayout();
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 920, 1320)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 689, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(tp, 260, 260, 260)))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panelEd, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+								.addGap(10)
+								.addComponent(panelEd, GroupLayout.PREFERRED_SIZE, 460, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(10)
+							.addComponent(tp, GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)))
+						
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(14, Short.MAX_VALUE))
+		);
+		this.revalidate();
+		this.repaint();
+//		this.setVisible(true);
 	}
 
 	@Override

@@ -7,11 +7,16 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
+import GUI.PanelEstadistica;
+import GUI.TableGUI;
 import Range.BestHand;
 
 public class CombosCalculator {
 
+	private TableGUI panelPrincipal;
+	
 	private List<JButton> selectedList;
 	private List<String> selectedBoard;
 	private List<String> todosCombo;
@@ -41,7 +46,9 @@ public class CombosCalculator {
 	private int nTotalCombos;
 	char doble = 0, doble2, trio, poker, segAlta = 0;
 
-	public CombosCalculator(List<JButton> selectedList, List<JButton> selectedBoard) {
+	public CombosCalculator(List<JButton> selectedList, List<JButton> selectedBoard, TableGUI panelPrincipal) {
+		this.panelPrincipal = panelPrincipal;
+		
 		this.selectedList = new ArrayList<JButton>();
 		this.selectedBoard = new ArrayList<String>();
 		this.selectedList.addAll(selectedList);
@@ -187,6 +194,7 @@ public class CombosCalculator {
 	}
 	
 	private void mostrarSolucion(){
+		List<Integer> listValue = new ArrayList<Integer>();
 		double porcentaje = 0.00;
 		DecimalFormat df = new DecimalFormat("0.00");
 		System.out.printf("%-18s%-7s%-9s", "Jugada", "Combo", "Porcentaje");
@@ -196,12 +204,15 @@ public class CombosCalculator {
 				porcentaje = (double)mapaResultado.get(jugada[i]) / nTotalCombos * 100;
 				System.out.printf("%-20s%-7s%-9s", jugada[i] + ":", mapaResultado.get(jugada[i]), df.format(porcentaje) + "%");
 				System.out.println("");
+				listValue.add(mapaResultado.get(jugada[i]));
 			} else {
 				System.out.printf("%-20s%-7s", jugada[i] + ":", 0);
 				System.out.println("");
+				listValue.add(0);
 			}
 		}
 		System.out.println("numero total de combos: " + nTotalCombos + System.getProperty("line.separator"));
+		panelPrincipal.actualizar(listValue);
 	}
 
 	private List<String> combos(String str) {
