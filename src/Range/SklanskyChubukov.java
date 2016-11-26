@@ -3,11 +3,15 @@ package Range;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SklanskyChubukov {
-	private static List<String> ranking;
-	
+public class SklanskyChubukov {
+	private List<String> ranking;
+	private final int numCombinaciones = 1326;
 
-	static {
+	/**
+	 * Constructor, anadiendo todos los rangos segun rank de la tabla
+	 * SklanskyChubukov
+	 */
+	public SklanskyChubukov() {
 		ranking = new ArrayList<String>();
 		ranking.add("AA");
 		ranking.add("KK");
@@ -159,41 +163,72 @@ public final class SklanskyChubukov {
 		ranking.add("84o");
 		ranking.add("92o");
 		ranking.add("43s");
-		ranking.add("74o");
 		ranking.add("72s");
+		ranking.add("74o");
 		ranking.add("54o");
-		ranking.add("64o");
-		ranking.add("52s");
 		ranking.add("62s");
+		ranking.add("52s");
+		ranking.add("64o");
 		ranking.add("83o");
 		ranking.add("42s");
 		ranking.add("82o");
 		ranking.add("73o");
-		ranking.add("53o");
 		ranking.add("63o");
+		ranking.add("53o");
 		ranking.add("32s");
 		ranking.add("43o");
 		ranking.add("72o");
-		ranking.add("52o");
 		ranking.add("62o");
+		ranking.add("52o");
 		ranking.add("42o");
-		ranking.add("32o");		
+		ranking.add("32o");
 	}
-		
-	public static List<String> getList(double percentaje){
+
+	/**
+	 * El metodo que devuelve el rango segun el porcentaje, cogiendo segun la
+	 * lista del ranking
+	 * 
+	 * @param percentaje
+	 *            el porcentaje que consulta
+	 * @return la lista de rangos que incluye el porcentaje
+	 */
+	public List<String> getList(double percentaje) {
 		List<String> aux = new ArrayList<String>();
 		int nPair = 0, nOff = 0, nSuit = 0, i = 0;
 		boolean reached = false;
-		while(!reached && i < 169){
+		while (!reached && i < 169) {
 			String act = ranking.get(i);
-			if(act.length() == 2) nPair++;
-			else if(act.charAt(2) == 's') nSuit++;
-			else if(act.charAt(2) == 'o') nOff++;
-			if (Percentage.getPercent(nSuit, nPair, nOff) <= percentaje) aux.add(ranking.get(i));
-			else reached = true;
+			if (act.length() == 2)
+				nPair++;
+			else if (act.charAt(2) == 's')
+				nSuit++;
+			else if (act.charAt(2) == 'o')
+				nOff++;
+			if (getPercent(nSuit, nPair, nOff) <= percentaje)
+				aux.add(ranking.get(i));
+			else
+				reached = true;
 			i++;
 		}
-		
+
 		return aux;
+	}
+
+	/**
+	 * El metodo para calcular el porcentaje del rango
+	 * 
+	 * @param Nsuited
+	 *            el numero de suited
+	 * @param Npar
+	 *            el numero de par
+	 * @param Noffsuited
+	 *            el numero de offsuited
+	 * @return el porcentaje del rango
+	 */
+	public double getPercent(int Nsuited, int Npar, int Noffsuited) {
+		double total = 0;
+		total = Nsuited * 4 + Npar * 6 + Noffsuited * 12;
+		double percent = total / numCombinaciones;
+		return percent * 100;
 	}
 }

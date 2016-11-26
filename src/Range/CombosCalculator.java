@@ -1,4 +1,4 @@
-package Cards;
+package Range;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -7,62 +7,61 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 
-import GUI.PanelEstadistica;
+import Cards.Hand;
+import Cards.Ranking;
 import GUI.TableGUI;
-import Range.BestHand;
 
 public class CombosCalculator {
 
+	// Campos de clase
 	private TableGUI panelPrincipal;
-	
+
 	private List<JButton> selectedList;
 	private List<String> selectedBoard;
 	private List<String> todosCombo;
-	
+
 	private Map<String, List<String>> mapa;
 	private Map<String, Integer> mapaResultado;
 	private Map<Character, Integer> mapaNCarta;
-	
+
 	private String manoBoard;
-	
-	private String[] jugada = { "STRAIGHT_FLUSH", 
-								"FOUR_OF_A_KIND", 
-								"FULL_HOUSE", 
-								"FLUSH", 
-								"STRAIGHT", 
-								"THREE_OF_A_KIND",
-								"TWO_PAIR", 
-								"OVER_PAIR", 
-								"TOP_PAIR", 
-								"PP_BELOW_TP", 
-								"MIDDLE_PAIR", 
-								"WEAK_PAIR", 
-								"PAIR", 
-								"ace high",
-								"no made hand" };
-	
+
+	private String[] jugada = { "STRAIGHT_FLUSH", "FOUR_OF_A_KIND", "FULL_HOUSE", "FLUSH", "STRAIGHT",
+			"THREE_OF_A_KIND", "TWO_PAIR", "OVER_PAIR", "TOP_PAIR", "PP_BELOW_TP", "MIDDLE_PAIR", "WEAK_PAIR", "PAIR",
+			"ace high", "no made hand" };
+
 	private int nTotalCombos;
+
 	char doble = 0, doble2, trio, poker, segAlta = 0;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param selectedList
+	 *            Lista de rangos seleccionados
+	 * @param selectedBoard
+	 *            Lista de cartas selecionadas del board
+	 * @param panelPrincipal
+	 *            El objeto de panel principal
+	 */
 	public CombosCalculator(List<JButton> selectedList, List<JButton> selectedBoard, TableGUI panelPrincipal) {
 		this.panelPrincipal = panelPrincipal;
-		
+
 		this.selectedList = new ArrayList<JButton>();
 		this.selectedBoard = new ArrayList<String>();
 		this.selectedList.addAll(selectedList);
-		manoBoard = "";
+		this.manoBoard = "";
 		for (int i = 0; i < selectedBoard.size(); i++) {
 			this.selectedBoard.add(selectedBoard.get(i).getText());
 			manoBoard += selectedBoard.get(i).getText();
 		}
 		todosCombo = new ArrayList<String>();
-		
+
 		this.mapa = new TreeMap<String, List<String>>();
 		this.mapaResultado = new TreeMap<String, Integer>();
 		this.mapaNCarta = new TreeMap<Character, Integer>();
-		
+
 		nTotalCombos = 0;
 
 		numCartaMismaBoard();
@@ -70,9 +69,15 @@ public class CombosCalculator {
 		procesarMapa();
 		mostrarSolucion();
 	}
-	
-	private void numCartaMismaBoard(){
+
+	/**
+	 * El metodo que recorre toda la lista de carta de board, para saber si
+	 * existe parejas, trio o poker, en caso afirmativo, asignar el valor de la
+	 * carta al char correspondiente
+	 */
+	private void numCartaMismaBoard() {
 		int cont = 0;
+		// guardar la carta con el numero de veces que aprece
 		for (int i = 0; i < selectedBoard.size(); i++) {
 			char aux = selectedBoard.get(i).charAt(0);
 			if (mapaNCarta.containsKey(aux)) {
@@ -80,15 +85,18 @@ public class CombosCalculator {
 			} else {
 				cont++;
 				mapaNCarta.put(aux, 1);
-				if(cont == 2){
+				if (cont == 2) {
 					segAlta = aux;
 				}
 			}
 		}
-		
+
+		// asignar la carta al char correspondiente
+		// la variable doble2 es para guarda la segunda carta en caso de doble
+		// pareja en board
 		for (Map.Entry<Character, Integer> entry : mapaNCarta.entrySet()) {
 			if (entry.getValue() == 2) {
-				if(doble == 0){
+				if (doble == 0) {
 					doble = entry.getKey();
 				} else {
 					doble2 = entry.getKey();
@@ -99,9 +107,14 @@ public class CombosCalculator {
 				poker = entry.getKey();
 			}
 		}
-		
+
 	}
 
+	/**
+	 * El metodo que recorrer toda la lista del rango, sacar posibles
+	 * combinaciones del rango a una lista y lo guarda en una mapa con clave el
+	 * nombre del rango
+	 */
 	private void construirMapa() {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < selectedList.size(); i++) {
@@ -109,17 +122,21 @@ public class CombosCalculator {
 			List<String> listaCombo = combos(str);
 			mapa.put(str, listaCombo);
 		}
-		
 	}
-	
-	private void procesarMapa(){
+
+	/**
+	 * El metodo que procesa la mapa que contruye el metodo contruirMapa(),
+	 * calcular los mejores manos que puedan tener con todos los combinaciones,
+	 * y los guarda en mapa del resultado
+	 */
+	private void procesarMapa() {
 		for (Map.Entry<String, List<String>> entry : mapa.entrySet()) {
-			
+
 			String manos = "";
 			for (int p = 0; p < entry.getValue().size(); p++) {
 				manos = entry.getValue().get(p);
 				BestHand bestHand = new BestHand(new Hand(this.manoBoard + manos));
-				
+
 				String rank = quitarMejorManoBoard(bestHand);
 
 				if (this.mapaResultado.containsKey(rank)) {
@@ -130,79 +147,143 @@ public class CombosCalculator {
 			}
 		}
 	}
-	
-	private String quitarMejorManoBoard(BestHand bestHand){
+
+	/**
+	 * El metodo que analiza el mejor mano, si el mejor mano esta formado por
+	 * las cartas del board, segun el caso, cambiaria al otro ranking
+	 * 
+	 * @param bestHand
+	 *            El mejor mano
+	 * @return devuelve el nuevo rank del mejor mano
+	 */
+	private String quitarMejorManoBoard(BestHand bestHand) {
 		String rank = bestHand.getRank().toString();
-		if(bestHand.getRank() == Ranking.FOUR_OF_A_KIND){
-			String aux = bestHand.toString();
-			if(poker == aux.charAt(0)){
-				rank = "no made hand";
-			}
-		} else if(bestHand.getRank() == Ranking.THREE_OF_A_KIND){
-			String aux = bestHand.toString();
-			if(trio == aux.charAt(0)){
-				rank = "no made hand";
-			}
-		} else if (bestHand.getRank() == Ranking.TWO_PAIR) {
-			String aux = bestHand.toString();
-			if(doble == aux.charAt(0) && doble2 == aux.charAt(4)){
-				rank = "no made hand";
-			} else if (doble == aux.charAt(0) || doble == aux.charAt(4)) {
-				rank = "PAIR";
-			}
-			
-		} else if(bestHand.getRank() == Ranking.HIGH_CARD) {
-			if (bestHand.getHighCard().getValue().getName().equals("A") && selectedBoard.get(0).charAt(0) != 'A') {
-				rank = "ace high";
-			} else {
-				rank = "no made hand";
-			}
-		}
-		
-		if(rank.equals("PAIR")){
-			rank = diferenciarPar(bestHand);
-		}
-		
-		return rank;
-	}
-	
-	private String diferenciarPar(BestHand bestHand){
-		String rank = "";
-		
-		if(parseChar(bestHand.toString().charAt(0)) > parseChar(selectedBoard.get(0).charAt(0))){
-			rank = "OVER_PAIR";
-		} else if(parseChar(bestHand.toString().charAt(0)) == parseChar(selectedBoard.get(0).charAt(0))){
-			rank = "TOP_PAIR";
-		} else if(parseChar(bestHand.toString().charAt(0)) < parseChar(selectedBoard.get(0).charAt(0)) && parseChar(bestHand.toString().charAt(0)) > parseChar(segAlta)){
-			rank = "PP_BELOW_TP";
-		} else if(bestHand.toString().charAt(0) == segAlta && bestHand.toString().charAt(0) != doble){
-			rank = "MIDDLE_PAIR";
-		} else {
-			String aux = bestHand.toString();
-			if(bestHand.getRank() == Ranking.TWO_PAIR){
-				rank = "WEAK_PAIR";
-			} else if (doble == aux.charAt(0)) {
+		String aux = bestHand.toString();
+
+		// si el mejor mano es poker, pero esta formado por 4 carta del mismo
+		// valor en board
+		if (bestHand.getRank() == Ranking.FOUR_OF_A_KIND) {
+			if (poker == aux.charAt(0)) {
+				// si el mejor carta del mejor mano es un ace y no esta en board
 				if (bestHand.getHighCard().getValue().getName().equals("A") && selectedBoard.get(0).charAt(0) != 'A') {
 					rank = "ace high";
 				} else {
 					rank = "no made hand";
 				}
 			}
+		} else if (bestHand.getRank() == Ranking.FULL_HOUSE) {
+			// si el mejor mano es fullhouse pero el trio esta formado por 3
+			// carta del mismo valor en board
+			if (trio == aux.charAt(0)) {
+				rank = "PAIR";
+			}
+		} else if (bestHand.getRank() == Ranking.THREE_OF_A_KIND) {
+			// si el mejor mano es trio pero el trio esta formado por 3 carta
+			// del mismo valor en board
+			if (trio == aux.charAt(0)) {
+				if (bestHand.getHighCard().getValue().getName().equals("A") && selectedBoard.get(0).charAt(0) != 'A') {
+					rank = "ace high";
+				} else {
+					rank = "no made hand";
+				}
+			}
+		} else if (bestHand.getRank() == Ranking.TWO_PAIR) {
+			// en caso de doble pareja
+			if (doble == aux.charAt(0) && doble2 == aux.charAt(4)) {
+				// el doble pareja esta formado por 2 pareja del board
+				rank = "no made hand";
+			} else if (doble == aux.charAt(0) || doble == aux.charAt(4)) {
+				// algun pareja ya esta en board, pero con el otro puede tener
+				// pareja
+				rank = "PAIR";
+			}
+
+		} else if (bestHand.getRank() == Ranking.HIGH_CARD) {
+			if (bestHand.getHighCard().getValue().getName().equals("A") && selectedBoard.get(0).charAt(0) != 'A') {
+				rank = "ace high";
+			} else {
+				rank = "no made hand";
+			}
 		}
-		
+
+		// en caso de parejas, hay que especificar de que tipo es
+		if (rank.equals("PAIR")) {
+			rank = especificarPair(bestHand);
+		}
+
 		return rank;
 	}
-	
-	private void mostrarSolucion(){
+
+	/**
+	 * El metodo para especificar el tipo de parejas
+	 * 
+	 * @param bestHand
+	 *            El mejor mano
+	 * @return el pareja especificada
+	 */
+	private String especificarPair(BestHand bestHand) {
+		String rank = "";
+		String aux = bestHand.toString();
+
+		// en caso de doble pareja
+		if (bestHand.getRank() == Ranking.TWO_PAIR) {
+			if (doble == aux.charAt(0)) {
+				// si la primera pareja esta en board, cojemos la segunda pareja
+				aux = aux.substring(4, aux.length());
+			} else if (doble == aux.charAt(4)) {
+				// si la segunda pareja esta en board, cojemos la primera
+				aux = aux.substring(0, 4);
+			}
+		} else if (bestHand.getRank() == Ranking.FULL_HOUSE) {
+			// si el trio del fullhouse esta en board, cojemos la pareja
+			if (trio == aux.charAt(0)) {
+				aux = aux.substring(6, aux.length());
+			}
+		}
+
+		// si la pareja ya esta en board
+		if (doble == aux.charAt(0)) {
+			if (bestHand.getHighCard().getValue().getName().equals("A") && selectedBoard.get(0).charAt(0) != 'A') {
+				rank = "ace high";
+			} else {
+				rank = "no made hand";
+			}
+		} else if (parseChar(aux.charAt(0)) > parseChar(selectedBoard.get(0).charAt(0))) {
+			// si la valor de pareja es mayor que la carta mas alta del board
+			rank = "OVER_PAIR";
+		} else if (parseChar(aux.charAt(0)) == parseChar(selectedBoard.get(0).charAt(0))) {
+			// si la pareja es igual que la carta mas alta del board
+			rank = "TOP_PAIR";
+		} else if (parseChar(aux.charAt(0)) < parseChar(selectedBoard.get(0).charAt(0))
+				&& parseChar(aux.charAt(0)) > parseChar(segAlta)) {
+			// si la pareja es menor que la carta mas alta, pero mayor que la
+			// segunda carta mas alta
+			rank = "PP_BELOW_TP";
+		} else if (aux.charAt(0) == segAlta && aux.charAt(0) != doble) {
+			// si la pareja es igual que la segunda carta mas alta del board
+			rank = "MIDDLE_PAIR";
+		} else {
+			// resto de parejas
+			rank = "WEAK_PAIR";
+		}
+
+		return rank;
+	}
+
+	/**
+	 * El metodo que muestra la solucion en la consola y graficamente
+	 */
+	private void mostrarSolucion() {
 		List<Integer> listValue = new ArrayList<Integer>();
 		double porcentaje = 0.00;
 		DecimalFormat df = new DecimalFormat("0.00");
 		System.out.printf("%-18s%-7s%-9s", "Jugada", "Combo", "Porcentaje");
 		System.out.println("");
 		for (int i = 0; i < jugada.length; i++) {
-			if(mapaResultado.containsKey(jugada[i])){
-				porcentaje = (double)mapaResultado.get(jugada[i]) / nTotalCombos * 100;
-				System.out.printf("%-20s%-7s%-9s", jugada[i] + ":", mapaResultado.get(jugada[i]), df.format(porcentaje) + "%");
+			if (mapaResultado.containsKey(jugada[i])) {
+				porcentaje = (double) mapaResultado.get(jugada[i]) / nTotalCombos * 100;
+				System.out.printf("%-20s%-7s%-9s", jugada[i] + ":", mapaResultado.get(jugada[i]),
+						df.format(porcentaje) + "%");
 				System.out.println("");
 				listValue.add(mapaResultado.get(jugada[i]));
 			} else {
@@ -215,6 +296,13 @@ public class CombosCalculator {
 		panelPrincipal.actualizar(listValue);
 	}
 
+	/**
+	 * El metodo que calcula posibles combinaciones segun el rango
+	 * 
+	 * @param str
+	 *            El rango
+	 * @return Un objeto lista de todos los combinaciones
+	 */
 	private List<String> combos(String str) {
 		// TODO Auto-generated method stub
 		List<String> lista = new ArrayList<String>();
@@ -272,6 +360,13 @@ public class CombosCalculator {
 		return lista;
 	}
 
+	/**
+	 * El metodo que parsea la carta
+	 * 
+	 * @param c
+	 *            la valor de la carta
+	 * @return el peso de la carta
+	 */
 	private int parseChar(char c) {
 		int num = -1;
 		switch (c) {

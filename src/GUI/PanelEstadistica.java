@@ -94,8 +94,6 @@ public class PanelEstadistica extends JPanel{
         	lista.add(valores[i]);
         }
         chart.setContentPane(new PanelEstadistica(lista));
-//        chart.setPreferredSize(new Dimension(400,400));
-//        chart.setSize(new Dimension(700,460));
         chart.pack();
         chart.setVisible(true);
         
