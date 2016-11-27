@@ -322,7 +322,7 @@ public class CombosCalculator {
 			}
 		}
 		System.out.println(System.getProperty("line.separator"));
-		panelPrincipal.actualizar(listValue);
+		panelPrincipal.actualizar(listValue, nTotalCombos);
 	}
 
 	/**

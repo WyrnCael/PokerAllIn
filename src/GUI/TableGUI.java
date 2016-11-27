@@ -64,6 +64,7 @@ public class TableGUI extends JFrame implements ActionListener {
 	private JPanel panelPorcentaje;
 	private JPanel panel;
 	private JTabbedPane tp;
+	private JLabel lblNumeroTotalDe;
 
 	SklanskyChubukov listRanking;
 
@@ -96,6 +97,7 @@ public class TableGUI extends JFrame implements ActionListener {
 		percentaje = new JLabel();
 		percentText = new JTextField();
 		slider = new JSlider();
+		lblNumeroTotalDe = new JLabel("Numero total de combos: 0");
 		matrixBoard = new JButton[13][4];
 		for (int i = 12; i >= 0; i--) {
 			for (int j = 12; j >= 0; j--) {
@@ -272,6 +274,8 @@ public class TableGUI extends JFrame implements ActionListener {
 						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(14, Short.MAX_VALUE)));
+		
+		panelEd.add(lblNumeroTotalDe);
 		
 		
 		GroupLayout gl_panelControl = new GroupLayout(panelControl);
@@ -692,10 +696,10 @@ public class TableGUI extends JFrame implements ActionListener {
 		paintTable();
 		this.selectedBoard.clear();
 		paintBoard();
-		actualizar(new ArrayList<Integer>());
+		actualizar(new ArrayList<Integer>(), 0);
 	}
 
-	public void actualizar(List<Integer> listValue) {
+	public void actualizar(List<Integer> listValue, int totalCombos) {
 		this.remove(panelEd);
 		if(listValue.isEmpty()){
 			this.panelEd = new PanelEstadistica();
@@ -728,6 +732,8 @@ public class TableGUI extends JFrame implements ActionListener {
 						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(14, Short.MAX_VALUE)));
+		panelEd.add(lblNumeroTotalDe);
+		lblNumeroTotalDe.setText("Numero total de combos: " + totalCombos);
 		this.revalidate();
 		this.repaint();
 		// this.setVisible(true);
