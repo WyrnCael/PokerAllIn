@@ -1,10 +1,8 @@
 package GUI;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -56,6 +54,11 @@ public class PanelEstadistica extends JPanel{
         dataset.setValue(0,"","PAIR");
         dataset.setValue(0,"","ace high");
         dataset.setValue(0,"","no made hand");
+        dataset.setValue(0,"","STRAIGHT_FLUSH OpenEnded");
+        dataset.setValue(0,"","STRAIGHT_FLUSH gutshot");
+        dataset.setValue(0,"","DRAW FLUSH");
+        dataset.setValue(0,"","STRAIGHT OpenEnded");
+        dataset.setValue(0,"","STRAIGHT Gutshot");
         return dataset;
     }
     
@@ -76,27 +79,18 @@ public class PanelEstadistica extends JPanel{
 				"WEAK_PAIR", 
 				"PAIR", 
 				"ace high",
-				"no made hand" };
+				"no made hand", 
+				"STR.FLUSH OpenEnded", 
+				"STR.FLUSH Gutshot", 
+				"DRAW FLUSH", 
+				"STRAIGHT OpenEnded", 
+				"STRAIGHT Gutshot" };
         
         for(int i=0; i < listValue.size(); i++){
         	dataset.setValue(listValue.get(i),"",str[i]);
         }
         
         return dataset;
-    }
-    
-    public static void main(String[] args)
-    {
-        JFrame chart=new JFrame();
-        List<Integer> lista = new ArrayList<Integer>();
-        int[] valores = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-        for(int i=0; i< valores.length;i++){
-        	lista.add(valores[i]);
-        }
-        chart.setContentPane(new PanelEstadistica(lista));
-        chart.pack();
-        chart.setVisible(true);
-        
     }
     
 }

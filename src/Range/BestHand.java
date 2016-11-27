@@ -309,16 +309,16 @@ public class BestHand implements Comparable<Object> {
 		if (this.rank != Ranking.STRAIGHT_FLUSH) {
 
 			if (this.isStraightFlushOpenEnded) {
-				draws.add(Ranking.STRAIGHT_FLUSH.getName() + " OpenEnded");
+				draws.add("Str.Flush OpenEnded");
 			}
 			if (this.isStraightFlushGutshot && flushGutshot == 1) {
-				draws.add(Ranking.STRAIGHT_FLUSH.getName() + " Gutshot");
+				draws.add("Str.Flush Gutshot");
 			}
 
 			if (this.rank.getValue() < Ranking.FLUSH.getValue()
 					&& flush.size() == 4) {
 
-				draws.add(Ranking.FLUSH.getName());
+				draws.add("Draw " + Ranking.FLUSH.getName());
 			}
 
 			if (!this.isStraightFlushOpenEnded && !this.isStraightFlushGutshot

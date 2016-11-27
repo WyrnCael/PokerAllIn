@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -103,8 +102,7 @@ public class TableGUI extends JFrame implements ActionListener {
 				String buttonName = parseButtonName(i, j);
 				matrixButtons[i][j] = new JButton(buttonName);
 				matrixButtons[i][j].setPreferredSize(new Dimension(50, 50));
-				matrixButtons[i][j].setBorder(new BevelBorder(BevelBorder.RAISED));
-				matrixButtons[i][j].setFont(new Font("Arial", Font.BOLD, 16));
+				matrixButtons[i][j].setFont(new Font("Arial", Font.BOLD, 14));
 				matrixButtons[i][j].addActionListener(this);
 
 				this.mapButtons.put(buttonName, matrixButtons[i][j]);
@@ -207,14 +205,14 @@ public class TableGUI extends JFrame implements ActionListener {
 		});
 
 		outputArea = new JTextField();
-		outputArea.setMaximumSize(new Dimension(Integer.MAX_VALUE, outputArea.getMinimumSize().height));
 		outputArea.setEditable(false);
+		outputArea.setMaximumSize(new Dimension(Integer.MAX_VALUE, inputArea.getMinimumSize().height));
+		outputArea.setPreferredSize(new Dimension(150, 20));
 		outputArea.setToolTipText("Salida del rango resaltado en el panel");
+		
 		JLabel selected = new JLabel("Range selected frome the board:");
-		selected.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
 		JButton calculateRange = new JButton("Calculate Range from Board");
-		calculateRange.setAlignmentX(JButton.CENTER_ALIGNMENT);
 
 		calculateRange.addActionListener(new ActionListener() {
 			@Override
@@ -253,59 +251,81 @@ public class TableGUI extends JFrame implements ActionListener {
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
 				.createSequentialGroup().addContainerGap()
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 920, 1320)
+						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 680, 1320)
 						.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 689, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED).addComponent(tp, 260, 260, 260)))
+								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(tp, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)))
 				.addPreferredGap(ComponentPlacement.RELATED)
 				.addComponent(panelEd, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE).addContainerGap()));
+		
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(panel,
-										GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup().addGap(10).addComponent(panelEd,
-										GroupLayout.PREFERRED_SIZE, 460, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup().addGap(10).addComponent(tp,
-										GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+								.addComponent(panel,GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup().addGap(10)
+								.addComponent(panelEd,GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup().addGap(10)
+								.addComponent(tp, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)))
 
 						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(14, Short.MAX_VALUE)));
+		
+		
 		GroupLayout gl_panelControl = new GroupLayout(panelControl);
-		gl_panelControl.setHorizontalGroup(gl_panelControl.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panelControl.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE,
-						Short.MAX_VALUE)
-						.addGroup(gl_panelControl.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_panelControl.createSequentialGroup()
-										.addComponent(outputArea, GroupLayout.PREFERRED_SIZE, 231,
-												GroupLayout.PREFERRED_SIZE)
-										.addContainerGap())
-								.addGroup(gl_panelControl.createSequentialGroup()
-										.addComponent(inputArea, GroupLayout.PREFERRED_SIZE, 231,
-												GroupLayout.PREFERRED_SIZE)
-										.addContainerGap())
-								.addGroup(gl_panelControl.createSequentialGroup().addComponent(input).addGap(38))
-								.addGroup(gl_panelControl.createSequentialGroup()
-										.addGroup(gl_panelControl.createParallelGroup(Alignment.LEADING)
-												.addComponent(selected).addComponent(drawHandRange))
-										.addGap(42))
-								.addGroup(gl_panelControl.createSequentialGroup().addComponent(calculateRange)
-										.addGap(39))))
-				.addGroup(Alignment.LEADING, gl_panelControl.createSequentialGroup().addGap(90).addComponent(clear)
-						.addContainerGap(104, Short.MAX_VALUE)));
+		gl_panelControl.setHorizontalGroup(gl_panelControl.createSequentialGroup()
+				.addGroup(gl_panelControl.createSequentialGroup().addGap(10)
+						.addGroup(gl_panelControl.createParallelGroup()
+							.addGroup(gl_panelControl.createSequentialGroup().addGap(10)
+									.addComponent(input).addGap(38)
+									)
+							.addComponent(inputArea, GroupLayout.PREFERRED_SIZE, 200,
+									GroupLayout.PREFERRED_SIZE).addGap(40)
+							.addGroup(gl_panelControl.createSequentialGroup().addGap(10)
+									.addComponent(drawHandRange).addGap(40)
+									)
+							.addGroup(gl_panelControl.createSequentialGroup().addGap(10)
+									.addComponent(selected)
+									)
+							.addComponent(outputArea, GroupLayout.PREFERRED_SIZE, 200,
+									GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_panelControl.createSequentialGroup().addGap(5)
+									.addComponent(calculateRange)
+									)
+							.addGroup(gl_panelControl.createSequentialGroup().addGap(60)
+									.addComponent(clear))
+									)
+						));
+		
 		gl_panelControl.setVerticalGroup(gl_panelControl.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelControl.createSequentialGroup().addGap(28).addComponent(input)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(inputArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED).addComponent(drawHandRange).addGap(50)
-						.addComponent(selected).addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(outputArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED).addComponent(calculateRange).addGap(50)
-						.addComponent(clear).addGap(21)));
+				.addGroup(gl_panelControl.createSequentialGroup().addGap(28)
+						.addGroup(gl_panelControl.createParallelGroup(Alignment.LEADING)
+								.addComponent(input)
+						).addGap(15)
+						.addGroup(gl_panelControl.createParallelGroup()
+								.addComponent(inputArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								).addGap(15)
+						.addGroup(gl_panelControl.createParallelGroup()
+								.addComponent(drawHandRange)								
+								).addGap(50)
+						.addGroup(gl_panelControl.createParallelGroup()
+								.addComponent(selected)								
+								).addGap(15)
+						.addGroup(gl_panelControl.createParallelGroup()
+								.addComponent(outputArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								).addGap(15)
+						.addGroup(gl_panelControl.createParallelGroup()
+								.addComponent(calculateRange)
+								).addGap(50)
+						.addGroup(gl_panelControl.createParallelGroup()
+								.addComponent(clear)).addGap(70))
+								);
 		panelControl.setLayout(gl_panelControl);
+		
 		tp.addTab("Apartados 1 y 2", panelControl);
 
 		JPanel panelBoard = new JPanel(new GridLayout(13, 4, 3, 3));
@@ -313,8 +333,8 @@ public class TableGUI extends JFrame implements ActionListener {
 			for (int j = 3; j >= 0; j--) {
 				String buttonName = parseBoardButtonName(i, j);
 				matrixBoard[i][j] = new JButton(buttonName);
-				matrixBoard[i][j].setPreferredSize(new Dimension(20, 20));
-				matrixBoard[i][j].setFont(new Font("Arial", Font.BOLD, 16));
+				matrixBoard[i][j].setPreferredSize(new Dimension(15, 15));
+				matrixBoard[i][j].setFont(new Font("Arial", Font.BOLD, 14));
 				matrixBoard[i][j].addActionListener(new ActionListener() {
 
 					@Override
@@ -330,12 +350,12 @@ public class TableGUI extends JFrame implements ActionListener {
 								boton.setBackground(new Color(163, 163, 117));
 								break;
 							case 'c':
-								// azul
-								boton.setBackground(new Color(0, 153, 255));
-								break;
-							case 'd':
 								// verde
 								boton.setBackground(new Color(51, 204, 51));
+								break;
+							case 'd':
+								// azul
+								boton.setBackground(new Color(0, 153, 255));
 								break;
 							case 'h':
 								// rojo
@@ -343,7 +363,7 @@ public class TableGUI extends JFrame implements ActionListener {
 							default:
 								break;
 							}
-							boton.setBorder(new BevelBorder(BevelBorder.RAISED));
+							boton.setBorder(new BevelBorder(BevelBorder.LOWERED));
 							if (selectedBoard.size() >= 3) {
 								ordenarLista();
 								new CombosCalculator(selectedList, selectedBoard, panelPrincipal);
@@ -356,12 +376,12 @@ public class TableGUI extends JFrame implements ActionListener {
 								boton.setBackground(new Color(214, 214, 194));
 								break;
 							case 'c':
-								// azul
-								boton.setBackground(new Color(102, 194, 255));
-								break;
-							case 'd':
 								// verde
 								boton.setBackground(new Color(153, 230, 153));
+								break;
+							case 'd':
+								// azul
+								boton.setBackground(new Color(102, 194, 255));
 								break;
 							case 'h':
 								// rojo
@@ -369,7 +389,7 @@ public class TableGUI extends JFrame implements ActionListener {
 							default:
 								break;
 							}
-							boton.setBorder(BorderFactory.createLineBorder(getForeground()));
+							boton.setBorder(new BevelBorder(BevelBorder.RAISED));
 							if (selectedBoard.size() >= 3) {
 								ordenarLista();
 								new CombosCalculator(selectedList, selectedBoard, panelPrincipal);
@@ -404,6 +424,7 @@ public class TableGUI extends JFrame implements ActionListener {
 				} else { // i > j suited(rojo)
 					matrixButtons[i][j].setBackground(new Color(255, 71, 26));
 				}
+				matrixButtons[i][j].setBorder(new BevelBorder(BevelBorder.RAISED));
 			}
 		}
 	}
@@ -418,12 +439,12 @@ public class TableGUI extends JFrame implements ActionListener {
 					color = new Color(214, 214, 194);
 					break;
 				case 1:
-					// verde
-					color = new Color(153, 230, 153);
-					break;
-				case 2:
 					// azul
 					color = new Color(102, 194, 255);
+					break;
+				case 2:
+					// verde
+					color = new Color(153, 230, 153);
 					break;
 				case 3:
 					// rojo
@@ -433,7 +454,7 @@ public class TableGUI extends JFrame implements ActionListener {
 					break;
 				}
 				matrixBoard[i][j].setBackground(color);
-				matrixBoard[i][j].setBorder(BorderFactory.createLineBorder(getForeground()));
+				matrixBoard[i][j].setBorder(new BevelBorder(BevelBorder.RAISED));
 			}
 		}
 	}
@@ -592,6 +613,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			selectedList.add(button);
 		}
 		button.setBackground(Color.yellow);
+		button.setBorder(new BevelBorder(BevelBorder.LOWERED));
 		boolean finish = tmp.equals(finalButton);
 		while (!finish) {
 			tmp = tmp.replace(tmp.substring(1, 2), parseNum(parseChar(tmp.charAt(1)) + -1));
@@ -685,21 +707,23 @@ public class TableGUI extends JFrame implements ActionListener {
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
 				.createSequentialGroup().addContainerGap()
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 920, 1320)
+						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 680, 1320)
 						.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 689, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED).addComponent(tp, 260, 260, 260)))
+								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(tp, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)))
 				.addPreferredGap(ComponentPlacement.RELATED)
 				.addComponent(panelEd, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE).addContainerGap()));
+		
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(panel,
-										GroupLayout.PREFERRED_SIZE, 607, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup().addGap(10).addComponent(panelEd,
-										GroupLayout.PREFERRED_SIZE, 460, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup().addGap(10).addComponent(tp,
-										GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+								.addComponent(panel,GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup().addGap(10)
+								.addComponent(panelEd,GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup().addGap(10)
+								.addComponent(tp, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)))
 
 						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
@@ -734,7 +758,8 @@ public class TableGUI extends JFrame implements ActionListener {
 			if (!selectedList.contains(boton)) {
 				selectedList.add(boton);
 			}
-			this.mapButtons.get(texto).setBackground(Color.yellow);
+			boton.setBorder(new BevelBorder(BevelBorder.LOWERED));
+			boton.setBackground(Color.yellow);
 		}
 		if (selectedBoard.size() >= 3) {
 			ordenarLista();
@@ -914,7 +939,8 @@ public class TableGUI extends JFrame implements ActionListener {
 
 	private void drawCustomPercent() {
 		this.outputArea.setText("");
-		clearTable();
+		this.selectedList.clear();
+		paintTable();
 		selectedList.clear();
 		double percent = slider.getValue();
 
@@ -924,6 +950,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			JButton button = this.mapButtons.get(combo);
 			selectedList.add(button);
 			button.setBackground(Color.yellow);
+			button.setBorder(new BevelBorder(BevelBorder.LOWERED));
 		}
 		this.inputArea.setText("");
 		refreshPercentaje();
@@ -948,6 +975,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			JButton button = this.mapButtons.get(combo);
 			selectedList.add(button);
 			button.setBackground(Color.yellow);
+			button.setBorder(new BevelBorder(BevelBorder.LOWERED));
 		}
 		this.inputArea.setText("");
 		this.slider.setValue((int) percent);

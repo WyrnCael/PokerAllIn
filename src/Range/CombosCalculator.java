@@ -23,13 +23,15 @@ public class CombosCalculator {
 
 	private Map<String, List<String>> mapa;
 	private Map<String, Integer> mapaResultado;
+	private Map<String, Integer> mapaDraw;
 	private Map<Character, Integer> mapaNCarta;
 
 	private String manoBoard;
 
 	private String[] jugada = { "STRAIGHT_FLUSH", "FOUR_OF_A_KIND", "FULL_HOUSE", "FLUSH", "STRAIGHT",
 			"THREE_OF_A_KIND", "TWO_PAIR", "OVER_PAIR", "TOP_PAIR", "PP_BELOW_TP", "MIDDLE_PAIR", "WEAK_PAIR", "PAIR",
-			"ace high", "no made hand" };
+			"ace high", "no made hand", "Str.Flush OpenEnded", "Str.Flush Gutshot", "Draw Flush", 
+			"Straight OpenEnded", "Straight Gutshot"};
 
 	private int nTotalCombos;
 
@@ -60,6 +62,7 @@ public class CombosCalculator {
 
 		this.mapa = new TreeMap<String, List<String>>();
 		this.mapaResultado = new TreeMap<String, Integer>();
+		this.mapaDraw = new TreeMap<String, Integer>();
 		this.mapaNCarta = new TreeMap<Character, Integer>();
 
 		nTotalCombos = 0;
@@ -143,6 +146,17 @@ public class CombosCalculator {
 					this.mapaResultado.put(rank, this.mapaResultado.get(rank) + 1);
 				} else {
 					this.mapaResultado.put(rank, 1);
+				}
+				
+				List<String> listDraws = bestHand.getDraws();
+				
+				for(int k=0; k < listDraws.size();k++){
+					String draw = listDraws.get(k);
+					if (this.mapaDraw.containsKey(draw)) {
+						this.mapaDraw.put(draw, this.mapaDraw.get(draw) + 1);
+					} else {
+						this.mapaDraw.put(draw, 1);
+					}
 				}
 			}
 		}
@@ -279,7 +293,7 @@ public class CombosCalculator {
 		DecimalFormat df = new DecimalFormat("0.00");
 		System.out.printf("%-18s%-7s%-9s", "Jugada", "Combo", "Porcentaje");
 		System.out.println("");
-		for (int i = 0; i < jugada.length; i++) {
+		for (int i = 0; i < jugada.length - 5; i++) {
 			if (mapaResultado.containsKey(jugada[i])) {
 				porcentaje = (double) mapaResultado.get(jugada[i]) / nTotalCombos * 100;
 				System.out.printf("%-20s%-7s%-9s", jugada[i] + ":", mapaResultado.get(jugada[i]),
@@ -292,7 +306,22 @@ public class CombosCalculator {
 				listValue.add(0);
 			}
 		}
+		
 		System.out.println("numero total de combos: " + nTotalCombos + System.getProperty("line.separator"));
+		for (int i = 15; i < jugada.length; i++) {
+			if (mapaDraw.containsKey(jugada[i])) {
+				porcentaje = (double) mapaDraw.get(jugada[i]) / nTotalCombos * 100;
+				System.out.printf("%-20s%-7s%-9s", jugada[i] + ":", mapaDraw.get(jugada[i]),
+						df.format(porcentaje) + "%");
+				System.out.println("");
+				listValue.add(mapaDraw.get(jugada[i]));
+			} else {
+				System.out.printf("%-20s%-7s", jugada[i] + ":", 0);
+				System.out.println("");
+				listValue.add(0);
+			}
+		}
+		System.out.println(System.getProperty("line.separator"));
 		panelPrincipal.actualizar(listValue);
 	}
 
