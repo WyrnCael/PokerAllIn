@@ -4,12 +4,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -18,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,6 +41,7 @@ import Range.SklanskyChubukov;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 
@@ -74,6 +80,7 @@ public class TableGUI extends JFrame implements ActionListener {
 	 * Metodo constructor
 	 */
 	public TableGUI() {
+		super("PokerALLIn");
 		matrixButtons = new JButton[13][13];
 		mapButtons = new TreeMap<String, JButton>();
 		selectedList = new ArrayList<JButton>();
@@ -82,6 +89,18 @@ public class TableGUI extends JFrame implements ActionListener {
 		panelPrincipal = this;
 		initGUI();
 
+		// LOGO
+		try {
+			BufferedImage image;
+			java.net.URL url = this.getClass().getClassLoader().getResource("img" + File.separator + "icon.png");
+			image = ImageIO.read(url);
+			this.setIconImage(new ImageIcon(image).getImage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		this.setResizable(false);
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
