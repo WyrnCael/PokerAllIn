@@ -253,13 +253,13 @@ public class TableGUI extends JFrame implements ActionListener {
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
 				.createSequentialGroup().addContainerGap()
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 680, 1320)
+						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 480, 1120)
 						.addGroup(groupLayout.createSequentialGroup()
 								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(tp, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)))
 				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(panelEd, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE).addContainerGap()));
+				.addComponent(panelEd, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE).addContainerGap()));
 		
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -711,13 +711,13 @@ public class TableGUI extends JFrame implements ActionListener {
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
 				.createSequentialGroup().addContainerGap()
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 680, 1320)
+						.addComponent(panelPorcentaje, GroupLayout.PREFERRED_SIZE, 680, 1120)
 						.addGroup(groupLayout.createSequentialGroup()
 								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(tp, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)))
 				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(panelEd, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE).addContainerGap()));
+				.addComponent(panelEd, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE).addContainerGap()));
 		
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -759,6 +759,7 @@ public class TableGUI extends JFrame implements ActionListener {
 			else {
 				this.mapButtons.get(texto).setBackground(new Color(71, 209, 71));
 			}
+			boton.setBorder(new BevelBorder(BevelBorder.RAISED));
 		} else {
 			// Evitamos meter el mismo boton en la lista si ya esta en ella
 			if (!selectedList.contains(boton)) {

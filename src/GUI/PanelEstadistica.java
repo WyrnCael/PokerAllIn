@@ -1,8 +1,11 @@
 package GUI;
 
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -23,8 +26,10 @@ public class PanelEstadistica extends JPanel{
 		
 		JFreeChart chart=ChartFactory.createBarChart("Combos", "", 
                 "", dataset, PlotOrientation.HORIZONTAL, false, false, false);
-		this.add(new ChartPanel(chart));
-        this.setSize(new Dimension(700,460));
+		BufferedImage bfI = chart.createBufferedImage(500, 460);
+		JLabel lI = new JLabel(new ImageIcon(bfI));
+		this.add(lI);
+        this.setSize(new Dimension(500,260));
         this.setVisible(true);
 	}
 	
@@ -33,7 +38,9 @@ public class PanelEstadistica extends JPanel{
 		
 		JFreeChart chart=ChartFactory.createBarChart("Combos", "", 
                 "", dataset, PlotOrientation.HORIZONTAL, false, false, false);
-		this.add(new ChartPanel(chart));
+		BufferedImage bfI = chart.createBufferedImage(500, 460);
+		JLabel lI = new JLabel(new ImageIcon(bfI));
+		this.add(lI);
 	}
 	
     private CategoryDataset createDataset()
