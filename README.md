@@ -1,55 +1,65 @@
 # Poker-All-In
 
-Repositorio para el desarrollo de las pr√°cticas de la asignatura "Herramientas Inform√°ticas para los Juegos de Azar
-". Se pretende desarrollar una herramienta √°gil y agradable que permita el estudio de los juegos de azar.
+Repositorio para el desarrollo de las pr®¢cticas de la asignatura "Herramientas Inform®¢ticas para los Juegos de Azar
+". Se pretende desarrollar una herramienta ®¢gil y agradable que permita el estudio de los juegos de azar.
+
+## Pr®¢ctica2: It's all about the range
+
+El objetivo consiste en calcular y representar **rangos** en el juego NLHE. 
 
 ###Uso:
 
- Para la entrada de datos, los valores de cada carta estaran representados por los siguientes caracteres: A, K, Q, J, T, 9, 8, 7, 6, 5, 4, 3, 2; mientras que el palo de cada carta estar√° representado por: h, d, s, c.
+Para la entrada de datos, los valores de los rangos estaran representados por pares de los siguientes caracteres: A, K, Q, J, T, 9, 8, 7, 6, 5, 4, 3, 2 y separado por comas; cuando los dos caracteres del par no son parejas, existe tercera caracter representado por: s(suited) u o(offSuited). Por ejemplo: AA, JJ, ATs, 76o.
 
-La herramienta puede ser usada de modo gr√°fico o modo consola, para ello se aceptar√°n los siguientes argumentos:
-* **window**: modo gr√°fico
-* **X Entrada.txt Salida.txt:** donde X es el n√∫mero del apartado que se desea probar, Entrada el archivo donde se encuentran los datos a analizar y Salida el archivo donde se escribir√° la soluci√≥n.
+Utilizar el operator **"+"** cuando:
+* El rango es una **pareja**(misma caracter): El rango resultante ser®¢n todos los rangos superiores al rango indicado
+* El rango **no** es una pareja(diferente caracter): El rango resultante ser®¢n todos los rangos superriores al rango indicado, tomando valor fijo el primer caracter y todos los valores superior del segundo caracter teniendo en cuenta suited u offsuited.
+Por ejemplo: JJ+, T2s+, 52o+.
 
-A la derecha encontraremos un men√∫ que nos permite seleccionar el apartado a probar as√≠ como el fichero desde donde leer los datos:
+Utilizar el operator **"-"** para representar un intervalor entre dos rangos, por ejemplo: ATs-A2s.
+
+La herramienta existe 3 panel:
+* **Panel de los rangos**: representar los rangos en grafico.verde: pareja; rojo: suited; gris: offsuited.
+* **Panel del control**: cambiar la forma de introducir los datos de entrada segun el apartado.
+* **panel de los combos**: representar en grafico los posibles combos que puedan formar con el rango y carta en board.
 
 <p align="center">
-  <img src="http://i.imgur.com/Kte4cRk.png"/>
+  <img src="http://i.imgur.com/PMEPOT6.jpg"/>
 </p>
 
 Ejemplo de salida:
 
 <p align="center">
-  <img src="http://i.imgur.com/BjKxPDO.png"/>
+  <img src="http://i.imgur.com/DfDToKi.jpg"/>
 </p>
 
 ###Funcionalidades actuales:
 
-* Calcular la mejor jugada de 5 cartas.
+* Calcular un rango textual, representar en gr®¢fico.
 
 <p align="center">
-  <img src="http://i.imgur.com/F475TBw.png"/>
+  <img src="http://i.imgur.com/Hh1FIQd.png"/>
 </p>
 
-* Calcular la mejor jugada con 2 cartas en mano y 3, 4 √≥ 5 en la mesa.
+* Seleccionar los rangos en grafico, calcular su rango textual.
 
 <p align="center">
-  <img src="http://i.imgur.com/OamTmGr.png"/>
+  <img src="http://i.imgur.com/yDXBh5g.png"/>
 </p>
 
-* Ordenar hasta 9 jugadores en Hold'em.
+* Dado un porcentaje, calcular el rango y representar en gr®¢fico.
 
 <p align="center">
-  <img src="http://i.imgur.com/fkqjH3U.png"/>
+  <img src="http://i.imgur.com/6LPXRyX.png"/>
 </p>
 
-* Calcular la mejor mano en Omaha con 3, 4 √≥ 5 cartas en la mesa
+* Dado un rango y con 3, 4 o 5 carta en board, calcular sus posibles cambos y draws.
 
 <p align="center">
-  <img src="http://i.imgur.com/QtXf5BE.png"/>
+  <img src="http://i.imgur.com/CBhd4jJ.png"/>
 </p>
 
 ###Ideas por desarrollar:
 
 - [x] Cambiar readme
-- [ ] Permitir introducir mano desde interfaz.
+- [ ] Especificar los contenidos que forman cada combo.
