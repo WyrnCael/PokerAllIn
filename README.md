@@ -1,7 +1,7 @@
 # Poker-All-In
 
-Repositorio para el desarrollo de las pr¨¢cticas de la asignatura "Herramientas Inform¨¢ticas para los Juegos de Azar
-". Se pretende desarrollar una herramienta ¨¢gil y agradable que permita el estudio de los juegos de azar.
+Repositorio para el desarrollo de las practicas de la asignatura "Herramientas Informaticas para los Juegos de Azar
+". Se pretende desarrollar una herramienta agil y agradable que permita el estudio de los juegos de azar.
 
 ## Practica2: It's all about the range
 
@@ -12,8 +12,8 @@ El objetivo consiste en calcular y representar **rangos** en el juego NLHE.
 Para la entrada de datos, los valores de los rangos estaran representados por pares de los siguientes caracteres: A, K, Q, J, T, 9, 8, 7, 6, 5, 4, 3, 2 y separado por comas; cuando los dos caracteres del par no son parejas, existe tercera caracter representado por: s(suited) u o(offSuited). Por ejemplo: AA, JJ, ATs, 76o.
 
 Utilizar el operator **"+"** cuando:
-* El rango es una **pareja**(misma caracter): El rango resultante ser¨¢n todos los rangos superiores al rango indicado
-* El rango **no** es una pareja(diferente caracter): El rango resultante ser¨¢n todos los rangos superriores al rango indicado, tomando valor fijo el primer caracter y todos los valores superior del segundo caracter teniendo en cuenta suited u offsuited.
+* El rango es una **pareja**(misma caracter): El rango resultante seran todos los rangos superiores al rango indicado
+* El rango **no** es una pareja(diferente caracter): El rango resultante seran todos los rangos superriores al rango indicado, tomando valor fijo el primer caracter y todos los valores superior del segundo caracter teniendo en cuenta suited u offsuited.
 Por ejemplo: JJ+, T2s+, 52o+.
 
 Utilizar el operator **"-"** para representar un intervalor entre dos rangos, por ejemplo: ATs-A2s.
@@ -35,7 +35,7 @@ Ejemplo de salida:
 
 ###Funcionalidades actuales:
 
-* Calcular un rango textual, representar en gr¨¢fico.
+* Calcular un rango textual, representar en grafico.
 
 <p align="center">
   <img src="http://i.imgur.com/Hh1FIQd.png"/>
@@ -47,7 +47,7 @@ Ejemplo de salida:
   <img src="http://i.imgur.com/yDXBh5g.png"/>
 </p>
 
-* Dado un porcentaje, calcular el rango y representar en gr¨¢fico.
+* Dado un porcentaje, calcular el rango y representar en grafico.
 
 <p align="center">
   <img src="http://i.imgur.com/6LPXRyX.png"/>
