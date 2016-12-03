@@ -33,6 +33,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Poker_All_In.Poker_All_In;
 import Range.CombosCalculator;
 import Range.Range;
 import Range.SklanskyChubukov;
@@ -90,7 +91,7 @@ public class TableGUI extends JFrame implements ActionListener {
 		// LOGO
 		try {
 			BufferedImage image;
-			java.net.URL url = this.getClass().getClassLoader().getResource("img" + File.separator + "icon.png");
+			java.net.URL url = Poker_All_In.class.getResource("/img/icon.png");
 			image = ImageIO.read(url);
 			this.setIconImage(new ImageIcon(image).getImage());
 		} catch (IOException e) {
