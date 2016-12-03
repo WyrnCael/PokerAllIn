@@ -3,7 +3,7 @@
 Repositorio para el desarrollo de las pr¨¢cticas de la asignatura "Herramientas Inform¨¢ticas para los Juegos de Azar
 ". Se pretende desarrollar una herramienta ¨¢gil y agradable que permita el estudio de los juegos de azar.
 
-## Pr¨¢ctica2: It's all about the range
+## Practica2: It's all about the range
 
 El objetivo consiste en calcular y representar **rangos** en el juego NLHE. 
 
