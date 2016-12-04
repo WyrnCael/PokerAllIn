@@ -21,6 +21,7 @@ public class PokerGame{
 	public PokerGame() {
 		this.players = new ArrayList<Player>();
 		this.playersCards = new ArrayList<Player>();
+		this.gameInfo = "";
 	}
 
 	/**
@@ -75,6 +76,7 @@ public class PokerGame{
 	}
 	
 	public void addBoard(Hand board){
+		this.gameInfo = board.toString();
 		this.sharedHand = board;
 	}
 

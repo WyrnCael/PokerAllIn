@@ -31,8 +31,9 @@ public class Player implements Comparable<Object> {
 	}
 	
 	public void setBoard(Hand board){
-		board.addAll(this.hand.getCardsList());
-		this.besthand = new BestHand(board);
+		Hand aux = new Hand(board.toString());
+		aux.addAll(this.hand.getCardsList());
+		this.besthand = new BestHand(aux);
 	}
 
 

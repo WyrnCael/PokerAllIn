@@ -80,7 +80,7 @@ public class EquityCalculator {
 	}
 	
 	public List<Player> caclulateEquity(){				
-		for(int v = 0; v < 200000; v++){
+		for(int v = 0; v < 2000000; v++){
 			pokerGame = new PokerGame();
 			ArrayList<Card> añadidas = new ArrayList<Card>();
 			Hand boardRandom = new Hand();
@@ -108,6 +108,7 @@ public class EquityCalculator {
 			
 			pokerGame.processGame();
 			
+			
 			// Le marcamos como ganador
 			players.get(pokerGame.winner().getName()).wonGame();			
 		
@@ -117,7 +118,7 @@ public class EquityCalculator {
 		while(it.hasNext()){
 			Map.Entry pair = (Map.Entry)it.next();
 			Player player = (Player) pair.getValue();
-			System.out.println("Player " + player.getName() + ": " +  Double.valueOf((Double.valueOf(player.getWonGames()) * 100 ) / 200000));
+			System.out.println("Player " + player.getName() + ": " +  Double.valueOf((Double.valueOf(player.getWonGames()) * 100 ) / 2000000));
 		}
 		
 		

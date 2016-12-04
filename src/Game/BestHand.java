@@ -651,7 +651,7 @@ public class BestHand implements Comparable<Object> {
 		}
 		// Si son iguales se compara por jugada.
 		else {
-			for (int i = 0; i < 7; i++) {
+			for (int i = 0; i < 5; i++) {
 				if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()){
 					cardValue1 = this.bestHand.getCard(i).getValue().getValue();
 					cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
