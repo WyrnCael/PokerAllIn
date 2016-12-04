@@ -14,6 +14,21 @@ public class Hand {
 	 */
 	public Hand() {
 		cardsList = new ArrayList<Card>();
+		cardsValueMap = new TreeMap<Card, Integer>();
+		cardSuitMap = new TreeMap<Card, Integer>(new Comparator<Card>() {
+			@Override
+			public int compare(Card o1, Card o2) {
+				char p1 = ((Card) o1).getSuit().getChar();
+				char p2 = ((Card) o2).getSuit().getChar();
+				if (Character.compare(p1, p2) < 0)
+					return 1;
+				else if (Character.compare(p1, p2) > 0)
+					return -1;
+				else
+					return 0;
+			}
+
+		});
 	}
 
 	/**
@@ -60,7 +75,7 @@ public class Hand {
 	 *            El parametro card define el objeto de carta que va a anadir
 	 */
 	public void add(Card card) {
-		this.cardsList.add(card);
+		parseCard(card);
 	}
 
 	/**
@@ -70,7 +85,9 @@ public class Hand {
 	 *            El parametro cards define el objeto de una lista de cartas
 	 */
 	public void addAll(List<Card> cards) {
-		this.cardsList.addAll(cards);
+		for(int i = 0; i < cards.size(); i++){
+			parseCard(cards.get(i));
+		}
 	}
 
 	/**
@@ -123,6 +140,24 @@ public class Hand {
 				this.cardSuitMap.put(card, 1);
 			}
 		}
+		Collections.sort(cardsList);
+	}
+	
+	private void parseCard(Card card) {
+		this.cardsList.add(card);
+
+		if (this.cardsValueMap.containsKey(card)) {
+			this.cardsValueMap.put(card, this.cardsValueMap.get(card).intValue() + 1);
+		} else {
+			this.cardsValueMap.put(card, 1);
+		}
+
+		if (this.cardSuitMap.containsKey(card)) {
+			this.cardSuitMap.put(card, cardSuitMap.get(card) + 1);
+		} else {
+			this.cardSuitMap.put(card, 1);
+		}
+		
 		Collections.sort(cardsList);
 	}
 

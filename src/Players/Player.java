@@ -3,12 +3,15 @@ package Players;
 import Cards.Hand;
 import Game.BestHand;
 
+// Lamar a setHand y setBoard para que funcione, en ese orden.
 public class Player implements Comparable<Object> {
 
 	// campos de la clase
 	String name;
 	Hand hand;
 	BestHand besthand;
+	int wonGames;
+	Double equity;
 
 	/**
 	 * Constructor
@@ -18,11 +21,20 @@ public class Player implements Comparable<Object> {
 	 * @param holeCard
 	 *            El parametro cards es las carta que tiene ese jugador
 	 */
-	public Player(String name, Hand holeCard, Hand allCards) {
+	public Player(String name) {
 		this.name = name;
-		this.hand = holeCard;
-		this.besthand = new BestHand(allCards);
+		wonGames = 0;
 	}
+	
+	public void setHand(Hand hand){
+		this.hand = hand;
+	}
+	
+	public void setBoard(Hand board){
+		board.addAll(this.hand.getCardsList());
+		this.besthand = new BestHand(board);
+	}
+
 
 	/**
 	 * El metodo que devuelve la mano del jugador
@@ -50,7 +62,14 @@ public class Player implements Comparable<Object> {
 	public String getName() {
 		return this.name;
 	}
+	
+	public void wonGame(){
+		wonGames++;
+	}
 
+	public int getWonGames(){
+		return wonGames;
+	}
 	/**
 	 * Metodo que compare dos jugadadores
 	 */

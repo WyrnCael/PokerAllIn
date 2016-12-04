@@ -260,7 +260,7 @@ public class BestHand implements Comparable<Object> {
 			if (threeKind.size() == 6) {
 				// el valor del segundo trio es mayor que el de pareja,
 				// completamos la mano con dos cartas del segundo trio
-				if (threeKind.get(3).getValue().getValue() > pair.get(0)
+				if (pair.size() == 0 || threeKind.get(3).getValue().getValue() > pair.get(0)
 						.getValue().getValue()) {
 					bestHand.addAll(threeKind);
 				}
@@ -651,14 +651,16 @@ public class BestHand implements Comparable<Object> {
 		}
 		// Si son iguales se compara por jugada.
 		else {
-			for (int i = 0; i < 5; i++) {
-				cardValue1 = this.bestHand.getCard(i).getValue().getValue();
-				cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
-				if (cardValue1 > cardValue2) {
-					return -1;
-				} else if (cardValue1 < cardValue2) {
-					return 1;
-				}
+			for (int i = 0; i < 7; i++) {
+				if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()){
+					cardValue1 = this.bestHand.getCard(i).getValue().getValue();
+					cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
+					if (cardValue1 > cardValue2) {
+						return -1;
+					} else if (cardValue1 < cardValue2) {
+						return 1;
+					}
+				}				
 			}
 		}
 
