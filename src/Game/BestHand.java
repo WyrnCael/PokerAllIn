@@ -24,6 +24,7 @@ public class BestHand implements Comparable<Object> {
 	private List<String> draws;
 
 	private List<Card> highCards;
+	private List<Card> full;
 	private List<Card> pair;
 	private List<Card> threeKind;
 	private List<Card> flush;
@@ -38,6 +39,7 @@ public class BestHand implements Comparable<Object> {
 
 	private int gutshot;
 	private int flushGutshot;
+	private int straightFlushColor;
 	private boolean isStraightGutshot;
 	private boolean isStraightOpenEnded;
 	private boolean isStraightFlushGutshot;
@@ -63,6 +65,7 @@ public class BestHand implements Comparable<Object> {
 		poker = new ArrayList<Card>();
 		finalStraight = new ArrayList<Card>();
 		straightFlush = new ArrayList<Card>();
+		full = new ArrayList<Card>();
 
 		straight = new ArrayList<List<Card>>();
 		straight.add(new ArrayList<Card>());
@@ -255,7 +258,7 @@ public class BestHand implements Comparable<Object> {
 		// mayor que 2, hay full
 		else if (threeKind.size() >= 3
 				&& (pair.size() >= 2 || threeKind.size() >= 6)) {
-
+			full = new ArrayList<Card>();
 			// dos trios
 			if (threeKind.size() == 6) {
 				// el valor del segundo trio es mayor que el de pareja,
@@ -263,17 +266,29 @@ public class BestHand implements Comparable<Object> {
 				if (pair.size() == 0 || threeKind.get(3).getValue().getValue() > pair.get(0)
 						.getValue().getValue()) {
 					bestHand.addAll(threeKind);
+					full.addAll(threeKind);
 				}
 				// completamos la mano con pareja
 				else {
+					bestHand.add(threeKind.get(0));
+					bestHand.add(threeKind.get(1));
+					bestHand.add(threeKind.get(2));
 					bestHand.add(pair.get(0));
 					bestHand.add(pair.get(1));
+					full.add(threeKind.get(0));
+					full.add(threeKind.get(1));
+					full.add(threeKind.get(2));
+					full.add(pair.get(0));
+					full.add(pair.get(1));
 				}
 			}
 			// un trio
 			else {
 				bestHand.addAll(threeKind);
+				full.addAll(threeKind);
 				if (pair.size() >= 2) {
+					full.add(pair.get(0));
+					full.add(pair.get(1));
 					bestHand.add(pair.get(0));
 					bestHand.add(pair.get(1));
 				}
@@ -448,6 +463,7 @@ public class BestHand implements Comparable<Object> {
 					gutshot = 0;
 				}
 			}
+			
 			straight.get(0).clear();
 			straight.get(0).add(card);
 		}
@@ -533,7 +549,8 @@ public class BestHand implements Comparable<Object> {
 						for (int j = 0; j < 5; j++) {
 							escaleraColorAux.add(straight.get(i).get(j));
 						}
-						straightFlush = escaleraColorAux;
+						straightFlush = new ArrayList<Card>();
+						straightFlush.addAll(escaleraColorAux);
 					}
 				}
 			}
@@ -543,7 +560,8 @@ public class BestHand implements Comparable<Object> {
 					&& (finalStraight.size() < 5 || finalStraight.get(0)
 							.getValue().getValue() < straight.get(0).get(0)
 							.getValue().getValue())) {
-				finalStraight = straight.get(0);
+				finalStraight = new ArrayList<Card>();
+				finalStraight.addAll(straight.get(0));
 			}
 		}
 	}
@@ -651,19 +669,153 @@ public class BestHand implements Comparable<Object> {
 		}
 		// Si son iguales se compara por jugada.
 		else {
-			for (int i = 0; i < 5; i++) {
-				if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()){
-					cardValue1 = this.bestHand.getCard(i).getValue().getValue();
-					cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
-					if (cardValue1 > cardValue2) {
+			
+			switch(this.rank){
+			case PAIR:
+				for(int i = 0; i < 2; i++){
+					if(this.pair.get(i).getValue().getValue() > hand2.pair.get(i).getValue().getValue()){
 						return -1;
-					} else if (cardValue1 < cardValue2) {
+					}
+					else if(this.pair.get(i).getValue().getValue() < hand2.pair.get(i).getValue().getValue()){
 						return 1;
 					}
-				}				
+				}
+				for (int i = 0; i < 7; i++) {
+					if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()
+							&& this.bestHand.getCard(i).getValue().getValue() != this.pair.get(0).getValue().getValue()){
+						cardValue1 = this.bestHand.getCard(i).getValue().getValue();
+						cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
+						if (cardValue1 > cardValue2) {
+							return -1;
+						} else if (cardValue1 < cardValue2) {
+							return 1;
+						}
+					}				
+				}
+				break;			
+			case TWO_PAIR:
+				for(int i = 0; i < 4; i++){
+					if(this.pair.get(i).getValue().getValue() > hand2.pair.get(i).getValue().getValue()){
+						return -1;
+					}
+					else if(this.pair.get(i).getValue().getValue() < hand2.pair.get(i).getValue().getValue()){
+						return 1;
+					}
+				}
+				for (int i = 0; i < 7; i++) {
+					if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()
+						&& this.bestHand.getCard(i).getValue().getValue() != this.pair.get(0).getValue().getValue()
+						&& this.bestHand.getCard(i).getValue().getValue() != this.pair.get(2).getValue().getValue()){
+						
+						cardValue1 = this.bestHand.getCard(i).getValue().getValue();
+						cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
+						if (cardValue1 > cardValue2) {
+							return -1;
+						} else if (cardValue1 < cardValue2) {
+							return 1;
+						}
+					}				
+				}
+				break;
+			case THREE_OF_A_KIND:
+				for(int i = 0; i < 3; i++){
+					if(this.threeKind.get(i).getValue().getValue() > hand2.threeKind.get(i).getValue().getValue()){
+						return -1;
+					}
+					else if(this.threeKind.get(i).getValue().getValue() < hand2.threeKind.get(i).getValue().getValue()){
+						return 1;
+					}
+				}
+				for (int i = 0; i < 7; i++) {
+					if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()
+							&& this.bestHand.getCard(i).getValue().getValue() != this.threeKind.get(0).getValue().getValue()){
+						cardValue1 = this.bestHand.getCard(i).getValue().getValue();
+						cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
+						if (cardValue1 > cardValue2) {
+							return -1;
+						} else if (cardValue1 < cardValue2) {
+							return 1;
+						}
+					}				
+				}
+				break;
+			case FOUR_OF_A_KIND:
+				for(int i = 0; i < 4; i++){
+					if(this.poker.get(i).getValue().getValue() > hand2.poker.get(i).getValue().getValue()){
+						return -1;
+					}
+					else if(this.poker.get(i).getValue().getValue() < hand2.poker.get(i).getValue().getValue()){
+						return 1;
+					}
+				}
+				for (int i = 0; i < 7; i++) {
+					if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()
+							&& this.bestHand.getCard(i).getValue().getValue() != this.poker.get(0).getValue().getValue()){
+						cardValue1 = this.bestHand.getCard(i).getValue().getValue();
+						cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
+						if (cardValue1 > cardValue2) {
+							return -1;
+						} else if (cardValue1 < cardValue2) {
+							return 1;
+						}
+					}				
+				}
+				break;
+			case FULL_HOUSE:
+				for(int i = 0; i < 5; i++){
+					if(this.full.get(i).getValue().getValue() > hand2.full.get(i).getValue().getValue()){
+						return -1;
+					}
+					else if(this.full.get(i).getValue().getValue() < hand2.full.get(i).getValue().getValue()){
+						return 1;
+					}
+				}		
+				break;
+			case STRAIGHT:
+				for(int i = 0; i < 5; i++){
+					if(this.finalStraight.get(i).getValue().getValue() > hand2.finalStraight.get(i).getValue().getValue()){
+						return -1;
+					}
+					else if(this.finalStraight.get(i).getValue().getValue() < hand2.finalStraight.get(i).getValue().getValue()){
+						return 1;
+					}
+				}
+				break;
+			case STRAIGHT_FLUSH:
+				for(int i = 0; i < 5; i++){
+					if(this.straightFlush.get(i).getValue().getValue() > hand2.straightFlush.get(i).getValue().getValue()){
+						return -1;
+					}
+					else if(this.straightFlush.get(i).getValue().getValue() < hand2.straightFlush.get(i).getValue().getValue()){
+						return 1;
+					}
+				}
+				break;
+			case FLUSH:
+				for(int i = 0; i < 5; i++){
+					if(this.flush.get(i).getValue().getValue() > hand2.flush.get(i).getValue().getValue()){
+						return -1;
+					}
+					else if(this.flush.get(i).getValue().getValue() < hand2.flush.get(i).getValue().getValue()){
+						return 1;
+					}
+				}
+				break;			
+			case HIGH_CARD:
+				for (int i = 0; i < 5; i++) {
+					if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()){
+						cardValue1 = this.bestHand.getCard(i).getValue().getValue();
+						cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
+						if (cardValue1 > cardValue2) {
+							return -1;
+						} else if (cardValue1 < cardValue2) {
+							return 1;
+						}
+					}				
+				}
+				break;
 			}
+			return 0;
 		}
-
-		return 0;
 	}
 }

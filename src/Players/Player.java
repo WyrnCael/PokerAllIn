@@ -10,7 +10,7 @@ public class Player implements Comparable<Object> {
 	String name;
 	Hand hand;
 	BestHand besthand;
-	int wonGames;
+	double wonGames;
 	Double equity;
 
 	/**
@@ -64,11 +64,11 @@ public class Player implements Comparable<Object> {
 		return this.name;
 	}
 	
-	public void wonGame(){
-		wonGames++;
+	public void addwonGame(double wins){
+		wonGames += wins;
 	}
 
-	public int getWonGames(){
+	public double getWonGames(){
 		return wonGames;
 	}
 	/**

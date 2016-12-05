@@ -87,16 +87,33 @@ public class PokerGame{
 	public void processGame() {
 		// Ordenamos
 		Collections.sort(players);
+		
+		double winners = getWinners();
+		for(int i = 0; i < winners; i++){
+			double wins = (double) 1.0/winners;
+			players.get(i).addwonGame(wins);
+		}
 	}
 	
-	public Player winner(){
-		return players.get(0);
+	public int getWinners(){
+		int i = 0;
+		boolean distintos = false;
+		
+		while(i + 1 < players.size() && !distintos){
+			if(players.get(i).compareTo(players.get(i+1)) == 0){
+				i++;
+			}
+			else{
+				distintos = true;
+			}
+		}
+		return i+1;
 	}
 	
 	public String toString() {
 		String str = this.gameInfo + System.getProperty("line.separator");
 		for (int i = 0; i < this.players.size(); i++) {
-			str += this.players.get(i).toString() + System.getProperty("line.separator");
+			str += this.players.get(i).toString() + " " + this.players.get(i).getWonGames() + System.getProperty("line.separator");
 		}
 		return str;
 	}

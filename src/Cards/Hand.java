@@ -163,7 +163,7 @@ public class Hand {
 
 	public String toString() {
 		String str = "";
-		for (int i = 0; i < cardsList.size() && i < 5; i++) {
+		for (int i = 0; i < cardsList.size() && i < 7; i++) {
 			str += cardsList.get(i);
 		}
 		return str;

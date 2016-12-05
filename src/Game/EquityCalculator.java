@@ -79,6 +79,10 @@ public class EquityCalculator {
 		board = hand;
 	}
 	
+	public void foldPlayer(String name){
+		players.remove(name);
+	}
+	
 	public List<Player> caclulateEquity(){				
 		for(int v = 0; v < 2000000; v++){
 			pokerGame = new PokerGame();
@@ -106,11 +110,9 @@ public class EquityCalculator {
 				deck.insertCard(añadidas.get(i));
 			}
 			
-			pokerGame.processGame();
+			pokerGame.processGame();			
 			
-			
-			// Le marcamos como ganador
-			players.get(pokerGame.winner().getName()).wonGame();			
+			// System.out.println(pokerGame);
 		
 		}
 		
