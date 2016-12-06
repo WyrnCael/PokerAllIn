@@ -56,7 +56,7 @@ public class BoardGUI extends JFrame {
 		JPanel panel = new JPanel();
 		
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Jota\\Pictures\\fondo.png"));
+		lblNewLabel.setIcon(new ImageIcon(BoardGUI.class.getResource("/img/fondo.png")));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
