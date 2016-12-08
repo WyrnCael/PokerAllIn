@@ -1,129 +1,70 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-
-import com.sun.xml.internal.bind.v2.util.QNameMap;
 
 import Cards.Card;
 import Cards.DeckCards;
 import Cards.Hand;
 import Players.Player;
 
-//Primero asignar el Board, luego los jugadores.
 public class EquityCalculator {
-	private DeckCards deck;
-	private PokerGame pokerGame;
-	private int numberOfPlayers;
-	private int numberOfBoardCards;
-	private Hand board;
-	private HashMap<String, Player> players;
-	
-	public EquityCalculator(){
-		pokerGame = new PokerGame();
-		deck = new DeckCards();
-		players = new HashMap<String, Player>();
-		board = new Hand();
-		numberOfPlayers = 0;
-		numberOfBoardCards = 0;
+	private List<Player> players;
+
+	public EquityCalculator(Map<Player, Integer> mapPlayers) {
+		players = new ArrayList<Player>();
+		for (Map.Entry<Player, Integer> entry : mapPlayers.entrySet()) {
+			players.add(entry.getKey());
+		}
 	}
-	
-	public void addRandomPlayers(int numberOfPlayers){
-		int index = numberOfPlayers;
-		for(int i = 1; i <= numberOfPlayers; i++){
-			Hand hand = new Hand();
-			for(int j = 0; j < 2; j++){
-				hand.add(deck.getRandomCard());
+
+	/**
+	 * Calcular los porcentaje del equity
+	 * 
+	 * @param deck
+	 *            Mapa de las cartas de la baraja
+	 * @param numGame
+	 *            El numero de partida a simular
+	 * @param numCommon
+	 *            El numero de las cartas en la mesa
+	 */
+	public void CalculateEquity(Map<String, Card> deck, double numGame, int numCommon) {
+		System.out.println("Calcular equity con " + numGame + " partida");
+		for (int v = 0; v < numGame; v++) {
+			String commonCard = "";
+			DeckCards vDeck = new DeckCards(deck);
+
+			for (int i = 0; i < 5 - numCommon; i++) {
+				commonCard += vDeck.getRandomCard().toString();
 			}
-			Player player = new Player("R" + i + index);
-			player.setHand(hand);
-			players.put(player.getName(), player);
-			this.numberOfPlayers++;
-		}		
-	}
-	
-	public void addRandomBoard(int numberOfCards){
-		board = new Hand();
-		for(int i = 0; i < numberOfCards; i++){
-			board.add(deck.getRandomCard());
-		}
-		numberOfBoardCards = numberOfCards;
-	}
-	
-	public void addPlayer(String name, Hand hand){
-		// Eliminamos las cartas de la baraja
-		List<Card> cardsHand = hand.getCardsList();
-		for(int i = 0; i < cardsHand.size(); i++){
-			deck.removeCard(cardsHand.get(i));
-		}
-		
-		Player player = new Player(name);
-		player.setHand(hand);
-		players.put(player.getName(), player);
-		numberOfPlayers++;
-	}
-	
-	public void addBoard(Hand hand){	
-		numberOfBoardCards = 0;
-		
-		// Eliminamos las cartas de la baraja
-		List<Card> cardsHand = hand.getCardsList();
-		for(int i = 0; i < cardsHand.size(); i++){
-			deck.removeCard(cardsHand.get(i));
-			numberOfBoardCards++;
-		}
-		
-		board = hand;
-	}
-	
-	public void foldPlayer(String name){
-		players.remove(name);
-	}
-	
-	public List<Player> caclulateEquity(){				
-		for(int v = 0; v < 2000000; v++){
-			pokerGame = new PokerGame();
-			ArrayList<Card> añadidas = new ArrayList<Card>();
-			Hand boardRandom = new Hand();
-			boardRandom.addAll(board.getCardsList());
-			
-			for(int i = numberOfBoardCards; i < 5; i++){
-				Card aux = deck.getRandomCard();
-				boardRandom.add(aux);
-				añadidas.add(aux);
+
+			for (int i = 0; i < players.size(); i++) {
+				Player p = players.get(i);
+				Hand hand = new Hand(p.getHand().toString() + commonCard);
+				BestHand bestHand = new BestHand(hand);
+				p.setBestHand(bestHand);
 			}
-			pokerGame.addBoard(boardRandom);
-			
-			Iterator it = players.entrySet().iterator();
-			while(it.hasNext()){
-				Map.Entry pair = (Map.Entry)it.next();
-				Player player = (Player) pair.getValue();
-				player.setBoard(boardRandom);
-				pokerGame.addPlayer(player);
+
+			Collections.sort(players, new Comparator<Player>() {
+
+				@Override
+				public int compare(Player p1, Player p2) {
+					// TODO Auto-generated method stub
+					return p1.getBestHand().compareTo(p2.getBestHand());
+				}
+			});
+
+			players.get(0).win();
+
+			if (v % (numGame / 100) == 0) {
+				System.out.println("Calculando..." + v * 100 / numGame + "%");
+			} else if (v == numGame - 1) {
+				System.out.println("Terminado...100%" + System.getProperty("line.separator"));
 			}
-			
-			// Volvemos a añadir las cartas a la baraja
-			for(int i = 0; i < 5 - numberOfBoardCards; i++){
-				deck.insertCard(añadidas.get(i));
-			}
-			
-			pokerGame.processGame();			
-			
-			// System.out.println(pokerGame);
-		
 		}
-		
-		Iterator it = players.entrySet().iterator();
-		while(it.hasNext()){
-			Map.Entry pair = (Map.Entry)it.next();
-			Player player = (Player) pair.getValue();
-			System.out.println("Player " + player.getName() + ": " +  Double.valueOf((Double.valueOf(player.getWonGames()) * 100 ) / 2000000));
-		}
-		
-		
-		return null;
 	}
+
 }

@@ -1,25 +1,32 @@
 package Poker_All_In;
 
-import java.io.File;
-
 import Cards.Hand;
-import Game.EquityCalculator;
 import Game.PokerGame;
-import Players.Player;
 
 public class Poker_All_In {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
-		EquityCalculator equity = new EquityCalculator();
-		equity.addPlayer("P1", new Hand("8h8d"));
-		equity.addPlayer("P2", new Hand("AcAd"));
-		equity.addPlayer("P3", new Hand("QhQd"));
-		equity.addPlayer("P4", new Hand("AsKs"));
-		equity.addPlayer("P5", new Hand("KcQs"));
-		equity.addPlayer("P6", new Hand("6d7c"));
-		equity.caclulateEquity();
+		long start = System.currentTimeMillis();
+		
+		PokerGame pokerGame = new PokerGame();
+		pokerGame.addPlayer("P1", new Hand("8d8h"));
+		pokerGame.addPlayer("P2", new Hand("AdAc"));
+		pokerGame.addPlayer("P3", new Hand("QhQd"));
+		pokerGame.addPlayer("P4", new Hand("AsKs"));
+		pokerGame.addPlayer("P5", new Hand("KcQs"));
+		pokerGame.addPlayer("P6", new Hand("6d7c"));
+		pokerGame.processGame();
+		System.out.println(pokerGame.toString());
+		
+//		EquityCalculator equity = new EquityCalculator();
+//		equity.addPlayer("P1", "8d8h");
+//		equity.addPlayer("P2", "AdAc");
+//		equity.addPlayer("P3", "QhQd");
+//		equity.addPlayer("P4", "AsKs");
+//		equity.addPlayer("P5", "KcQs");
+//		equity.addPlayer("P6", "6d7c");
+//		equity.CalculateEquity();
 		
 		/*PokerGame game = new PokerGame();
 		game.addBoard(new Hand("7h7d4d3s3h"));
@@ -65,6 +72,10 @@ public class Poker_All_In {
 		equity.addPlayer("P6", new Hand("5d7h"));
 		equity.addBoard(new Hand("Ah3d4dJhTc"));
 		equity.caclulateEquity();*/
+		
+		long end = System.currentTimeMillis();
+		long time = end - start;
+		System.out.println("Tiempo de ejecucion: " + time + "ms " + time / 1000 + "s");
 	}
 
 }

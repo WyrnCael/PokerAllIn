@@ -39,7 +39,6 @@ public class BestHand implements Comparable<Object> {
 
 	private int gutshot;
 	private int flushGutshot;
-	private int straightFlushColor;
 	private boolean isStraightGutshot;
 	private boolean isStraightOpenEnded;
 	private boolean isStraightFlushGutshot;
@@ -651,7 +650,6 @@ public class BestHand implements Comparable<Object> {
 		sortedEntries.addAll(map.entrySet());
 		return sortedEntries;
 	}
-
 	/**
 	 * El metodo que compara dos mejor mano
 	 */
@@ -669,153 +667,17 @@ public class BestHand implements Comparable<Object> {
 		}
 		// Si son iguales se compara por jugada.
 		else {
-			
-			switch(this.rank){
-			case PAIR:
-				for(int i = 0; i < 2; i++){
-					if(this.pair.get(i).getValue().getValue() > hand2.pair.get(i).getValue().getValue()){
-						return -1;
-					}
-					else if(this.pair.get(i).getValue().getValue() < hand2.pair.get(i).getValue().getValue()){
-						return 1;
-					}
+			for (int i = 0; i < 5; i++) {
+				cardValue1 = this.bestHand.getCard(i).getValue().getValue();
+				cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
+				if (cardValue1 > cardValue2) {
+					return -1;
+				} else if (cardValue1 < cardValue2) {
+					return 1;
 				}
-				for (int i = 0; i < 7; i++) {
-					if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()
-							&& this.bestHand.getCard(i).getValue().getValue() != this.pair.get(0).getValue().getValue()){
-						cardValue1 = this.bestHand.getCard(i).getValue().getValue();
-						cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
-						if (cardValue1 > cardValue2) {
-							return -1;
-						} else if (cardValue1 < cardValue2) {
-							return 1;
-						}
-					}				
-				}
-				break;			
-			case TWO_PAIR:
-				for(int i = 0; i < 4; i++){
-					if(this.pair.get(i).getValue().getValue() > hand2.pair.get(i).getValue().getValue()){
-						return -1;
-					}
-					else if(this.pair.get(i).getValue().getValue() < hand2.pair.get(i).getValue().getValue()){
-						return 1;
-					}
-				}
-				for (int i = 0; i < 7; i++) {
-					if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()
-						&& this.bestHand.getCard(i).getValue().getValue() != this.pair.get(0).getValue().getValue()
-						&& this.bestHand.getCard(i).getValue().getValue() != this.pair.get(2).getValue().getValue()){
-						
-						cardValue1 = this.bestHand.getCard(i).getValue().getValue();
-						cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
-						if (cardValue1 > cardValue2) {
-							return -1;
-						} else if (cardValue1 < cardValue2) {
-							return 1;
-						}
-					}				
-				}
-				break;
-			case THREE_OF_A_KIND:
-				for(int i = 0; i < 3; i++){
-					if(this.threeKind.get(i).getValue().getValue() > hand2.threeKind.get(i).getValue().getValue()){
-						return -1;
-					}
-					else if(this.threeKind.get(i).getValue().getValue() < hand2.threeKind.get(i).getValue().getValue()){
-						return 1;
-					}
-				}
-				for (int i = 0; i < 7; i++) {
-					if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()
-							&& this.bestHand.getCard(i).getValue().getValue() != this.threeKind.get(0).getValue().getValue()){
-						cardValue1 = this.bestHand.getCard(i).getValue().getValue();
-						cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
-						if (cardValue1 > cardValue2) {
-							return -1;
-						} else if (cardValue1 < cardValue2) {
-							return 1;
-						}
-					}				
-				}
-				break;
-			case FOUR_OF_A_KIND:
-				for(int i = 0; i < 4; i++){
-					if(this.poker.get(i).getValue().getValue() > hand2.poker.get(i).getValue().getValue()){
-						return -1;
-					}
-					else if(this.poker.get(i).getValue().getValue() < hand2.poker.get(i).getValue().getValue()){
-						return 1;
-					}
-				}
-				for (int i = 0; i < 7; i++) {
-					if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()
-							&& this.bestHand.getCard(i).getValue().getValue() != this.poker.get(0).getValue().getValue()){
-						cardValue1 = this.bestHand.getCard(i).getValue().getValue();
-						cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
-						if (cardValue1 > cardValue2) {
-							return -1;
-						} else if (cardValue1 < cardValue2) {
-							return 1;
-						}
-					}				
-				}
-				break;
-			case FULL_HOUSE:
-				for(int i = 0; i < 5; i++){
-					if(this.full.get(i).getValue().getValue() > hand2.full.get(i).getValue().getValue()){
-						return -1;
-					}
-					else if(this.full.get(i).getValue().getValue() < hand2.full.get(i).getValue().getValue()){
-						return 1;
-					}
-				}		
-				break;
-			case STRAIGHT:
-				for(int i = 0; i < 5; i++){
-					if(this.finalStraight.get(i).getValue().getValue() > hand2.finalStraight.get(i).getValue().getValue()){
-						return -1;
-					}
-					else if(this.finalStraight.get(i).getValue().getValue() < hand2.finalStraight.get(i).getValue().getValue()){
-						return 1;
-					}
-				}
-				break;
-			case STRAIGHT_FLUSH:
-				for(int i = 0; i < 5; i++){
-					if(this.straightFlush.get(i).getValue().getValue() > hand2.straightFlush.get(i).getValue().getValue()){
-						return -1;
-					}
-					else if(this.straightFlush.get(i).getValue().getValue() < hand2.straightFlush.get(i).getValue().getValue()){
-						return 1;
-					}
-				}
-				break;
-			case FLUSH:
-				for(int i = 0; i < 5; i++){
-					if(this.flush.get(i).getValue().getValue() > hand2.flush.get(i).getValue().getValue()){
-						return -1;
-					}
-					else if(this.flush.get(i).getValue().getValue() < hand2.flush.get(i).getValue().getValue()){
-						return 1;
-					}
-				}
-				break;			
-			case HIGH_CARD:
-				for (int i = 0; i < 5; i++) {
-					if(i < this.bestHand.getCardsList().size() && i < hand2.bestHand.getCardsList().size()){
-						cardValue1 = this.bestHand.getCard(i).getValue().getValue();
-						cardValue2 = hand2.bestHand.getCard(i).getValue().getValue();
-						if (cardValue1 > cardValue2) {
-							return -1;
-						} else if (cardValue1 < cardValue2) {
-							return 1;
-						}
-					}				
-				}
-				break;
 			}
-			return 0;
 		}
+
+		return 0;
 	}
 }

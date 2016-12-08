@@ -18,11 +18,6 @@ public class Card implements Comparable<Object> {
 		this.value = parseValue(value);
 		this.suit = parseSuit(suit);
 	}
-	
-	public Card(int value, int suit) {
-		this.value = parseValue(value);
-		this.suit = parseSuit(suit);
-	}
 
 	/**
 	 * El metodo que devuelve el valor de la carta
@@ -83,41 +78,6 @@ public class Card implements Comparable<Object> {
 		}
 		return null;
 	}
-	
-	private Value parseValue(int value) {
-		switch (value) {
-		case 2:
-			return Value.Two;
-		case 3:
-			return Value.Three;
-		case 4:
-			return Value.Four;
-		case 5:
-			return Value.Five;
-		case 6:
-			return Value.Six;
-		case 7:
-			return Value.Seven;
-		case 8:
-			return Value.Eight;
-		case 9:
-			return Value.Nine;
-		case 10:
-			return Value.Ten;
-		case 11:
-			return Value.Jack;
-		case 12:
-			return Value.Queen;
-		case 13:
-			return Value.King;
-		case 14:
-			return Value.Ace;
-		default:
-			System.out.println("Error en parsear el valor");
-			break;
-		}
-		return null;
-	}
 
 	/**
 	 * Metodo para parsear el palo de la carta
@@ -135,23 +95,6 @@ public class Card implements Comparable<Object> {
 		case "c":
 			return Suit.Clubs;
 		case "s":
-			return Suit.Spades;
-		default:
-			System.out.println("Erro en parsear el palo");
-			break;
-		}
-		return null;
-	}
-	
-	private Suit parseSuit(int suit) {
-		switch (suit) {
-		case 0:
-			return Suit.Hearts;
-		case 1:
-			return Suit.Diamonds;
-		case 2:
-			return Suit.Clubs;
-		case 3:
 			return Suit.Spades;
 		default:
 			System.out.println("Erro en parsear el palo");
