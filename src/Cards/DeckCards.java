@@ -50,6 +50,16 @@ public class DeckCards {
 		removeCard(card);
 		return card;
 	}
+	
+	public Card getCardandRemove() {
+		Object[] values = cards.values().toArray();
+		Card card = (Card) values[randomGenerator.nextInt(values.length)];
+		removeCard(card);
+		return card;
+	}
+	
+	
+	
 
 	/**
 	 * Sacar la carta de la baraja
@@ -57,7 +67,7 @@ public class DeckCards {
 	 * @param card
 	 *            La carta que quiere sacar
 	 */
-	private void removeCard(Card card) {
+	public void removeCard(Card card) {
 		this.cards.remove(card.toString());
 	}
 

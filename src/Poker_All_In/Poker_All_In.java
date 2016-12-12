@@ -1,5 +1,6 @@
 package Poker_All_In;
 
+import Cards.Card;
 import Cards.Hand;
 import Game.PokerGame;
 
@@ -16,6 +17,13 @@ public class Poker_All_In {
 		pokerGame.addPlayer("P4", new Hand("AsKs"));
 		pokerGame.addPlayer("P5", new Hand("KcQs"));
 		pokerGame.addPlayer("P6", new Hand("6d7c"));
+		
+		pokerGame.addCommonCard(new Card("Q", "c"));
+		pokerGame.addCommonCard(new Card("6", "s"));
+		pokerGame.addCommonCard(new Card("8", "c"));
+		//pokerGame.addCommonCard(new Card("K", "d"));
+		//pokerGame.flop();
+		
 		pokerGame.processGame();
 		System.out.println(pokerGame.toString());
 		

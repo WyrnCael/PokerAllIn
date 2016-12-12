@@ -3,6 +3,7 @@ package Game;
 import java.util.Map;
 import java.util.TreeMap;
 
+import Cards.Card;
 import Cards.DeckCards;
 import Cards.Hand;
 import Players.Player;
@@ -15,7 +16,7 @@ public class PokerGame {
 	private DeckCards deck;
 	private Map<Player, Integer> mapPlayers;
 	private double numGame = 1000000;
-
+	
 	/**
 	 * Constructor
 	 */
@@ -70,11 +71,30 @@ public class PokerGame {
 	}
 	
 	/**
-	 * Repartir una carta
+	 * Repartir una carta aleatoria
 	 */
 	public void addCommonCard(){
 		commonCard += deck.getRandomCard().toString();
 		numCommon++;
+	}
+	
+	
+	/**
+	 * Repartir una carta especifica
+	 */
+	public void addCommonCard(Card card){
+		commonCard += card.toString();
+		deck.removeCard(card);
+		numCommon++;
+	}
+	
+	/**
+	 * Flop aleatorio
+	 */
+	public void flop(){
+		for (int i =0; i < 3; i++){
+			addCommonCard();
+		}
 	}
 
 	/**
@@ -84,8 +104,7 @@ public class PokerGame {
 	public void processGame() {
 		
 		EquityCalculator equity = new EquityCalculator(mapPlayers);
-		equity.CalculateEquity(deck.getDeck(), numGame, numCommon);
-		
+		equity.CalculateEquity(deck.getDeck(), numGame, commonCard , numCommon);
 	}
 
 	public String toString() {
