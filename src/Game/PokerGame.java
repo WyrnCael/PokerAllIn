@@ -15,7 +15,7 @@ public class PokerGame {
 	private int numCommon;
 	private DeckCards deck;
 	private Map<Player, Integer> mapPlayers;
-	private double numGame = 100000;
+	private double numGame = 1000000;
 	
 	/**
 	 * Constructor
@@ -104,8 +104,19 @@ public class PokerGame {
 	public void processGame() {
 		
 		EquityCalculator equity = new EquityCalculator(mapPlayers);
+		equity.CalculateEquity(deck.getDeck(), numGame, commonCard , numCommon);
+	}
+	
+	/**
+	 * El metodo que progresa la partida ordenando los jugadores segun el valor
+	 * de su mejor mano que puede formar
+	 */
+	public void processGameOmaha() {
+		
+		EquityCalculator equity = new EquityCalculator(mapPlayers);
 		equity.CalculateEquityOmaha(deck.getDeck(), numGame, commonCard , numCommon);
 	}
+	
 
 	public String toString() {
 		String str = "";
@@ -118,4 +129,34 @@ public class PokerGame {
 		return str;
 	}
 
+	public void pruebasHoldEm(){
+		addPlayer("P1", new Hand("8d8h"));
+		addPlayer("P2", new Hand("AdAc"));
+		addPlayer("P3", new Hand("QhQd"));
+		addPlayer("P4", new Hand("AsKs"));
+		addPlayer("P5", new Hand("KcQs"));
+		addPlayer("P6", new Hand("6d7c"));
+		
+		addCommonCard(new Card("Q", "c"));
+		addCommonCard(new Card("6", "s"));
+		addCommonCard(new Card("8", "c"));	
+		//addCommonCard(new Card("K", "d"));
+		
+	}
+	
+	/**
+	 * Funcion con los casos de prueba de OMAHA
+	 */
+	public void pruebasOmaha(){
+		addPlayer("P1", new Hand("AdTdKsAs"));
+		addPlayer("P2", new Hand("Ts6s9hTc"));
+		addPlayer("P3", new Hand("JdAc5dTh"));
+		addPlayer("P4", new Hand("KdQd7c6c"));
+		addPlayer("P5", new Hand("9d8dQhAh"));
+		addPlayer("P6", new Hand("KhQc2h4h"));
+		addCommonCard(new Card("4", "c"));
+		addCommonCard(new Card("6", "h"));
+		addCommonCard(new Card("Q", "s"));
+	}
+	
 }

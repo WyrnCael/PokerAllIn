@@ -11,8 +11,14 @@ public class Poker_All_In {
 		long start = System.currentTimeMillis();
 		
 		PokerGame pokerGame = new PokerGame();
-		//OMAHA
+		pokerGame.pruebasHoldEm(); //Esto es para HOLD EM
+		pokerGame.processGame(); //Esto es para HOLD EM
+		//pokerGame.pruebasOmaha(); //Esto es para OMAHA, recordar cambiar numManos para que tarde 20 min
+		//pokerGame.processGameOmaha(); //Esto es para OMAHA
+		System.out.println(pokerGame.toString());
 		
+		//OMAHA
+		/*
 		pokerGame.addPlayer("P1", new Hand("AdTdKsAs"));
 		pokerGame.addPlayer("P2", new Hand("Ts6s9hTc"));
 		pokerGame.addPlayer("P3", new Hand("JdAc5dTh"));
@@ -24,10 +30,12 @@ public class Poker_All_In {
 		pokerGame.addCommonCard(new Card("Q", "s"));
 		
 		
-		pokerGame.processGame();
+		pokerGame.processGameOmaha();
 		System.out.println(pokerGame.toString());
+		*/
 		
-		/* HOLD´EM
+		//HOLD´EM
+		/*
 		pokerGame.addPlayer("P1", new Hand("8d8h"));
 		pokerGame.addPlayer("P2", new Hand("AdAc"));
 		pokerGame.addPlayer("P3", new Hand("QhQd"));
@@ -40,11 +48,10 @@ public class Poker_All_In {
 		pokerGame.addCommonCard(new Card("8", "c"));
 		//pokerGame.addCommonCard(new Card("K", "d"));
 		//pokerGame.flop();
-		
-		pokerGame.processGame();
-		System.out.println(pokerGame.toString());
-		
 		*/
+		
+		
+		
 		
 //		EquityCalculator equity = new EquityCalculator();
 //		equity.addPlayer("P1", "8d8h");
