@@ -15,7 +15,7 @@ public class PokerGame {
 	private int numCommon;
 	private DeckCards deck;
 	private Map<Player, Integer> mapPlayers;
-	private double numGame = 1000000;
+	private double numGame = 100000;
 	
 	/**
 	 * Constructor
@@ -104,7 +104,7 @@ public class PokerGame {
 	public void processGame() {
 		
 		EquityCalculator equity = new EquityCalculator(mapPlayers);
-		equity.CalculateEquity(deck.getDeck(), numGame, commonCard , numCommon);
+		equity.CalculateEquityOmaha(deck.getDeck(), numGame, commonCard , numCommon);
 	}
 
 	public String toString() {

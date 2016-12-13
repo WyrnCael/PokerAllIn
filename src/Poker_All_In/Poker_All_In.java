@@ -11,6 +11,23 @@ public class Poker_All_In {
 		long start = System.currentTimeMillis();
 		
 		PokerGame pokerGame = new PokerGame();
+		//OMAHA
+		
+		pokerGame.addPlayer("P1", new Hand("AdTdKsAs"));
+		pokerGame.addPlayer("P2", new Hand("Ts6s9hTc"));
+		pokerGame.addPlayer("P3", new Hand("JdAc5dTh"));
+		pokerGame.addPlayer("P4", new Hand("KdQd7c6c"));
+		pokerGame.addPlayer("P5", new Hand("9d8dQhAh"));
+		pokerGame.addPlayer("P6", new Hand("KhQc2h4h"));
+		pokerGame.addCommonCard(new Card("4", "c"));
+		pokerGame.addCommonCard(new Card("6", "h"));
+		pokerGame.addCommonCard(new Card("Q", "s"));
+		
+		
+		pokerGame.processGame();
+		System.out.println(pokerGame.toString());
+		
+		/* HOLD´EM
 		pokerGame.addPlayer("P1", new Hand("8d8h"));
 		pokerGame.addPlayer("P2", new Hand("AdAc"));
 		pokerGame.addPlayer("P3", new Hand("QhQd"));
@@ -26,6 +43,8 @@ public class Poker_All_In {
 		
 		pokerGame.processGame();
 		System.out.println(pokerGame.toString());
+		
+		*/
 		
 //		EquityCalculator equity = new EquityCalculator();
 //		equity.addPlayer("P1", "8d8h");
