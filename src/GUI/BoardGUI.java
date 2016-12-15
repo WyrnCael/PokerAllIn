@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Cards.Hand;
+import Players.Player;
+
 import java.awt.FlowLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -62,14 +66,148 @@ public class BoardGUI extends JFrame {
 		
 		//JPanel panel = new BackgroundPanel();
 		JPanel panel = new JPanel();
+		
+		JPanel player1 = new JPanel();
+		//PlayerPanel player1 = new PlayerPanel(new Player("P1", new Hand("AcAh")));
+	
+		JPanel player2 = new JPanel();
+		//PlayerPanel player2 = new PlayerPanel(new Player("P2", new Hand("2s5h")));
+		
+		JPanel player3 = new JPanel();
+		//PlayerPanel player3 = new PlayerPanel(new Player("P3", new Hand("JcTd")));
+		
+		JPanel player4 = new JPanel();
+		//PlayerPanel player4 = new PlayerPanel(new Player("P4", new Hand("8s9s")));
+		
+		JPanel player5 = new JPanel();
+		//PlayerPanel player5 = new PlayerPanel(new Player("P5", new Hand("ThTs")));
+		
+		JPanel player6 = new JPanel();
+		//PlayerPanel player6 = new PlayerPanel(new Player("P6", new Hand("AsKs")));
+		
+		JPanel player7 = new JPanel();
+		//PlayerPanel player7 = new PlayerPanel(new Player("P7", new Hand("9s9c")));
+		
+		JPanel player8 = new JPanel();
+		//PlayerPanel player8 = new PlayerPanel(new Player("P8", new Hand("2c2d")));
+		
+		JPanel player9 = new JPanel();
+		//PlayerPanel player9 = new PlayerPanel(new Player("P9", new Hand("Qh7c")));
+		
+		JPanel player10 = new JPanel();		
+		//PlayerPanel player10 = new PlayerPanel(new Player("P10", new Hand("8c3h")));
+
+		JButton btnFold = new JButton("Fold");
+		
+		JButton button_2 = new JButton("Fold");
+		
+		JButton button_3 = new JButton("Fold");
+		
+		JButton button_4 = new JButton("Fold");
+		
+		JButton button_5 = new JButton("Fold");
+		
+		JButton button_6 = new JButton("Fold");
+		
+		JButton button_7 = new JButton("Fold");
+		
+		JButton button_8 = new JButton("Fold");
+		
+		JButton button_9 = new JButton("Fold");
+		
+		JButton button_10 = new JButton("Fold");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 768, Short.MAX_VALUE)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(58)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(player4, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+						.addComponent(player3, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+						.addComponent(button_2, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+						.addComponent(button_3, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+					.addGap(53)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(btnFold, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(player2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))
+							.addGap(49)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(player1, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+								.addComponent(button_10, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+							.addGap(46)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(button_9, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+								.addComponent(player10, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(player5, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+								.addComponent(button_4, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+							.addGap(168)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(button_5, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+								.addComponent(player6, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))))
+					.addGap(42)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(player9, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+						.addComponent(player7, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+						.addComponent(button_6, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(26)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(button_7, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+								.addComponent(player8, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(button_8, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(64, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 501, Short.MAX_VALUE)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(22)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(player5, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+						.addComponent(player6, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(28)
+							.addComponent(player4, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+							.addGap(7)
+							.addComponent(button_3)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(player3, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(button_2))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(button_5)
+								.addComponent(button_4))))
+					.addPreferredGap(ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(player1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+						.addComponent(player10, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+						.addComponent(player2, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnFold)
+						.addComponent(button_9)
+						.addComponent(button_10))
+					.addGap(45))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(87)
+					.addComponent(player7, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(button_6)
+					.addGap(1)
+					.addComponent(player8, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(button_7)
+					.addGap(7)
+					.addComponent(player9, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(button_8)
+					.addContainerGap(94, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 		
