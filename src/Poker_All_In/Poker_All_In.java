@@ -11,10 +11,10 @@ public class Poker_All_In {
 		long start = System.currentTimeMillis();
 		
 		PokerGame pokerGame = new PokerGame();
-		pokerGame.pruebasHoldEm(); //Esto es para HOLD EM
-		pokerGame.processGame(); //Esto es para HOLD EM
-		//pokerGame.pruebasOmaha(); //Esto es para OMAHA, recordar cambiar numManos para que tarde 20 min
-		//pokerGame.processGameOmaha(); //Esto es para OMAHA
+		//pokerGame.pruebasHoldEm(); //Esto es para HOLD EM
+		//pokerGame.processGame(); //Esto es para HOLD EM
+		pokerGame.pruebasOmaha(); //Esto es para OMAHA, recordar cambiar numManos para que tarde 20 min
+		pokerGame.processGameOmaha(); //Esto es para OMAHA
 		System.out.println(pokerGame.toString());
 		
 		//OMAHA

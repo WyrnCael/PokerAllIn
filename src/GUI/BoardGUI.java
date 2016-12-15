@@ -13,10 +13,17 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 
 public class BoardGUI extends JFrame {
@@ -53,22 +60,16 @@ public class BoardGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
+		//JPanel panel = new BackgroundPanel();
 		JPanel panel = new JPanel();
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(BoardGUI.class.getResource("/img/fondo.png")));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 768, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGap(0, 768, Short.MAX_VALUE)
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 501, Short.MAX_VALUE)
-					.addContainerGap())
+				.addGap(0, 501, Short.MAX_VALUE)
 		);
 		panel.setLayout(gl_panel);
 		
@@ -273,5 +274,32 @@ public class BoardGUI extends JFrame {
 		);
 		panel_1.setLayout(gl_panel_1);
 		contentPane.setLayout(gl_contentPane);
+	}
+	
+	private class BackgroundPanel extends JPanel{
+		private Image backgroundImage;
+		
+		/**
+		 * Constructor
+		 */
+		BackgroundPanel(){		
+			try {
+				URL url = this.getClass().getClassLoader().getResource("img/fondo.png");
+				BufferedImage image = ImageIO.read(url);
+				backgroundImage = new ImageIcon(image).getImage();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		@Override
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			
+			if(backgroundImage != null){
+				g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(),this);
+			}
+		}
 	}
 }

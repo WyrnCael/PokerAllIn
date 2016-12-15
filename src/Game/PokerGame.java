@@ -140,7 +140,7 @@ public class PokerGame {
 		addCommonCard(new Card("Q", "c"));
 		addCommonCard(new Card("6", "s"));
 		addCommonCard(new Card("8", "c"));	
-		//addCommonCard(new Card("K", "d"));
+		addCommonCard(new Card("K", "d"));
 		
 	}
 	
