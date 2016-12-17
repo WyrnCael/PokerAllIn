@@ -47,7 +47,6 @@ public class DeckCards {
 	public Card getRandomCard() {
 		Object[] values = cards.values().toArray();
 		Card card = (Card) values[randomGenerator.nextInt(values.length)];
-		removeCard(card);
 		return card;
 	}
 	

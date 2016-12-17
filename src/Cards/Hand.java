@@ -47,10 +47,15 @@ public class Hand {
 	 * 
 	 * @param i
 	 *            El parametro i define la posicion de la carta
-	 * @return El objeto de carta de la posicion i
+	 * @return El objeto de carta de la posicion i, si no existe, null
 	 */
 	public Card getCard(int i) {
-		return this.cardsList.get(i);
+		try{
+			return this.cardsList.get(i);
+		}
+		catch (Exception e){
+			return null;
+		}
 	}
 
 	/**
@@ -133,5 +138,6 @@ public class Hand {
 		}
 		return str;
 	}
+	
 
 }

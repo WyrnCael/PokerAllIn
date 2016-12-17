@@ -3,19 +3,16 @@ package Players;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
-
 import Cards.Card;
 import Cards.Hand;
 import Game.BestHand;
 
-public class OmahaPlayer implements Comparable<Object> {
+public class OmahaPlayer extends Player implements Comparable<Object>  {
 
 	// campos de la clase
 	String name;
 	Hand hand;
 	BestHand bestHand;
-	int wonGames;
 
 	/**
 	 * Constructor
@@ -61,6 +58,11 @@ public class OmahaPlayer implements Comparable<Object> {
 		}
 	}
 	
+	@Override
+	public void setBestHand(BestHand bestHand) {
+		this.bestHand = bestHand;
+	}
+	
 	/**
 	 * Coger el mejor mano del jugador
 	 * @return El mejor mano
@@ -95,13 +97,7 @@ public class OmahaPlayer implements Comparable<Object> {
 		return this.name;
 	}
 	
-	/**
-	 * Devolver el numero de veces que ha ganado el jugador
-	 * @return
-	 */
-	public int getWonGames() {
-		return this.wonGames;
-	}
+	
 
 	/**
 	 * Metodo que compare dos jugadadores
@@ -116,4 +112,7 @@ public class OmahaPlayer implements Comparable<Object> {
 	public String toString() {
 		return this.name + ": "+ this.wonGames ;
 	}
+
+	
+
 }

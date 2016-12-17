@@ -1,5 +1,6 @@
 package Game;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -7,6 +8,7 @@ import java.util.TreeMap;
 import Cards.Card;
 import Cards.DeckCards;
 import Cards.Hand;
+import Players.HoldEmPlayer;
 import Players.OmahaPlayer;
 import Players.Player;
 
@@ -16,8 +18,8 @@ public class PokerGame {
 	private String commonCard;
 	private int numCommon;
 	private DeckCards deck;
-	private Map<Object, Integer> mapPlayers;
-	private double numGame = 100000;
+	private Map<Player, Integer> mapPlayers;
+	private final double numHands = 100000;
 	
 	/**
 	 * Constructor
@@ -26,7 +28,7 @@ public class PokerGame {
 		commonCard = "";
 		numCommon = 0;
 		deck = new DeckCards();
-		mapPlayers = new TreeMap<Object, Integer>();
+		mapPlayers = new TreeMap<Player, Integer>();
 	}
 
 	/**
@@ -37,9 +39,14 @@ public class PokerGame {
 	 * @param hand
 	 *            El parametro hand define las cartas que tiene el jugador
 	 */
-	public void addPlayer(String name, Hand hand) {
-		mapPlayers.put(new Player(name, hand), 0);
-		deck.removeAllCards(hand.getCardsList());
+	public Player addPlayer(Integer num, Hand hand) {
+		Player player = new HoldEmPlayer("P" + num, hand);
+		if (!mapPlayers.containsKey(player)){
+			mapPlayers.put(player, 0);
+			deck.removeAllCards(hand.getCardsList());
+			return player;
+		}
+		return null;
 	}
 	/**
 	 * Metodo que anade el jugador a la partida
@@ -49,33 +56,51 @@ public class PokerGame {
 	 * @param hand
 	 *            El parametro hand define las cartas que tiene el jugador
 	 */
-	public void addOmahaPlayer(String name, Hand hand) {
-		mapPlayers.put(new OmahaPlayer(name, hand), 0);
-		deck.removeAllCards(hand.getCardsList());
+	public Player addOmahaPlayer(Integer num, Hand hand) {
+		Player player = new OmahaPlayer("P" + num, hand);
+		if (!mapPlayers.containsKey(player)){
+			mapPlayers.put(player, 0);
+			deck.removeAllCards(hand.getCardsList());
+			return player;
+		}
+		return null;
 	}
 	
 	/**
-	 * Anadir un jugador aleatorio
+	 * Anadir un jugador aleatorio, solo si no esta se añade
+	 * @return El jugador añadido o null si no se puede añadir
 	 */
-	public void addPlayer() {
+	public Player addPlayer(Integer num) {
 		String cards = "";
 		for(int i = 0; i < 2; i++) {
 			cards += deck.getRandomCard().toString();
 		}
 		Hand hand = new Hand(cards);
-		mapPlayers.put(new Player("P" + mapPlayers.size()+1, hand), 0);
+		Player player = new HoldEmPlayer("P" + num, hand);
+		if (!mapPlayers.containsKey(player)){
+			mapPlayers.put(player, 0);
+			deck.removeAllCards(hand.getCardsList());
+			return player;
+		}
+		return null;
 	}
 	
 	/**
-	 * Anadir un jugador aleatorio
+	 * Anadir un jugador aleatorio de omaha
 	 */
-	public void addOmahaPlayer() {
+	public Player addOmahaPlayer(Integer num) {
 		String cards = "";
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < 4; i++) {
 			cards += deck.getRandomCard().toString();
 		}
 		Hand hand = new Hand(cards);
-		mapPlayers.put(new OmahaPlayer("P" + mapPlayers.size()+1, hand), 0);
+		Player player = new OmahaPlayer("P" + num, hand);
+		if (!mapPlayers.containsKey(player)){
+			mapPlayers.put(player,0);
+			deck.removeAllCards(hand.getCardsList());
+			return player;
+		}
+		return null;
 	}
 	
 	/**
@@ -84,26 +109,48 @@ public class PokerGame {
 	 */
 	public void addPlayers(int numPlayers) {
 		for(int i = 0; i < numPlayers; i++) {
-			addPlayer();
+			addPlayer(i + 1);
 		}
 	}
 	
 	/**
 	 * Eliminar un jugador de la partida
+	 * @return Si ha borrado
 	 * @param name El nombre del jugador
 	 */
-	public void foldPlayer(String name) {
-		mapPlayers.remove(name);
+	public boolean foldPlayer(Integer num, boolean omaha) {
+		Player player;
+		if (omaha){
+			player = new OmahaPlayer("P" + num,new Hand());
+		}
+		else {
+			player = new HoldEmPlayer("P" + num,new Hand());
+		}
+		if(mapPlayers.remove(player) != null){
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**
 	 * Repartir una carta aleatoria
 	 */
-	public void addCommonCard(){
-		commonCard += deck.getRandomCard().toString();
+	public String addCommonCard(){
+		String carta = deck.getCardandRemove().toString();
+		commonCard += carta;
 		numCommon++;
+		return carta;
 	}
 	
+	public String getCommonCards(){
+		return commonCard;
+	}
+	
+	public int getNumCommon(){
+		return numCommon;
+	}
 	
 	/**
 	 * Repartir una carta especifica
@@ -112,6 +159,19 @@ public class PokerGame {
 		commonCard += card.toString();
 		deck.removeCard(card);
 		numCommon++;
+	}
+	
+	public void addCommonCards(Hand hand) {
+		int i = 0;
+		Card card = hand.getCard(i);
+		while (card != null){
+			commonCard += card.toString();
+			deck.removeCard(card);
+			numCommon++;
+			i++;
+			card = hand.getCard(i);
+		}
+		
 	}
 	
 	/**
@@ -127,50 +187,82 @@ public class PokerGame {
 	 * El metodo que progresa la partida ordenando los jugadores segun el valor
 	 * de su mejor mano que puede formar
 	 */
-	public void processGame() {
-		
-		EquityCalculator equity = new EquityCalculator(0, mapPlayers);
-		equity.CalculateEquity(deck.getDeck(), numGame, commonCard , numCommon);
+	public String[] processGame() {
+		if (!mapPlayers.isEmpty()){
+			EquityCalculator equity = new EquityCalculator(0, mapPlayers);
+			equity.CalculateEquity(deck.getDeck(), numHands, commonCard , numCommon);
+		}
+		return obtainInfo();
 	}
 	
 	/**
 	 * El metodo que progresa la partida ordenando los jugadores segun el valor
 	 * de su mejor mano que puede formar
 	 */
-	public void processGameOmaha() {
-		
-		EquityCalculator equity = new EquityCalculator(1, mapPlayers);
-		equity.CalculateEquityOmaha(deck.getDeck(), numGame, commonCard , numCommon);
+	public String[] processGameOmaha() {
+		if (!mapPlayers.isEmpty()){
+			EquityCalculator equity = new EquityCalculator(1, mapPlayers);
+			equity.CalculateEquityOmaha(deck.getDeck(), numHands, commonCard , numCommon);
+		}
+		return obtainInfo();
 	}
 	
-
 	public String toString() {
 		String str = "";
 		try{
-			for(Entry<Object, Integer> entry : mapPlayers.entrySet()) {		
+			for(Entry<Player, Integer> entry : mapPlayers.entrySet()) {		
 			str += ((Player) entry.getKey()).getName() + " carta de mano " + 
 					((Player) entry.getKey()).getHand() + " con probabilidad de " + 
-					((Player) entry.getKey()).getWonGames() * 100 / numGame + "%" +
+					((Player) entry.getKey()).getWonGames() * 100 / numHands + "%" +
 					System.getProperty("line.separator");
+			
 			}
 		} catch(Exception e){
-			for(Entry<Object, Integer> entry : mapPlayers.entrySet()) {		
-				str += ((OmahaPlayer) entry.getKey()).getName() + " carta de mano " + 
-						((OmahaPlayer) entry.getKey()).getHand() + " con probabilidad de " + 
-						((OmahaPlayer) entry.getKey()).getWonGames() * 100 / numGame + "%" +
+			System.out.println(e.getMessage());
+			/*
+			for(Entry<Player, Integer> entry : mapPlayers.entrySet()) {		
+				str += ((Player) entry.getKey()).getName() + " carta de mano " + 
+						((Player) entry.getKey()).getHand() + " con probabilidad de " + 
+						((Player) entry.getKey()).getWonGames() * 100 / numHands + "%" +
 						System.getProperty("line.separator");
 				}
+			*/
 		}
 		return str;
 	}
+	
+
+	public String[] obtainInfo() {
+		int i = 0;
+		String[] str = new String[mapPlayers.size()];
+		try{
+			for(Entry<Player, Integer> entry : mapPlayers.entrySet()) {		
+			str[i] = ((Player) entry.getKey()).getName() + " " + 
+					((Player) (entry.getKey())).getWonGames() * 100 / numHands + "%"; 
+			i++;
+			}
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+			/*
+			for(Entry<Player, Integer> entry : mapPlayers.entrySet()) {		
+				str += ((Player) entry.getKey()).getName() + " carta de mano " + 
+						((Player) entry.getKey()).getHand() + " con probabilidad de " + 
+						((Player) entry.getKey()).getWonGames() * 100 / numHands + "%" +
+						System.getProperty("line.separator");
+				}
+			*/
+		}
+		return str;
+	}
+	
 
 	public void pruebasHoldEm(){
-		addPlayer("P1", new Hand("8d8h"));
-		addPlayer("P2", new Hand("AdAc"));
-		addPlayer("P3", new Hand("QhQd"));
-		addPlayer("P4", new Hand("AsKs"));
-		addPlayer("P5", new Hand("KcQs"));
-		addPlayer("P6", new Hand("6d7c"));
+		addPlayer(1, new Hand("8d8h"));
+		addPlayer(2, new Hand("AdAc"));
+		addPlayer(3, new Hand("QhQd"));
+		addPlayer(4, new Hand("AsKs"));
+		addPlayer(5, new Hand("KcQs"));
+		addPlayer(6, new Hand("6d7c"));
 		
 		addCommonCard(new Card("Q", "c"));
 		addCommonCard(new Card("6", "s"));
@@ -183,15 +275,24 @@ public class PokerGame {
 	 * Funcion con los casos de prueba de OMAHA
 	 */
 	public void pruebasOmaha(){
-		addOmahaPlayer("P1", new Hand("AdTdKsAs"));
-		addOmahaPlayer("P2", new Hand("Ts6s9hTc"));
-		addOmahaPlayer("P3", new Hand("JdAc5dTh"));
-		addOmahaPlayer("P4", new Hand("KdQd7c6c"));
-		addOmahaPlayer("P5", new Hand("9d8dQhAh"));
-		addOmahaPlayer("P6", new Hand("KhQc2h4h"));
+		addOmahaPlayer(1, new Hand("AdTdKsAs"));
+		addOmahaPlayer(2, new Hand("Ts6s9hTc"));
+		addOmahaPlayer(3, new Hand("JdAc5dTh"));
+		addOmahaPlayer(4, new Hand("KdQd7c6c"));
+		addOmahaPlayer(5, new Hand("9d8dQhAh"));
+		addOmahaPlayer(6, new Hand("KhQc2h4h"));
 		addCommonCard(new Card("4", "c"));
 		addCommonCard(new Card("6", "h"));
 		addCommonCard(new Card("Q", "s"));
 	}
+
+	public void reset() {
+		commonCard = "";
+		numCommon = 0;
+		deck = new DeckCards();
+		mapPlayers = new TreeMap<Player, Integer>();
+	}
+
+	
 	
 }

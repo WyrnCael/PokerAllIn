@@ -12,22 +12,27 @@ import Cards.DeckCards;
 import Cards.Hand;
 import Players.OmahaPlayer;
 import Players.Player;
+import Players.HoldEmPlayer;
 
 public class EquityCalculator {
 	private List<Player> players;
-	private List<OmahaPlayer> omahaPlayers;
+	private List<Player> omahaPlayers;
 
-	public EquityCalculator(int tipo, Map<Object, Integer> mapPlayers) { // 0 poker, 1 omaha
+	public EquityCalculator(int tipo, Map<Player, Integer> mapPlayers) { // 0 poker, 1 omaha
 		if(tipo == 0){
 			players = new ArrayList<Player>();
-			for (Entry<Object, Integer> entry : mapPlayers.entrySet()) {
-				players.add((Player) entry.getKey());
+			for (Entry<Player, Integer> entry : mapPlayers.entrySet()) {
+				Player player = entry.getKey();
+				player.resetGames();
+				players.add(player);
 			}
 		}
 		else{
-			omahaPlayers = new ArrayList<OmahaPlayer>();
-			for (Entry<Object, Integer> entry : mapPlayers.entrySet()) {
-				omahaPlayers.add((OmahaPlayer) entry.getKey());
+			omahaPlayers = new ArrayList<Player>();
+			for (Entry<Player, Integer> entry : mapPlayers.entrySet()) {
+				Player player = entry.getKey();
+				player.resetGames();
+				omahaPlayers.add(player);
 			}
 		}		
 	}
@@ -43,7 +48,8 @@ public class EquityCalculator {
 	 *            El numero de las cartas en la mesa
 	 */
 	public void CalculateEquity(Map<String, Card> deck, double numGame, String commonCardIni, int numCommon) {
-		System.out.println("Calcular equity con " + numGame + " partida");
+		long start = System.currentTimeMillis();
+		System.out.println("Calcular equity con " + numGame + " manos");
 		for (int v = 0; v < numGame; v++) {
 			String commonCard = commonCardIni;
 			DeckCards vDeck = new DeckCards(deck);
@@ -63,7 +69,7 @@ public class EquityCalculator {
 
 				@Override
 				public int compare(Player p1, Player p2) {
-					// TODO Auto-generated method stub
+					
 					return p1.getBestHand().compareTo(p2.getBestHand());
 				}
 			});
@@ -76,6 +82,9 @@ public class EquityCalculator {
 				System.out.println("Terminado...100%" + System.getProperty("line.separator"));
 			}
 		}
+		long end = System.currentTimeMillis();
+		long time = end - start;
+		System.out.println("Tiempo de ejecucion: " + time + "ms " + time / 1000 + "s");
 	}
 	
 	/**
@@ -89,7 +98,8 @@ public class EquityCalculator {
 	 *            El numero de las cartas en la mesa
 	 */
 	public void CalculateEquityOmaha(Map<String, Card> deck, double numGame, String commonCardIni, int numCommon) {
-		System.out.println("Calcular equity con " + numGame + " partida");
+		long start = System.currentTimeMillis();
+		System.out.println("Calcular equity con " + numGame + " manos");
 		for (int v = 0; v < numGame; v++) {
 			String commonCard = commonCardIni;
 			DeckCards vDeck = new DeckCards(deck);
@@ -99,15 +109,15 @@ public class EquityCalculator {
 			}
 
 			for (int i = 0; i < omahaPlayers.size(); i++) {
-				OmahaPlayer p = omahaPlayers.get(i);
+				Player p = omahaPlayers.get(i);
 				p.calculateBestHand(p.getHand().toString(), commonCard);
 			}
 
-			Collections.sort(omahaPlayers, new Comparator<OmahaPlayer>() {
+			Collections.sort(omahaPlayers, new Comparator<Player>() {
 
 				@Override
-				public int compare(OmahaPlayer p1, OmahaPlayer p2) {
-					// TODO Auto-generated method stub
+				public int compare(Player p1, Player p2) {
+					
 					return p1.getBestHand().compareTo(p2.getBestHand());
 				}
 			});
@@ -120,6 +130,9 @@ public class EquityCalculator {
 				System.out.println("Terminado...100%" + System.getProperty("line.separator"));
 			}
 		}
+		long end = System.currentTimeMillis();
+		long time = end - start;
+		System.out.println("Tiempo de ejecucion: " + time + "ms " + time / 1000 + "s");
 	}
 
 }
