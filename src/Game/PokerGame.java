@@ -40,11 +40,24 @@ public class PokerGame {
 	 *            El parametro hand define las cartas que tiene el jugador
 	 */
 	public Player addPlayer(Integer num, Hand hand) {
-		Player player = new HoldEmPlayer("P" + num, hand);
-		if (!mapPlayers.containsKey(player)){
-			mapPlayers.put(player, 0);
-			deck.removeAllCards(hand.getCardsList());
-			return player;
+		int i = 0;
+		boolean cartaNoEnMazo = false;
+		if (hand.size() == 2){
+			Card[] card = new Card[hand.size()];
+			//Compruebo que todas las cartas esten el mazo y se puedan añadir
+			while (i < hand.size() && !cartaNoEnMazo){		
+				card[i] = hand.getCard(i);
+				if (!deck.containsCard(card[i].toString())){
+					cartaNoEnMazo = true;
+				}
+				i++;
+			}
+			Player player = new HoldEmPlayer("P" + num, hand);
+			if (!mapPlayers.containsKey(player) && !cartaNoEnMazo){
+				mapPlayers.put(player, 0);
+				deck.removeAllCards(hand.getCardsList());
+				return player;
+			}
 		}
 		return null;
 	}
@@ -57,11 +70,24 @@ public class PokerGame {
 	 *            El parametro hand define las cartas que tiene el jugador
 	 */
 	public Player addOmahaPlayer(Integer num, Hand hand) {
-		Player player = new OmahaPlayer("P" + num, hand);
-		if (!mapPlayers.containsKey(player)){
-			mapPlayers.put(player, 0);
-			deck.removeAllCards(hand.getCardsList());
-			return player;
+		int i = 0;
+		boolean cartaNoEnMazo = false;
+		if (hand.size() == 4){
+			Card[] card = new Card[hand.size()];
+			//Compruebo que todas las cartas esten el mazo y se puedan añadir
+			while (i < hand.size() && !cartaNoEnMazo){		
+				card[i] = hand.getCard(i);
+				if (!deck.containsCard(card[i].toString())){
+					cartaNoEnMazo = true;
+				}
+				i++;
+			}
+			Player player = new OmahaPlayer("P" + num, hand);
+			if (!mapPlayers.containsKey(player) && !cartaNoEnMazo){
+				mapPlayers.put(player, 0);
+				deck.removeAllCards(hand.getCardsList());
+				return player;
+			}
 		}
 		return null;
 	}
@@ -153,25 +179,55 @@ public class PokerGame {
 	}
 	
 	/**
-	 * Repartir una carta especifica
+	 * Repartir una carta especifica, solo si esta en el mazo se agrega y las nueva carta no hace que se supere el limite (5)
+	 *  y se llega al minimo (3) de cartas comunes
+	 * @return Si se ha añadido la carta
 	 */
-	public void addCommonCard(Card card){
-		commonCard += card.toString();
-		deck.removeCard(card);
-		numCommon++;
+	public boolean addCommonCard(Card card){
+		boolean hecho = false;
+		if (numCommon + 1 > 2 && numCommon + 1 < 6){
+			if (deck.containsCard(card.toString())){
+				commonCard += card.toString();
+				deck.removeCard(card);
+				numCommon++;
+				hecho = true;
+			}
+		}
+		return hecho;
 	}
 	
-	public void addCommonCards(Hand hand) {
+	/**
+	 * Añade las cartas comunitarias, solo si todas estan el mazo y sumando las cartas comunitarias que ya habia y las nuevas 
+	 * no se supera el limite (5) y se llega al minimo (3) de cartas comunes
+	 * @param hand, Mano a añadir
+	 * @return Si se ha añadido la carta
+	 */
+	public boolean addCommonCards(Hand hand) {
 		int i = 0;
-		Card card = hand.getCard(i);
-		while (card != null){
-			commonCard += card.toString();
-			deck.removeCard(card);
-			numCommon++;
-			i++;
-			card = hand.getCard(i);
+		boolean hecho = false, cartaNoEnMazo = false;
+		//El numero de cartas comunes esta entre 3 y 5
+		if (numCommon + hand.size() > 2 && numCommon + hand.size() < 6){
+			Card[] card = new Card[hand.size()];
+			//Compruebo que todas las cartas esten el mazo y se puedan añadir
+			while (i < hand.size() && !cartaNoEnMazo){		
+				card[i] = hand.getCard(i);
+				if (!deck.containsCard(card[i].toString())){
+					cartaNoEnMazo = true;
+				}
+				i++;
+			}
+			//Si todas la cartas estan correctas, entonces se añaden
+			if (i == hand.size() && !cartaNoEnMazo){
+				for (int j = 0; j < i; j++){
+					commonCard += card[j].toString();
+					deck.removeCard(card[j]);
+					numCommon++;
+				}
+				hecho = true;
+				
+			}
 		}
-		
+		return hecho;
 	}
 	
 	/**
@@ -219,14 +275,6 @@ public class PokerGame {
 			}
 		} catch(Exception e){
 			System.out.println(e.getMessage());
-			/*
-			for(Entry<Player, Integer> entry : mapPlayers.entrySet()) {		
-				str += ((Player) entry.getKey()).getName() + " carta de mano " + 
-						((Player) entry.getKey()).getHand() + " con probabilidad de " + 
-						((Player) entry.getKey()).getWonGames() * 100 / numHands + "%" +
-						System.getProperty("line.separator");
-				}
-			*/
 		}
 		return str;
 	}
@@ -285,7 +333,8 @@ public class PokerGame {
 		addCommonCard(new Card("6", "h"));
 		addCommonCard(new Card("Q", "s"));
 	}
-
+	
+	
 	public void reset() {
 		commonCard = "";
 		numCommon = 0;

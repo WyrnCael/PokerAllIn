@@ -132,8 +132,8 @@ public class BoardPanel extends JPanel {
 		return tfPlayer[index];
 	}
 	
+
 	public void addCommonCards(Hand mano){
-		//panelComun = new CommonCardsPanel(mano);
 		panelComun.agregarCartas(mano);
 	}
 	
@@ -146,9 +146,22 @@ public class BoardPanel extends JPanel {
 		}
 	}
 	
+	public void hideAllPlayers(){
+		for (int i = 0; i < numJugadores; i++){
+			changeVisibily(false, i);
+		}
+	}
+	
 	public void changeVisibily(boolean show, int index){
 		panelPlayer[index].setVisible(show);
 		tfPlayer[index].setVisible(show);
+		tfPlayer[index].setText("");
 	}
 	
+	/**
+	 * Elimina las cartas comunitarias y oculta el panel
+	 */
+	public void cleanCommonCards(){
+		panelComun.agregarCartas(new Hand());
+	}
 }

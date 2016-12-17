@@ -50,9 +50,6 @@ public class BoardGUI extends JFrame{
 	private PokerGame pokerGame;
 	private boolean omaha;
 	private BoardPanel boardPanel;
-//	private final int numJugadores = 10;
-//	private JTextField[] tfPlayer;
-//	private PlayerPanel[] panelPlayer;
 
 
 	/**
@@ -82,170 +79,14 @@ public class BoardGUI extends JFrame{
 	public BoardGUI(PokerGame pokerGame) {
 		this.pokerGame = pokerGame;
 		this.omaha = false;
-//		this.panelPlayer = new PlayerPanel[numJugadores];
-//		this.tfPlayer = new JTextField[numJugadores];
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 550);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-//		JPanel panel = new JPanel();
 		boardPanel = new BoardPanel();
-//		
 
-//		JPanel[] panelPlayer = new JPanel[10];
-//		panelPlayer[0] = new JPanel();
-//		panelPlayer[1] = new JPanel();
-//		panelPlayer[2] = new JPanel();	
-//		panelPlayer[3] = new JPanel();
-//		panelPlayer[4] = new JPanel();	
-//		panelPlayer[5] = new JPanel();	
-//		panelPlayer[6] = new JPanel();		
-//		panelPlayer[7] = new JPanel();		
-//		panelPlayer[8] = new JPanel();		
-//		panelPlayer[9] = new JPanel();
-		
-
-//		for (int i = 0; i < numJugadores; i++){
-//			panelPlayer[i] = new PlayerPanel(); 
-//			tfPlayer[i] = new JTextField();
-//			tfPlayer[i].setEditable(false);
-//			tfPlayer[i].setColumns(10);
-//			tfPlayer[i].setVisible(false);
-//		}
-		
-//		GroupLayout gl_panel = new GroupLayout(panel);
-//		gl_panel.setHorizontalGroup(
-//			gl_panel.createParallelGroup(Alignment.LEADING)
-//				.addGroup(gl_panel.createSequentialGroup()
-//					.addGap(58)
-//					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-//						.addGroup(gl_panel.createSequentialGroup()
-//							.addPreferredGap(ComponentPlacement.RELATED)
-//							.addComponent(tfPlayer[3], GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE))
-//						.addGroup(gl_panel.createSequentialGroup()
-//							.addPreferredGap(ComponentPlacement.RELATED)
-//							.addComponent(tfPlayer[2], GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
-//							.addPreferredGap(ComponentPlacement.RELATED))
-//						.addComponent(panelPlayer[3], GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-//						.addComponent(panelPlayer[2], GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))
-//					.addGap(53)
-//					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-//						.addGroup(gl_panel.createSequentialGroup()
-//							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-//								.addComponent(panelPlayer[4], GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-//								.addGroup(gl_panel.createSequentialGroup()
-//									.addPreferredGap(ComponentPlacement.RELATED)
-//									.addComponent(tfPlayer[4], 0, 0, Short.MAX_VALUE)))
-//							.addPreferredGap(ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
-//							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-//								.addGroup(gl_panel.createSequentialGroup()
-//									.addPreferredGap(ComponentPlacement.RELATED)
-//									.addPreferredGap(ComponentPlacement.RELATED)
-//									.addComponent(tfPlayer[5], 0, 0, Short.MAX_VALUE))
-//								.addComponent(panelPlayer[5], GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)))
-//						.addGroup(gl_panel.createSequentialGroup()
-//							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-//								.addComponent(panelPlayer[1], GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-//								.addGroup(gl_panel.createSequentialGroup()
-//									.addPreferredGap(ComponentPlacement.RELATED)
-//									.addComponent(tfPlayer[1], GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)))
-//							.addGap(49)
-//							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-//								.addComponent(panelPlayer[0], GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-//								.addGroup(gl_panel.createSequentialGroup()
-//									.addPreferredGap(ComponentPlacement.RELATED)
-//									.addComponent(tfPlayer[0], GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)))
-//							.addGap(46)
-//							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-//								.addGroup(gl_panel.createSequentialGroup()
-//									.addPreferredGap(ComponentPlacement.RELATED)
-//									.addComponent(tfPlayer[9], GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
-//								.addComponent(panelPlayer[9], GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))))
-//					.addGap(42)
-//					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-//						.addComponent(panelPlayer[8], GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-//						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-//							.addGap(26)
-//							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-//								.addComponent(panelPlayer[7], GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-//								.addGroup(gl_panel.createSequentialGroup()
-//									.addPreferredGap(ComponentPlacement.RELATED)
-//									.addComponent(tfPlayer[7], GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))))
-//						.addGroup(gl_panel.createSequentialGroup()
-//							.addPreferredGap(ComponentPlacement.RELATED)
-//							.addComponent(tfPlayer[8], GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-//							.addGap(26))
-//						.addGroup(gl_panel.createSequentialGroup()
-//							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-//								.addGroup(gl_panel.createSequentialGroup()
-//									.addPreferredGap(ComponentPlacement.RELATED)
-//									.addComponent(tfPlayer[6], GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-//								.addComponent(panelPlayer[6], Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
-//							.addGap(26)))
-//					.addGap(64))
-//		);
-//		gl_panel.setVerticalGroup(
-//			gl_panel.createParallelGroup(Alignment.TRAILING)
-//				.addGroup(gl_panel.createSequentialGroup()
-//					.addGap(22)
-//					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-//						.addComponent(panelPlayer[4], GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-//						.addComponent(panelPlayer[5], GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-//					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-//						.addGroup(gl_panel.createSequentialGroup()
-//							.addGap(28)
-//							.addComponent(panelPlayer[3], GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-//							.addPreferredGap(ComponentPlacement.RELATED)
-//							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-//								.addComponent(tfPlayer[3], GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-//							.addGap(11)
-//							.addComponent(panelPlayer[2], GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-//							.addPreferredGap(ComponentPlacement.RELATED)
-//							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-//								.addComponent(tfPlayer[2], GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)))
-//						.addGroup(gl_panel.createSequentialGroup()
-//							.addPreferredGap(ComponentPlacement.RELATED)
-//							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-//								.addComponent(tfPlayer[4], GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)))
-//						.addGroup(gl_panel.createSequentialGroup()
-//							.addPreferredGap(ComponentPlacement.RELATED)
-//							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-//								.addComponent(tfPlayer[5], GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-//					.addPreferredGap(ComponentPlacement.RELATED)
-//					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-//						.addComponent(panelPlayer[0], GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-//						.addComponent(panelPlayer[9], GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-//						.addComponent(panelPlayer[1], GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-//					.addPreferredGap(ComponentPlacement.RELATED)
-//					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-//						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-//							.addComponent(tfPlayer[9], GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-//						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-//							.addComponent(tfPlayer[0], GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-//						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-//							.addComponent(tfPlayer[1], GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)))
-//					.addGap(44))
-//				.addGroup(gl_panel.createSequentialGroup()
-//					.addGap(77)
-//					.addComponent(panelPlayer[6], GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-//					.addPreferredGap(ComponentPlacement.RELATED)
-//					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-//						.addComponent(tfPlayer[6], GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-//					.addGap(8)
-//					.addComponent(panelPlayer[7], GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-//					.addPreferredGap(ComponentPlacement.RELATED)
-//					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-//						.addComponent(tfPlayer[7], GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-//					.addGap(8)
-//					.addComponent(panelPlayer[8], GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-//					.addPreferredGap(ComponentPlacement.RELATED)
-//					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-//						.addComponent(tfPlayer[8], GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-//					.addContainerGap(93, Short.MAX_VALUE))
-//		)));
-//		panel.setLayout(gl_panel);
 		
 		JPanel panel_1 = new JPanel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -305,7 +146,7 @@ public class BoardGUI extends JFrame{
 					boardPanel.changeVisibily(true, cbPlayer.getSelectedIndex());
 				}
 				catch (Exception e1){
-					JOptionPane.showMessageDialog(new JFrame(), "La mano introducida no es valida o el jugador ya existe", "Error", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(new JFrame(), "La mano introducida no es valida, puede que la carta no este en el mazo o el jugador ya existe", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -347,8 +188,12 @@ public class BoardGUI extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				try{
 					Hand hand = new Hand(tfSetCardsBoard.getText());
-					pokerGame.addCommonCards(hand);
-					boardPanel.addCommonCards(hand);
+					if (pokerGame.addCommonCards(hand)){
+						boardPanel.addCommonCards(new Hand(pokerGame.getCommonCards()));
+					}
+					else {
+						JOptionPane.showMessageDialog(new JFrame(), "El numero de cartas comunes no seria ni 3, 4 o 5 o alguna carta no esta el mazo", "Error", JOptionPane.WARNING_MESSAGE);
+					}
 				}
 				catch (Exception e1){
 					JOptionPane.showMessageDialog(new JFrame(), "Las cartas comunes introducidas no son validas", "Error", JOptionPane.WARNING_MESSAGE);
@@ -401,26 +246,6 @@ public class BoardGUI extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				Integer num = new Integer(cbSetCardsOnBoard.getSelectedItem().toString());
 				addCommonCards(num);
-				/*
-				boolean hecho = false;
-				if (pokerGame.getNumCommon() == 0){
-					pokerGame.flop();
-					hecho = true;
-				}
-				else if (pokerGame.getNumCommon() < 5){
-					while (pokerGame.getNumCommon() < 3){
-						pokerGame.addCommonCard();
-						hecho = true;
-					}
-					if (!hecho){
-						pokerGame.addCommonCard();
-						hecho = true;
-					}
-				}
-				if (hecho){
-					boardPanel.addCommonCards(new Hand(pokerGame.getCommonCards()));
-				}
-				*/
 			}
 		});
 		
@@ -440,9 +265,12 @@ public class BoardGUI extends JFrame{
 			}
 		});
 		
-		JButton btnGenerate = new JButton("Generate");
+		JButton btnGenerate = new JButton("Generate New Game");
 		btnGenerate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				pokerGame.reset();
+				boardPanel.cleanCommonCards();
+				boardPanel.hideAllPlayers();
 				Integer numCartasComunes = new Integer(cbCardsOnBoard.getSelectedItem().toString());
 				addCommonCards(numCartasComunes);
 
@@ -451,7 +279,6 @@ public class BoardGUI extends JFrame{
 					if (!omaha){
 						Player player = pokerGame.addPlayer(i + 1);
 						if (player != null){
-							
 							boardPanel.getPanelPlayer(i).addPlayer(player);
 						}
 					}	
@@ -474,11 +301,10 @@ public class BoardGUI extends JFrame{
 		cambioJuego.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (int i =0; i < 10; i++){
-					boardPanel.gettfPlayer(i).setText("");
-					boardPanel.changeVisibily(false, i);			
-				}
-				pokerGame.reset();				
+				pokerGame.reset();
+				boardPanel.cleanCommonCards();
+				boardPanel.hideAllPlayers();
+				
 				if (!omaha){
 					cambioJuego.setText("Omaha");
 					omaha = true;

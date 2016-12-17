@@ -139,5 +139,8 @@ public class Hand {
 		return str;
 	}
 	
+	public int size(){
+		return cardsList.size();
+	}
 
 }

@@ -81,6 +81,10 @@ public class DeckCards {
 			removeCard(cardsList.get(i));
 		}
 	}
+	
+	public boolean containsCard(String card){
+		return this.cards.containsKey(card);
+	}
 
 	/**
 	 * Devolver la baraja

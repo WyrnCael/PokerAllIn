@@ -17,25 +17,12 @@ public class Poker_All_In {
 					frame.setVisible(true);
 					frame.pack();
 					frame.setSize(1025, 550);
+					frame.setResizable(false);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-		
-		/*
-		// TODO Auto-generated method stub
-		
-		
-		
-		PokerGame pokerGame = new PokerGame();
-		//pokerGame.pruebasHoldEm(); //Esto es para HOLD EM
-		//pokerGame.processGame(); //Esto es para HOLD EM
-		pokerGame.pruebasOmaha(); //Esto es para OMAHA, recordar cambiar numManos para que tarde 20 min
-		pokerGame.processGameOmaha(); //Esto es para OMAHA
-		System.out.println(pokerGame.toString());
-		
-		*/
 	}
-
 }

@@ -55,7 +55,6 @@ public class CommonCardsPanel extends JPanel {
 				BufferedImage buffImage = ImageIO.read(url);
 				image = new ImageIcon(buffImage).getImage();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			ImageIcon img = new ImageIcon(image.getScaledInstance(47, 67, Image.SCALE_SMOOTH));
@@ -74,4 +73,5 @@ public class CommonCardsPanel extends JPanel {
 		this.hand = mano;
 		initGUI();
 	}
+
 }
