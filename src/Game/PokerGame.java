@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import Cards.Card;
 import Cards.DeckCards;
 import Cards.Hand;
+import GUI.BoardGUI;
 import Players.HoldEmPlayer;
 import Players.OmahaPlayer;
 import Players.Player;
@@ -243,10 +244,10 @@ public class PokerGame {
 	 * El metodo que progresa la partida ordenando los jugadores segun el valor
 	 * de su mejor mano que puede formar
 	 */
-	public String[] processGame() {
+	public String[] processGame(BoardGUI board) {
 		if (!mapPlayers.isEmpty()){
 			EquityCalculator equity = new EquityCalculator(0, mapPlayers);
-			equity.CalculateEquity(deck.getDeck(), numHands, commonCard , numCommon);
+			equity.CalculateEquity(deck.getDeck(), numHands, commonCard , numCommon, board);
 		}
 		return obtainInfo();
 	}
@@ -255,10 +256,10 @@ public class PokerGame {
 	 * El metodo que progresa la partida ordenando los jugadores segun el valor
 	 * de su mejor mano que puede formar
 	 */
-	public String[] processGameOmaha() {
+	public String[] processGameOmaha(BoardGUI board) {
 		if (!mapPlayers.isEmpty()){
 			EquityCalculator equity = new EquityCalculator(1, mapPlayers);
-			equity.CalculateEquityOmaha(deck.getDeck(), numHands, commonCard , numCommon);
+			equity.CalculateEquityOmaha(deck.getDeck(), numHands, commonCard , numCommon, board);
 		}
 		return obtainInfo();
 	}

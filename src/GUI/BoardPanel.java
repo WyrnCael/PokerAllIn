@@ -158,6 +158,10 @@ public class BoardPanel extends JPanel {
 		tfPlayer[index].setText("");
 	}
 	
+	public void setFold(int index){
+		tfPlayer[index].setText("FOLD");
+	}
+	
 	/**
 	 * Elimina las cartas comunitarias y oculta el panel
 	 */

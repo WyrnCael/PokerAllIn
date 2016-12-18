@@ -5,12 +5,17 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
+import com.sun.xml.internal.ws.api.server.Container;
 
 import Cards.Hand;
 import Game.PokerGame;
 import Players.HoldEmPlayer;
 import Players.Player;
+import javafx.scene.layout.Border;
 
 import java.awt.FlowLayout;
 import javax.swing.GroupLayout;
@@ -33,6 +38,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
 import java.awt.Color;
@@ -50,6 +56,8 @@ public class BoardGUI extends JFrame{
 	private PokerGame pokerGame;
 	private boolean omaha;
 	private BoardPanel boardPanel;
+	private JProgressBar progressBar;
+	private JFrame f;
 
 
 	/**
@@ -218,18 +226,38 @@ public class BoardGUI extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String[] info;
-				if (omaha){
-					info = pokerGame.processGameOmaha();
-				}
-				else {
-					info = pokerGame.processGame();
-				}
-				for (int i = 0; i < info.length; i++){
-					String[] parte = info[i].split(" ");
-					Integer num = new Integer(parte[0].split("P")[1].toString()) - 1;
-					boardPanel.gettfPlayer(num).setText(parte[1]);
-				}
+				f = new JFrame("Calculando equity");
+			    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			    java.awt.Container content = f.getContentPane();
+			    progressBar = new JProgressBar();
+			    progressBar.setValue(0);
+			    progressBar.setStringPainted(true);
+			    TitledBorder border = BorderFactory.createTitledBorder("Por favor, espere...");
+			    progressBar.setBorder(border);
+			    content.add(progressBar, BorderLayout.NORTH);
+			    f.setSize(300, 100);
+			    f.setVisible(true);
+			    f.setLocationRelativeTo(null);
+			    
+			    Runnable runner = new Runnable()
+			    {
+			        public void run() {
+			        	String[] info;
+			        	if (omaha){
+							info = pokerGame.processGameOmaha(BoardGUI.this);
+						}
+						else {
+							info = pokerGame.processGame(BoardGUI.this);
+						}
+						for (int i = 0; i < info.length; i++){
+							String[] parte = info[i].split(" ");
+							Integer num = new Integer(parte[0].split("P")[1].toString()) - 1;
+							boardPanel.gettfPlayer(num).setText(parte[1]);
+						}
+			        }
+			    };
+			    Thread t = new Thread(runner, "Code Executer");
+			    t.start();				
 			}
 		});
 		
@@ -257,7 +285,7 @@ public class BoardGUI extends JFrame{
 
 				if (pokerGame.foldPlayer(cbPlayer.getSelectedIndex() + 1, omaha)){
 					boardPanel.gettfPlayer(cbPlayer.getSelectedIndex()).setText("");
-					boardPanel.changeVisibily(false, cbPlayer.getSelectedIndex());
+					boardPanel.setFold(cbPlayer.getSelectedIndex());
 				}
 				else{
 					JOptionPane.showMessageDialog(new JFrame(), "El jugador seleccionado no esta jugando", "Error", JOptionPane.ERROR_MESSAGE);
@@ -491,6 +519,10 @@ public class BoardGUI extends JFrame{
 		);
 		panel_1.setLayout(gl_panel_1);
 		contentPane.setLayout(gl_contentPane);
+		
+		
+	    
+	    setLocationRelativeTo(null);
 	}
 	
 	private void addCommonCards(Integer numCartasComunes){
@@ -502,6 +534,21 @@ public class BoardGUI extends JFrame{
 		if(cambio){
 			boardPanel.addCommonCards(new Hand(pokerGame.getCommonCards()));
 		}
+	}
+	
+	public void setBarPercent(double d){
+		EventQueue.invokeLater(new Runnable() {
+			String[] info;
+			public void run() {
+				progressBar.setValue((int) d);
+				f.revalidate();
+				f.repaint();
+				if( (int) d == 99){
+					f.dispose();
+				}
+			}
+		});
+				
 	}
 	
 	

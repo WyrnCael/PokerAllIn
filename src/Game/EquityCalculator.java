@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import Cards.Card;
 import Cards.DeckCards;
 import Cards.Hand;
+import GUI.BoardGUI;
 import Players.OmahaPlayer;
 import Players.Player;
 import Players.HoldEmPlayer;
@@ -47,7 +48,7 @@ public class EquityCalculator {
 	 * @param numCommon
 	 *            El numero de las cartas en la mesa
 	 */
-	public void CalculateEquity(Map<String, Card> deck, double numGame, String commonCardIni, int numCommon) {
+	public void CalculateEquity(Map<String, Card> deck, double numGame, String commonCardIni, int numCommon, BoardGUI board) {
 		long start = System.currentTimeMillis();
 		System.out.println("Calcular equity con " + numGame + " manos");
 		for (int v = 0; v < numGame; v++) {
@@ -78,6 +79,7 @@ public class EquityCalculator {
 
 			if (v % (numGame / 100) == 0) {
 				System.out.println("Calculando..." + v * 100 / numGame + "%");
+				board.setBarPercent(v * 100 / numGame);
 			} else if (v == numGame - 1) {
 				System.out.println("Terminado...100%" + System.getProperty("line.separator"));
 			}
@@ -97,7 +99,7 @@ public class EquityCalculator {
 	 * @param numCommon
 	 *            El numero de las cartas en la mesa
 	 */
-	public void CalculateEquityOmaha(Map<String, Card> deck, double numGame, String commonCardIni, int numCommon) {
+	public void CalculateEquityOmaha(Map<String, Card> deck, double numGame, String commonCardIni, int numCommon, BoardGUI board) {
 		long start = System.currentTimeMillis();
 		System.out.println("Calcular equity con " + numGame + " manos");
 		for (int v = 0; v < numGame; v++) {
@@ -126,6 +128,7 @@ public class EquityCalculator {
 
 			if (v % (numGame / 100) == 0) {
 				System.out.println("Calculando..." + v * 100 / numGame + "%");
+				board.setBarPercent(v * 100 / numGame);
 			} else if (v == numGame - 1) {
 				System.out.println("Terminado...100%" + System.getProperty("line.separator"));
 			}
