@@ -20,7 +20,7 @@ public class PokerGame {
 	private int numCommon;
 	private DeckCards deck;
 	private Map<Player, Integer> mapPlayers;
-	private final double numHands = 100000;
+	private final double numHands = 1000000;
 	
 	/**
 	 * Constructor

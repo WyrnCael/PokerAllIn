@@ -113,7 +113,13 @@ public class PlayerPanel extends JPanel {
 				
 				e.printStackTrace();
 			}
-			ImageIcon img = new ImageIcon(image.getScaledInstance(47, 67, Image.SCALE_SMOOTH));
+			ImageIcon img = null;
+			if(this.hand.getCardsList().size() <= 2){
+				img = new ImageIcon(image.getScaledInstance(60, 80, Image.SCALE_SMOOTH));
+			}				
+			else{
+				img = new ImageIcon(image.getScaledInstance(50, 70, Image.SCALE_SMOOTH));
+			}
 			JLabel imgLabel = new JLabel(img);
 			imgLabel.setAlignmentX((float) i * 0.2f);
 			imgLabel.setAlignmentY((float) i * 0.05f);
@@ -123,7 +129,15 @@ public class PlayerPanel extends JPanel {
 		this.add(cardsPanel);
 
 		JLabel nombreLabel = new JLabel(player.getName());
-		nombreLabel.setFont(new Font("Courier New", Font.BOLD, 10));
+		if(this.hand.getCardsList().size() <= 2){
+			nombreLabel.setFont(new Font("Courier New", Font.BOLD, 10));
+		}				
+		else{
+			nombreLabel.setFont(new Font("Courier New", Font.BOLD, 12));
+		}
+		
+		nombreLabel.setBackground(Color.BLACK);
+		nombreLabel.setOpaque(true);
 		nombreLabel.setForeground(Color.WHITE);
 		
 		this.add(nombreLabel);
