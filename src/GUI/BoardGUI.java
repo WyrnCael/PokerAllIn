@@ -221,7 +221,7 @@ public class BoardGUI extends JFrame{
 		JLabel lblExecute = new JLabel("Execute:");
 		lblExecute.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JButton btnClaculateEquity = new JButton("Claculate Equity");
+		JButton btnClaculateEquity = new JButton("Calculate Equity");
 		btnClaculateEquity.addActionListener(new ActionListener() {
 			
 			@Override
