@@ -57,7 +57,7 @@ public class CommonCardsPanel extends JPanel {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			ImageIcon img = new ImageIcon(image.getScaledInstance(47, 67, Image.SCALE_SMOOTH));
+			ImageIcon img = new ImageIcon(image.getScaledInstance(55, 75, Image.SCALE_SMOOTH));
 			JLabel imgLabel = new JLabel(img);
 			this.add(imgLabel);
 		}
