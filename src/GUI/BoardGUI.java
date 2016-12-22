@@ -15,6 +15,7 @@ import Cards.Hand;
 import Game.PokerGame;
 import Players.HoldEmPlayer;
 import Players.Player;
+import Poker_All_In.Poker_All_In;
 import javafx.scene.layout.Border;
 
 import java.awt.FlowLayout;
@@ -85,6 +86,7 @@ public class BoardGUI extends JFrame{
 	 * Create the frame.
 	 */
 	public BoardGUI(PokerGame pokerGame) {
+		super("PokerALLIn");
 		this.pokerGame = pokerGame;
 		this.omaha = false;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,6 +97,16 @@ public class BoardGUI extends JFrame{
 		
 		boardPanel = new BoardPanel();
 
+		// LOGO
+		try {
+			BufferedImage image;
+			java.net.URL url = Poker_All_In.class.getResource("/img/icon.png");
+			image = ImageIO.read(url);
+			this.setIconImage(new ImageIcon(image).getImage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		JPanel panel_1 = new JPanel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -238,7 +250,17 @@ public class BoardGUI extends JFrame{
 			    f.setSize(300, 100);
 			    f.setVisible(true);
 			    f.setLocationRelativeTo(null);
-			    
+			    // LOGO
+				try {
+					BufferedImage image;
+					java.net.URL url = Poker_All_In.class.getResource("/img/icon.png");
+					image = ImageIO.read(url);
+					f.setIconImage(new ImageIcon(image).getImage());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+					
 			    Runnable runner = new Runnable()
 			    {
 			        public void run() {
