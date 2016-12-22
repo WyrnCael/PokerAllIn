@@ -1,7 +1,7 @@
 # Poker-All-In
 
-Repositorio para el desarrollo de las pr·cticas de la asignatura "Herramientas Inform·ticas para los Juegos de Azar
-". Se pretende desarrollar una herramienta ·gil y agradable que permita el estudio de los juegos de azar.
+Repositorio para el desarrollo de las pr√°cticas de la asignatura "Herramientas Inform√°ticas para los Juegos de Azar
+". Se pretende desarrollar una herramienta √°gil y agradable que permita el estudio de los juegos de azar.
 
 ### Practica1: El valor de una mano
 * La mejor jugada dadas **5 cartas**.
@@ -15,3 +15,7 @@ Repositorio para el desarrollo de las pr·cticas de la asignatura "Herramientas I
 * Contando combos y calculando probabilidades de manos hechas.
 
 ### Practica3: The equity
+* Calcular equity en las modalidades Hold'em y Omaha.
+* Permite hacer "fold" con los jugadores seleccionados.
+
+### Practica4: Black Jack Bot VIP
