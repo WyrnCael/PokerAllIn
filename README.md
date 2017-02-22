@@ -59,7 +59,8 @@ Ejemplo de salida:
   <img src="http://i.imgur.com/CBhd4jJ.png"/>
 </p>
 
-###Ideas por desarrollar:
+### Recursos utilizados
 
-- [x] Cambiar readme
-- [ ] Especificar los contenidos que forman cada combo.
+ - [Vector-playing-cards (Google Code)](https://code.google.com/archive/p/vector-playing-cards/)
+ - [JFreeChart](http://www.jfree.org/jfreechart/)
+ - [JCommon](http://www.jfree.org/jcommon/)
