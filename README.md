@@ -35,3 +35,9 @@ En el segundo apartado del menu derecho podemos hacer fold con los jugadores sel
 ![alt tag](http://i.imgur.com/YMR3nN4.png)
 
 Cambiando la modalidad, podemos realizar las mismas funciones arrriba indicadas en la modalidad Omaha.
+
+### Recursos utilizados
+
+ - [Vector-playing-cards (Google Code)](https://code.google.com/archive/p/vector-playing-cards/)
+ - [JFreeChart](http://www.jfree.org/jfreechart/)
+ - [JCommon](http://www.jfree.org/jcommon/)
