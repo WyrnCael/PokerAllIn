@@ -49,7 +49,6 @@ Ejemplo de salida:
   <img src="http://i.imgur.com/QtXf5BE.png"/>
 </p>
 
-###Ideas por desarrollar:
+### Recursos utilizados
 
-- [x] Cambiar readme
-- [ ] Permitir introducir mano desde interfaz.
+ - [Vector-playing-cards (Google Code)](https://code.google.com/archive/p/vector-playing-cards/)
