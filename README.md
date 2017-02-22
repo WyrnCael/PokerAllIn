@@ -39,5 +39,3 @@ Cambiando la modalidad, podemos realizar las mismas funciones arrriba indicadas 
 ### Recursos utilizados
 
  - [Vector-playing-cards (Google Code)](https://code.google.com/archive/p/vector-playing-cards/)
- - [JFreeChart](http://www.jfree.org/jfreechart/)
- - [JCommon](http://www.jfree.org/jcommon/)
